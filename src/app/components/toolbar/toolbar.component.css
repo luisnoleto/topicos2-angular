@@ -1,0 +1,23 @@
+.mat-toolbar.mat-padraoHeader {
+    background-color: rgba(66, 66, 66, 1);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    height: 64px;
+    padding: 0 16px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    display: flex;
+    padding: 16px 16px;
+    margin-left: auto;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
