@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { MatFormField } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -16,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButton,
     MatFormField,
     MatMenuModule,
+    RouterModule,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',

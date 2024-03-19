@@ -10,6 +10,7 @@ import { JogoFormComponent } from './components/jogo/jogo-form/jogo-form.compone
 import { jogoResolver } from './components/jogo/resolver/jogo-resolver';
 import { HomeComponent } from './components/home/home.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { UserComponent } from './components/user/user.component';
 
 export const routes: Routes = [
   {
@@ -51,4 +52,6 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent, title: 'Home' },
 
   { path: 'toolbar', component: ToolbarComponent, title: 'Toolbar' },
+
+  { path: 'auth', component: UserComponent, title: 'Auth' },
 ];
