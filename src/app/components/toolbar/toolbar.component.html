@@ -11,20 +11,30 @@
       aria-hidden="true"
     />
   </a>
-  <section>
-    <form>
-      <input type="text" placeholer="Pesquisar" /><button
-        class="primary"
-        type="button"
-      >
-        Buscar
+  <div class="actionHeader">
+    <a href="/home" id="inicio">Início</a>
+    <a href="Biblioteca" id="biblioteca">Biblioteca</a>
+    <a href="Sobre" id="sobre">Sobre</a>
+    <form class="search-form">
+      <input type="text" placeholder="Pesquisar" class="search" />
+      <button id="searchButton">
+        <mat-icon id="searchIcon">search</mat-icon>
       </button>
     </form>
-  </section>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-  />
-  <span class="material-symbols-outlined"> account_circle </span>
+  </div>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="Menu-de-Usuario"
+    class="material-symbols-outlined"
+  >
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      <span>Fazer Login</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 <router-outlet></router-outlet>
