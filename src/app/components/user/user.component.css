@@ -1,0 +1,51 @@
+.loginCard{
+    margin-top: 10%;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: rgba(66, 66, 66, 1);
+}
+
+#titleLogin{
+    text-align: center;
+    color: white;
+}
+
+.button1{
+    display: flex;
+    justify-content: center;
+}
+
+.button2{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    
+}
+
+#buttonLogin{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: rgba(124, 77, 255, 1);
+    color: white;
+}
+
+
+#buttonCadastro{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: rgba(124, 77, 255, 1);
+    color: white;
+
+}
+
+.formLogin{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}

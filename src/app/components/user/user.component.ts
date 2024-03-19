@@ -7,6 +7,8 @@ import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user',
@@ -17,6 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardContent,
     MatFormField,
     ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',

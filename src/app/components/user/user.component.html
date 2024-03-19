@@ -1,24 +1,24 @@
-<mat-card>
-  <mat-card-title>Login</mat-card-title>
+<mat-card class="loginCard">
+  <mat-card-title id="titleLogin">Login</mat-card-title>
   <mat-card-content>
     <form>
       <p>
-        <mat-form-field>
+        <mat-form-field class="formLogin">
           <input
             type="text"
             matInput
-            placeholder="Username"
+            placeholder="Usuário"
             formControlName="username"
           />
         </mat-form-field>
       </p>
 
       <p>
-        <mat-form-field>
+        <mat-form-field class="formLogin">
           <input
             type="password"
             matInput
-            placeholder="Password"
+            placeholder="Senha"
             formControlName="password"
           />
         </mat-form-field>
@@ -26,8 +26,14 @@
 
       <p *ngIf="error" class="error"></p>
 
-      <div class="button">
-        <button type="submit" mat-button>Login</button>
+      <div class="button1">
+        <button type="submit" mat-button id="buttonLogin">Login</button>
+      </div>
+
+      <div class="button2">
+        <button type="submit" mat-button id="buttonCadastro">
+          Fazer Cadastro
+        </button>
       </div>
     </form>
   </mat-card-content>
