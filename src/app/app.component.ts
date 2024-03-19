@@ -24,5 +24,4 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 })
 export class AppComponent {
   title = 'angular-loja-games';
-  color = 'rgba(37, 37, 39, 1)';
 }
