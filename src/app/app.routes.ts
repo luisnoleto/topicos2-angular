@@ -9,8 +9,10 @@ import { JogoListComponent } from './components/jogo/jogo-list/jogo-list.compone
 import { JogoFormComponent } from './components/jogo/jogo-form/jogo-form.component';
 import { jogoResolver } from './components/jogo/resolver/jogo-resolver';
 import { HomeComponent } from './components/home/home.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { UserComponent } from './components/user/user.component';
+
+import { LoginComponent } from './components/login/login.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { UserFormComponent } from './components/user/user-form/user-form.component';
 
 export const routes: Routes = [
   {
@@ -51,7 +53,13 @@ export const routes: Routes = [
 
   { path: 'home', component: HomeComponent, title: 'Home' },
 
-  { path: 'toolbar', component: ToolbarComponent, title: 'Toolbar' },
+  { path: 'auth', component: LoginComponent, title: 'Auth' },
 
-  { path: 'auth', component: UserComponent, title: 'Auth' },
+  { path: 'usuarios', component: UserListComponent, title: 'Usuários' },
+
+  {
+    path: 'usuarios/cadastro',
+    component: UserFormComponent,
+    title: 'Cadastro de Usuário',
+  },
 ];

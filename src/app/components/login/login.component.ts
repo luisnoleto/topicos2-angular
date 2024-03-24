@@ -9,9 +9,10 @@ import { FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-login',
   standalone: true,
   imports: [
     MatCard,
@@ -21,8 +22,9 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
+    RouterModule,
   ],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
 })
-export class UserComponent {}
+export class LoginComponent {}

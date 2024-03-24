@@ -23,15 +23,24 @@
           />
         </mat-form-field>
       </p>
-
-      <p *ngIf="error" class="error"></p>
-
       <div class="button1">
-        <button type="submit" mat-button id="buttonLogin">Login</button>
+        <button
+          type="submit"
+          mat-button
+          id="buttonLogin"
+          routerLink="/usuarios"
+        >
+          Login
+        </button>
       </div>
 
       <div class="button2">
-        <button type="submit" mat-button id="buttonCadastro">
+        <button
+          type="submit"
+          mat-button
+          id="buttonCadastro"
+          routerLink="/usuarios/cadastro"
+        >
           Fazer Cadastro
         </button>
       </div>
