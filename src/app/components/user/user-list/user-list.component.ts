@@ -23,7 +23,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'email'];
+  displayedColumns: string[] = ['id', 'nome', 'email', 'acao'];
   usuarios: User[] = [];
 
   constructor(private userService: UserService) {}
@@ -31,6 +31,18 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.userService.findAll().subscribe((data) => {
       this.usuarios = data;
+    });
+  }
+
+  deleteUser(user: User) {
+    this.userService.delete(user).subscribe({
+      next: () => {
+        // Remove the user from the list
+        this.usuarios = this.usuarios.filter((u) => u.id !== user.id);
+      },
+      error: (err) => {
+        console.log('Erro ao deletar Usuário', err);
+      },
     });
   }
 }

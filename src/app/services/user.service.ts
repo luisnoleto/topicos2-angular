@@ -14,4 +14,24 @@ export class UserService {
   findAll(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.baseUrl);
   }
+
+  findById(id: string): Observable<User> {
+    return this.httpClient.get<User>(`${this.baseUrl}/${id}`);
+  }
+
+  insert(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.baseUrl, user);
+  }
+
+  update(user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.baseUrl}/${user.id}`, user);
+  }
+
+  delete(user: User): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseUrl}/${user.id}`);
+  }
+
+  findByNome(nome: string): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.baseUrl}/search/nome/${nome}`);
+  }
 }
