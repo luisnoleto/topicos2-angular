@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -31,9 +32,9 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.userService.findAll().subscribe((data) => {
       this.usuarios = data;
+      console.log(this.usuarios);
     });
   }
-
   deleteUser(user: User) {
     this.userService.delete(user).subscribe({
       next: () => {

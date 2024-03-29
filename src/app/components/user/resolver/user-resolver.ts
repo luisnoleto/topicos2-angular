@@ -11,5 +11,5 @@ export const userResolver: ResolveFn<User> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  return inject(UserService).findById(route.paramMap.get('ID')!);
+  return inject(UserService).findById(route.paramMap.get('id')!);
 };
