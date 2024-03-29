@@ -3,8 +3,11 @@ export class Jogo {
   nome!: string;
   descricao!: string;
   preco!: number;
-  estoque!: number;
   genero!: Genero;
+  plataforma!: Plataforma;
+  requisitos!: Requisitos;
+  desenvolvedora!: Desenvolvedora;
+  classificacao!: Classificacao;
 }
 
 export enum Genero {

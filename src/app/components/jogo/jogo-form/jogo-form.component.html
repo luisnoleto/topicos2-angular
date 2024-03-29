@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="toolbar-title">Cadastro de Estado</mat-toolbar>
+<mat-toolbar color="primary" class="toolbar-title">Cadastro de Jogo</mat-toolbar>
 <div class="form-container">
     <mat-card>
         <mat-card-content>
@@ -13,12 +13,39 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Sigla</mat-label>
-                    <input matInput type="text" formControlName="sigla">
-                    <mat-error *ngIf="formGroup.get('sigla') 
-                                   && formGroup.get('sigla')?.invalid
-                                   && formGroup.get('sigla')?.touched">
-                        A sigla é obrigatoria.
+                    <mat-label>Descrição</mat-label>
+                    <input matInput type="text" formControlName="descricao">
+                    <mat-error *ngIf="formGroup.get('descricao') 
+                                   && formGroup.get('descricao')?.invalid
+                                   && formGroup.get('descricao')?.touched">
+                        A Descriçao é obrigatoria.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="text" formControlName="preco">
+                    <mat-error *ngIf="formGroup.get('preco') 
+                                   && formGroup.get('preco')?.invalid
+                                   && formGroup.get('preco')?.touched">
+                        O nome é obrigatorio.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Estoque</mat-label>
+                    <input matInput type="text" formControlName="estoque">
+                    <mat-error *ngIf="formGroup.get('estoque') 
+                                   && formGroup.get('estoque')?.invalid
+                                   && formGroup.get('estoque')?.touched">
+                        O nome é obrigatorio.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Genero</mat-label>
+                    <input matInput type="text" formControlName="genero">
+                    <mat-error *ngIf="formGroup.get('genero') 
+                                   && formGroup.get('genero')?.invalid
+                                   && formGroup.get('genero')?.touched">
+                        O nome é obrigatorio.
                     </mat-error>
                 </mat-form-field>
             </form>

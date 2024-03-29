@@ -45,13 +45,11 @@ export class JogoFormComponent {
     this.formGroup = formBuilder.group({
       id: [jogo && jogo.id ? jogo.id : null],
       nome: [jogo && jogo.nome ? jogo.nome : '', Validators.required],
-      descricao: [
-        jogo && jogo.descricao ? jogo.descricao : '',
-        Validators.required,
-      ],
+      descricao: [jogo && jogo.descricao ? jogo.descricao : '', Validators.required],
       preco: [jogo && jogo.preco ? jogo.preco : '', Validators.required],
-      estoque: [jogo && jogo.estoque ? jogo.estoque : '', Validators.required],
       genero: [jogo && jogo.genero ? jogo.genero : '', Validators.required],
+      plataforma: [jogo && jogo.plataforma ? jogo.plataforma : '', Validators.required],
+      
     });
   }
 
