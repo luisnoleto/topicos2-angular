@@ -49,7 +49,9 @@ export class JogoFormComponent {
       preco: [jogo && jogo.preco ? jogo.preco : '', Validators.required],
       genero: [jogo && jogo.genero ? jogo.genero : '', Validators.required],
       plataforma: [jogo && jogo.plataforma ? jogo.plataforma : '', Validators.required],
-      
+      requisitos: [jogo && jogo.requisitos ? jogo.requisitos : '', Validators.required],
+      desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora : '', Validators.required],
+      classificacao: [jogo && jogo.classificacao ? jogo.classificacao : '', Validators.required],      
     });
   }
 
