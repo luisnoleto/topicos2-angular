@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="toolbar-title">Cadastro de Estado</mat-toolbar>
+<mat-toolbar color="primary" class="toolbar-title">Cadastro de Jogo</mat-toolbar>
 <div class="form-container">
     <mat-card>
         <mat-card-content>
@@ -6,21 +6,68 @@
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Nome</mat-label>
                     <input matInput type="text" formControlName="nome">
-                    <mat-error *ngIf="formGroup.get('nome') 
-                                   && formGroup.get('nome')?.invalid
-                                   && formGroup.get('nome')?.touched">
-                        O nome é obrigatorio.
-                    </mat-error>
+                    <mat-error *ngIf="formGroup.get('nome')?.errors && 
+                                        formGroup.get('nome')?.touched">
+                    @if(formGroup.get('nome')?.errors?.['required']){
+                        <span>O nome deve possuir ao menos 4 caracteres.</span>
+                    }
+                    @if(formGroup.get('nome')?.errors?.['required']){
+                        <span>O nome deve ser informado.</span>
+                    }
+                    @if(formGroup.get('nome')?.hasError('apiError')){
+                        <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
                 </mat-form-field>
+
                 <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Sigla</mat-label>
-                    <input matInput type="text" formControlName="sigla">
-                    <mat-error *ngIf="formGroup.get('sigla') 
-                                   && formGroup.get('sigla')?.invalid
-                                   && formGroup.get('sigla')?.touched">
-                        A sigla é obrigatoria.
-                    </mat-error>
+                    <mat-label>Descrição</mat-label>
+                    <input matInput type="text" formControlName="descricao">
+                    <mat-error *ngIf="formGroup.get('descricao')?.errors && 
+                                        formGroup.get('descricao')?.touched">
+                    @if(formGroup.get('descricao')?.hasError('apiError')){
+                        <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
                 </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="number" formControlName="preco">
+                    <mat-error *ngIf="formGroup.get('preco')?.errors && 
+                                        formGroup.get('preco')?.touched">
+                    @if(formGroup.get('preco')?.hasError('apiError')){
+                        <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="number" formControlName="preco">
+                    <mat-error *ngIf="formGroup.get('preco')?.errors && 
+                                        formGroup.get('preco')?.touched">
+                    @if(formGroup.get('preco')?.errors?.['required']){
+                        <span>O valor não pode ser nulo.</span>
+                    }
+                    @if(formGroup.get('preco')?.hasError('apiError')){
+                        <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Genero</mat-label>
+                    <mat-select formControlName="genero">
+                        @for (genero of generos; track genero.id) {
+                            <mat-option [value]="genero">
+                                {{genero.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+               
             </form>
         </mat-card-content>
         <mat-card-actions>

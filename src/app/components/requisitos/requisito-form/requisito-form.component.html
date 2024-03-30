@@ -1,5 +1,4 @@
-<app-toolbar></app-toolbar>
-<mat-toolbar color="primary" class="toolbar-title">Cadastro de Município</mat-toolbar>
+<mat-toolbar color="primary" class="toolbar-title">Cadastro de Estado</mat-toolbar>
 <div class="form-container">
     <mat-card>
         <mat-card-content>
@@ -13,18 +12,15 @@
                         O nome é obrigatorio.
                     </mat-error>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Estado</mat-label>
-                    <mat-select formControlName="estado">
-                        @for (estado of estados; track estado.id) {
-                            <mat-option [value]="estado">
-                                {{estado.nome}}
-                            </mat-option>
-                        }
-                    </mat-select>
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Sigla</mat-label>
+                    <input matInput type="text" formControlName="sigla">
+                    <mat-error *ngIf="formGroup.get('sigla') 
+                                   && formGroup.get('sigla')?.invalid
+                                   && formGroup.get('sigla')?.touched">
+                        A sigla é obrigatoria.
+                    </mat-error>
                 </mat-form-field>
-
             </form>
         </mat-card-content>
         <mat-card-actions>
@@ -42,7 +38,7 @@
                 Excluir 
             </button>
             <button mat-raised-button  
-                    routerLink="/municipios"> 
+                    routerLink="/estados"> 
                 Cancelar 
             </button>
 

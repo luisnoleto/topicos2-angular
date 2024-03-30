@@ -23,7 +23,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './jogo-list.component.css',
 })
 export class JogoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'sigla', 'acao'];
+  displayedColumns: string[] = ['id', 'nome', 'acao'];
   jogos: Jogo[] = [];
 
   constructor(private jogoService: JogoService) {}
