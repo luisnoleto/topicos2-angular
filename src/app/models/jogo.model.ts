@@ -2,7 +2,7 @@ import { Classificacao } from './classificacao.model';
 import { Desenvolvedora } from './desenvolvedora.model';
 import { Genero } from './genero.model';
 import { Plataforma } from './plataforma.model';
-import { Requisitos } from './requisitos.model';
+import { Requisito } from './requisitos.model';
 
 export class Jogo {
   id!: number;
@@ -11,7 +11,7 @@ export class Jogo {
   preco!: number;
   genero!: Genero;
   plataforma!: Plataforma;
-  requisitos!: Requisitos;
+  requisitos!: Requisito;
   desenvolvedora!: Desenvolvedora;
   classificacao!: Classificacao;
 }

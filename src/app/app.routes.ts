@@ -13,6 +13,12 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
+import { RequisitoListComponent } from './components/requisitos/requisito-list/requisito-list.component';
+import { RequisitoFormComponent } from './components/requisitos/requisito-form/requisito-form.component';
+import { requisitoResolver } from './components/requisitos/resolver/requisito-resolver';
+import { GeneroListComponent } from './components/genero/genero-list/genero-list.component';
+import { GeneroFormComponent } from './components/genero/genero-form/genero-form.component';
+import { generoResolver } from './components/genero/resolver/genero-resolver';
 
 export const routes: Routes = [
   {
@@ -43,12 +49,39 @@ export const routes: Routes = [
     resolve: { municipio: municipioResolver },
   },
 
+  // Requisitos
+
+  {
+    path: 'requistos',
+    component: RequisitoListComponent,
+    title: 'Lista de requisitos',
+  },
+  { path: 'requisitos/new', component: RequisitoFormComponent, title: 'Novos Requisitos' },
+  {
+    path: 'requisitos/edit/:id',
+    component: RequisitoFormComponent,
+    resolve: { requisito: requisitoResolver },
+  },
+
+  // genero
+  {
+    path: 'generos',
+    component: GeneroListComponent,
+    title: 'Lista de Generos',
+  },
+  { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero' },
+  {
+    path: 'generos/edit/:id',
+    component: GeneroFormComponent,
+    resolve: { estado: generoResolver },
+  },
+
+  // Jogos
+
   { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' },
   { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo' },
   {
-    path: 'jogos/edit/:id',
-    component: JogoFormComponent,
-    resolve: { jogo: jogoResolver },
+    path: 'jogos/edit/:id', component: JogoFormComponent, resolve: { jogo: jogoResolver },
   },
 
   { path: 'home', component: HomeComponent, title: 'Home' },

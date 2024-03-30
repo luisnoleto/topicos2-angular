@@ -30,18 +30,7 @@
                     }
                 </mat-error>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Preço</mat-label>
-                    <input matInput type="number" formControlName="preco">
-                    <mat-error *ngIf="formGroup.get('preco')?.errors && 
-                                        formGroup.get('preco')?.touched">
-                    @if(formGroup.get('preco')?.hasError('apiError')){
-                        <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
-                
+               
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Preço</mat-label>
                     <input matInput type="number" formControlName="preco">
@@ -54,17 +43,6 @@
                         <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
                     }
                 </mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Genero</mat-label>
-                    <mat-select formControlName="genero">
-                        @for (genero of generos; track genero.id) {
-                            <mat-option [value]="genero">
-                                {{genero.nome}}
-                            </mat-option>
-                        }
-                    </mat-select>
                 </mat-form-field>
 
                
@@ -85,7 +63,7 @@
                 Excluir 
             </button>
             <button mat-raised-button  
-                    routerLink="/estados"> 
+                    routerLink="/jogos"> 
                 Cancelar 
             </button>
 
