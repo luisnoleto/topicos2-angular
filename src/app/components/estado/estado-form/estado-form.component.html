@@ -6,19 +6,23 @@
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Nome</mat-label>
                     <input matInput type="text" formControlName="nome">
-                    <mat-error *ngIf="formGroup.get('nome') 
-                                   && formGroup.get('nome')?.invalid
-                                   && formGroup.get('nome')?.touched">
-                        O nome é obrigatorio.
+                    <mat-error *ngIf="formGroup.get('nome')?.errors && formGroup.get('nome')?.touched">   
+                        {{getErrorMessage('nome', formGroup.get('nome')?.errors)}} 
+                        
+                        @if (formGroup.get('nome')?.hasError('apiError')) {
+                            <span>{{ formGroup.get('nome')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Sigla</mat-label>
                     <input matInput type="text" formControlName="sigla">
-                    <mat-error *ngIf="formGroup.get('sigla') 
-                                   && formGroup.get('sigla')?.invalid
-                                   && formGroup.get('sigla')?.touched">
-                        A sigla é obrigatoria.
+                    <mat-error *ngIf="formGroup.get('sigla')?.errors && formGroup.get('sigla')?.touched">   
+                        {{getErrorMessage('sigla', formGroup.get('sigla')?.errors)}}  
+                        
+                        @if (formGroup.get('sigla')?.hasError('apiError')) {
+                            <span>{{ formGroup.get('sigla')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
             </form>
@@ -26,8 +30,7 @@
         <mat-card-actions>
             <button mat-raised-button 
                     color="primary" 
-                    (click)="salvar()"
-                    [disabled]="formGroup.invalid"> 
+                    (click)="salvar()"> 
                 Salvar 
             </button>
             <button mat-raised-button 
