@@ -13,6 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
+import { userResolver } from './components/user/resolver/user-resolver';
 
 export const routes: Routes = [
   {
@@ -61,5 +62,11 @@ export const routes: Routes = [
     path: 'usuarios/cadastro',
     component: UserFormComponent,
     title: 'Cadastro de Usuário',
+  },
+
+  {
+    path: 'usuarios/edit/:id',
+    component: UserFormComponent,
+    resolve: { user: userResolver },
   },
 ];
