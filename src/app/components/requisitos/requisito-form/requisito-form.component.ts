@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { requisitoService } from '../../../services/requisito.service';
+import { RequisitoService } from '../../../services/requisito.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { requisito } from '../../../models/requisito.model';
+import { Requisito } from '../../../models/requisitos.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-requisito-form',
@@ -23,45 +24,39 @@ export class RequisitoFormComponent {
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    private requisitoService: requisitoService,
+    private RequisitoService: RequisitoService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
 
-    const requisito: requisito = activatedRoute.snapshot.data['requisito'];
+    const requisito: Requisito = activatedRoute.snapshot.data['requisito'];
 
     this.formGroup = formBuilder.group({
       id: [(requisito && requisito.id) ? requisito.id : null],
-      processador: [(requisito && requisito.processador) ? requisito.processador : '', Validators.required],
-      memoria: [(requisito && requisito.memoria) ? requisito.memoria : '', Validators.required],
-      armazenamento: [(requisito && requisito.armazenamento) ? requisito.armazenamento : '', Validators.required],
-      placaVideo: [(requisito && requisito.placaVideo) ? requisito.placaVideo : '', Validators.required],
-      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.required],    
+      processador: [(requisito && requisito.processador) ? requisito.processador : '',Validators.compose([Validators.required])],
+      memoria: [(requisito && requisito.memoria) ? requisito.memoria : '', Validators.compose([Validators.required])],
+      armazenamento: [(requisito && requisito.armazenamento) ? requisito.armazenamento : '', Validators.compose([Validators.required])],
+      placaVideo: [(requisito && requisito.placaVideo) ? requisito.placaVideo : '', Validators.compose([Validators.required])],
+      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.compose([Validators.required])],    
     });
 
   }
 
   salvar() {
+    this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const requisito = this.formGroup.value;
-      if (requisito.id ==null) {
-        this.requisitoService.insert(requisito).subscribe({
-          next: (requisitoCadastrado) => {
-            this.router.navigateByUrl('/requisitos');
-          },
-          error: (err) => {
-            console.log('Erro ao Incluir' + JSON.stringify(err));
-          }
-        });
-      } else {
-        this.requisitoService.update(requisito).subscribe({
-          next: (requisitoAlterado) => {
-            this.router.navigateByUrl('/requisitos');
-          },
-          error: (err) => {
-            console.log('Erro ao Editar' + JSON.stringify(err));
-          }
-        });
-      }
+      
+      const operacao = requisito.id == null 
+      ? this.RequisitoService.insert(requisito) 
+      : this.RequisitoService.update(requisito);
+
+      operacao.subscribe({
+        next: () => this.router.navigateByUrl('/requisitos'),
+        error: (error: HttpErrorResponse) => {
+          console.log('Erro ao Salvar' + JSON.stringify(error));
+          this.tratarErros(error);
+        },
+      });
     }
   }
 
@@ -69,7 +64,7 @@ export class RequisitoFormComponent {
     if (this.formGroup.valid) {
       const requisito = this.formGroup.value;
       if (requisito.id != null) {
-        this.requisitoService.delete(requisito).subscribe({
+        this.RequisitoService.delete(requisito).subscribe({
           next: () => {
             this.router.navigateByUrl('/requisitos');
           },
@@ -79,6 +74,58 @@ export class RequisitoFormComponent {
         });
       }
     }
+  }
+
+  
+  tratarErros(error: HttpErrorResponse){
+    if(error.status == 400){
+      if(error.error?.errors){
+        error.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.field);
+          console.log(validationError);
+          if(formControl){
+            console.log(formControl);
+            formControl.setErrors({ apiError: validationError.message});
+          }
+        });
+      };
+    } else if(error.status < 400) {
+      alert(error.error?.message || 'Erro generico no envio do formulario.');
+    } else if(error.status >= 500){
+      alert('Erro interno do Servidor. Por favor, tente novamente mais tarde.');
+    }
+  }
+
+    errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+
+    processador: {
+      required: 'O processador deve ser informado.',
+    },
+    memoria: {
+      required: 'A memória deve ser informada.',
+    },
+    armazenamento: {
+      required: 'O armazenamento deve ser informado.',
+    },
+    placaVideo: {
+      required: 'A placa de vídeo deve ser informada.',
+    },
+    sistemaOperacional: {
+      required: 'O sistema operacional deve ser informado.',
+    }
+  }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors) {
+      return '';
+    }
+
+    for (const errorName in errors) {
+      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 
 }

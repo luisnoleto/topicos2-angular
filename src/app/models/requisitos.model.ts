@@ -1,4 +1,4 @@
-export class Requisitos {
+export class Requisito {
     id!: number;
     processador!: string;
     memoria!: string;

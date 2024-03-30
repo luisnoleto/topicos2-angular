@@ -1,13 +1,13 @@
 <mat-toolbar color="primary">
   <div class="flex-container">
-    <span class="toolbar-title">Controle de Estados</span>
-    <button mat-fab color="accent" routerLink="/estados/new">
+    <span class="toolbar-title">Controle de Requisitos</span>
+    <button mat-fab color="accent" routerLink="/requisitos/new">
       <mat-icon>add</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
-<table mat-table [dataSource]="estados" class="mat-elevation-z8">
+<table mat-table [dataSource]="requisitos" class="mat-elevation-z8">
 
     <!-- Position Column -->
     <ng-container matColumnDef="id">
@@ -18,13 +18,7 @@
     <!-- Nome Column -->
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef> Nome </th>
-      <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-    </ng-container>
-  
-    <!-- Sigla Column -->
-    <ng-container matColumnDef="sigla">
-      <th mat-header-cell *matHeaderCellDef> Sigla </th>
-      <td mat-cell *matCellDef="let element"> {{element.sigla}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.processador}} </td>
     </ng-container>
 
     <!-- Acao Column -->
@@ -33,7 +27,7 @@
       <td mat-cell *matCellDef="let element"> 
         <button mat-icon-button 
                 color="primary"
-                routerLink="/estados/edit/{{element.id}}">
+                routerLink="/requisitos/edit/{{element.id}}">
                 <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button 
