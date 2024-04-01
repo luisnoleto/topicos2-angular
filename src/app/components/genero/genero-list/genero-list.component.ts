@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Estado } from '../../../models/estado.model';
-import { EstadoService } from '../../../services/estado.service';
+import { Genero } from '../../../models/genero.model';
+import { GeneroService } from '../../../services/genero.service';
 import { NgFor } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,24 +9,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-estado-list',
+  selector: 'app-genero-list',
   standalone: true,
   imports: [NgFor, MatTableModule, MatToolbarModule, MatIconModule
   , MatButtonModule, RouterModule],
-  templateUrl: './estado-list.component.html',
-  styleUrl: './estado-list.component.css'
+  templateUrl: './genero-list.component.html',
+  styleUrl: './genero-list.component.css'
 })
-export class EstadoListComponent implements OnInit {
+export class GeneroListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'acao'];
-  estados: Estado[] = [];
+  generos: Genero[] = [];
 
-  constructor(private estadoService: EstadoService) {
+  constructor(private generoService: GeneroService) {
 
   }
 
   ngOnInit(): void {
-    this.estadoService.findAll().subscribe(data => {
-      this.estados = data;
+    this.generoService.findAll().subscribe(data => {
+      this.generos = data;
     })
   }
 

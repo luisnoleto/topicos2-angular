@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +9,7 @@ import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Estado } from '../../../models/estado.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-estado-form',
@@ -31,34 +32,49 @@ export class EstadoFormComponent {
 
     this.formGroup = formBuilder.group({
       id: [(estado && estado.id) ? estado.id : null],
-      nome: [(estado && estado.nome) ? estado.nome : '', Validators.required],
-      sigla: [(estado && estado.sigla) ? estado.sigla : '', Validators.required]
+      nome: [(estado && estado.nome) ? estado.nome : '',
+      Validators.compose([Validators.required,
+      Validators.minLength(4)])],
+      sigla: [(estado && estado.sigla) ? estado.sigla : '',
+      Validators.compose([Validators.required,
+      Validators.minLength(2), Validators.maxLength(2)])]
     });
 
   }
 
   salvar() {
+    this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const estado = this.formGroup.value;
-      if (estado.id ==null) {
-        this.estadoService.insert(estado).subscribe({
-          next: (estadoCadastrado) => {
-            this.router.navigateByUrl('/estados');
-          },
-          error: (err) => {
-            console.log('Erro ao Incluir' + JSON.stringify(err));
+
+      const operacao = estado.id == null ? this.estadoService.insert(estado) : this.estadoService.update(estado);
+
+      operacao.subscribe({
+        next: () => this.router.navigateByUrl('/estados'),
+        error: (error:HttpErrorResponse) => {
+          console.log('Erro ao salvar' + JSON.stringify(error));
+          this.tratarErros(error);
+        }
+      });
+    }
+  }
+
+  tratarErros(error: HttpErrorResponse) {
+    if (error.status === 400) {
+      if (error.error?.errors) {
+        error.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.fildName);
+          if (formControl) {
+            console.log(formControl);
+            formControl.setErrors({ apiError: validationError.message });
           }
         });
-      } else {
-        this.estadoService.update(estado).subscribe({
-          next: (estadoAlterado) => {
-            this.router.navigateByUrl('/estados');
-          },
-          error: (err) => {
-            console.log('Erro ao Editar' + JSON.stringify(err));
-          }
-        });
-      }
+      };
+
+    } else if (error.status < 500) {
+      alert(error.error ?.message || 'Erro generico no enio do formulario');
+    } else if (error.status >= 500) {
+      alert('Erro interno do servidor. Por favor, tente novamente mais tarde.');
     }
   }
 
@@ -76,6 +92,33 @@ export class EstadoFormComponent {
         });
       }
     }
+  }
+
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+
+    nome: {
+      required: 'O nome deve ser informado.',
+      minlength: 'O nome deve conter ao menos 4 caracteres'
+    },
+    sigla: {
+      required: 'A sigla deve ser informada.',
+      minlength: 'A sigla deve possuir exatos 2 caracteres.',
+      maxlength: 'A sigla deve possuir exatos 2 caracteres.',
+      apiError: ''
+    }
+  }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors) {
+      return '';
+    }
+
+    for (const errorName in errors) {
+      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 
 }

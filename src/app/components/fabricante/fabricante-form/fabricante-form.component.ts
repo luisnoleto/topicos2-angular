@@ -3,55 +3,50 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validato
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RequisitoService } from '../../../services/requisito.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Requisito } from '../../../models/requisitos.model';
+import { Fabricante } from '../../../models/fabricante.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FabricanteService } from '../../../services/fabricante.service';
 
 @Component({
-  selector: 'app-requisito-form',
+  selector: 'app-fabricante-form',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule,
     MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, RouterModule],
-  templateUrl: './requisito-form.component.html',
-  styleUrl: './requisito-form.component.css'
+  templateUrl: './fabricante-form.component.html',
+  styleUrl: './fabricante-form.component.css'
 })
-export class RequisitoFormComponent {
+export class FabricanteFormComponent {
 
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    private RequisitoService: RequisitoService,
+    private fabricanteService: FabricanteService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
 
-    const requisito: Requisito = activatedRoute.snapshot.data['requisito'];
+    const fabricante: Fabricante = activatedRoute.snapshot.data['fabricante'];
 
     this.formGroup = formBuilder.group({
-      id: [(requisito && requisito.id) ? requisito.id : null],
-      processador: [(requisito && requisito.processador) ? requisito.processador : '',Validators.compose([Validators.required])],
-      memoria: [(requisito && requisito.memoria) ? requisito.memoria : '', Validators.compose([Validators.required])],
-      armazenamento: [(requisito && requisito.armazenamento) ? requisito.armazenamento : '', Validators.compose([Validators.required])],
-      placaVideo: [(requisito && requisito.placaVideo) ? requisito.placaVideo : '', Validators.compose([Validators.required])],
-      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.compose([Validators.required])],    
+      id: [(fabricante && fabricante.id) ? fabricante.id : null],
+      processador: [(fabricante && fabricante.nome) ? fabricante.nome : '',Validators.compose([Validators.required])],    
     });
-
   }
 
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const requisito = this.formGroup.value;
+      const fabricante = this.formGroup.value;
       
-      const operacao = requisito.id == null 
-      ? this.RequisitoService.insert(requisito) 
-      : this.RequisitoService.update(requisito);
+      const operacao = fabricante.id == null 
+      ? this.fabricanteService.insert(fabricante) 
+      : this.fabricanteService.update(fabricante);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/requisitos'),
+        next: () => this.router.navigateByUrl('/fabricantes'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -62,11 +57,11 @@ export class RequisitoFormComponent {
 
   excluir() {
     if (this.formGroup.valid) {
-      const requisito = this.formGroup.value;
-      if (requisito.id != null) {
-        this.RequisitoService.delete(requisito).subscribe({
+      const fabricante = this.formGroup.value;
+      if (fabricante.id != null) {
+        this.fabricanteService.delete(fabricante).subscribe({
           next: () => {
-            this.router.navigateByUrl('/requisitos');
+            this.router.navigateByUrl('/fabricantes');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -98,21 +93,10 @@ export class RequisitoFormComponent {
 
     errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
 
-    processador: {
-      required: 'O processador deve ser informado.',
+    nome: {
+      required: 'O nome deve ser informado.',
+      minlength: 'O nome deve ter no mínimo 6 caracteres.',
     },
-    memoria: {
-      required: 'A memória deve ser informada.',
-    },
-    armazenamento: {
-      required: 'O armazenamento deve ser informado.',
-    },
-    placaVideo: {
-      required: 'A placa de vídeo deve ser informada.',
-    },
-    sistemaOperacional: {
-      required: 'O sistema operacional deve ser informado.',
-    }
   }
 
   getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {

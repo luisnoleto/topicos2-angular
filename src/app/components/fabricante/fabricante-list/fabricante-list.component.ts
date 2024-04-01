@@ -1,32 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { Estado } from '../../../models/estado.model';
-import { EstadoService } from '../../../services/estado.service';
+import { Fabricante } from '../../../models/fabricante.model';
 import { NgFor } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { FabricanteService } from '../../../services/fabricante.service';
 
 @Component({
-  selector: 'app-estado-list',
+  selector: 'app-fabricante-list',
   standalone: true,
   imports: [NgFor, MatTableModule, MatToolbarModule, MatIconModule
   , MatButtonModule, RouterModule],
-  templateUrl: './estado-list.component.html',
-  styleUrl: './estado-list.component.css'
+  templateUrl: './fabricante-list.component.html',
+  styleUrl: './fabricante-list.component.css'
 })
-export class EstadoListComponent implements OnInit {
+export class FabricanteListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'acao'];
-  estados: Estado[] = [];
+  fabricantes: Fabricante[] = [];
 
-  constructor(private estadoService: EstadoService) {
+  constructor(private fabricanteService: FabricanteService) {
 
   }
 
   ngOnInit(): void {
-    this.estadoService.findAll().subscribe(data => {
-      this.estados = data;
+    this.fabricanteService.findAll().subscribe(data => {
+      this.fabricantes = data;
     })
   }
 

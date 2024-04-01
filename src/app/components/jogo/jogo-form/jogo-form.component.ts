@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +19,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Genero } from '../../../models/genero.model';
 import { Plataforma } from '../../../models/plataforma.model';
 import { Desenvolvedora } from '../../../models/desenvolvedora.model';
+import { RequisitoService } from '../../../services/requisito.service';
 
 @Component({
   selector: 'app-jogo-form',
@@ -45,9 +47,10 @@ export class JogoFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private jogoService: JogoService,
-    private desenvolvedoraService: DesenvolvedoraService,
-    private generoService: GeneroService,
-    private plataformaService: PlataformaService,
+    private requisitoService: RequisitoService,
+    // private desenvolvedoraService: DesenvolvedoraService,
+    // private generoService: GeneroService,
+    // private plataformaService: PlataformaService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -123,6 +126,34 @@ export class JogoFormComponent {
       alert('Erro interno do Servidor. Por favor, tente novamente mais tarde.');
     }
   }
+
+
+  // errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+
+  //   nome: {
+  //     required: 'O nome deve ser informado.',
+  //     minlength: 'O nome deve conter ao menos 4 caracteres'
+  //   },
+  //   sigla: {
+  //     required: 'A sigla deve ser informada.',
+  //     minlength: 'A sigla deve possuir exatos 2 caracteres.',
+  //     maxlength: 'A sigla deve possuir exatos 2 caracteres.',
+  //     apiError: ''
+  //   }
+  // }
+
+  // getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+  //   if (!errors) {
+  //     return '';
+  //   }
+
+  //   for (const errorName in errors) {
+  //     if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+  //       return this.errorMessages[controlName][errorName];
+  //     }
+  //   }
+  //   return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  // }
 
 
 } 
