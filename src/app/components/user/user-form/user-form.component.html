@@ -109,6 +109,45 @@
               }
             </mat-error>
           </mat-form-field>
+          <mat-form-field
+            id="perfilform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>DDD </mat-label>
+            <input matInput type="text" formControlName="ddd" />
+            <mat-error
+              *ngIf="
+                formGroup.get('ddd')?.errors && formGroup.get('ddd')?.touched
+              "
+            >
+              @if(formGroup.get('ddd')?.errors?.['required']) {
+              <span>O ddd deve ser informado.</span>
+              } @if(formGroup.get('ddd')?.hasError('apiError')) {
+              <span>{{ formGroup.get("ddd")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            id="perfilform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Telefone</mat-label>
+            <input matInput type="text" formControlName="telefone" />
+            <mat-error
+              *ngIf="
+                formGroup.get('telefone')?.errors &&
+                formGroup.get('telefone')?.touched
+              "
+            >
+              @if(formGroup.get('telefone')?.errors?.['required']) {
+              <span>O telefone deve ser informado.</span>
+              } @if(formGroup.get('telefone')?.hasError('apiError')) {
+              <span>{{ formGroup.get("telefone")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>

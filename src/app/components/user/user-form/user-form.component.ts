@@ -51,6 +51,16 @@ export class UserFormComponent {
       ],
       email: [user && user.email ? user.email : '', Validators.required],
       cpf: [user && user.cpf ? user.cpf : '', Validators.required],
+      telefones: formBuilder.array(
+        user && user.telefones
+          ? user.telefones.map((telefone) =>
+              formBuilder.group({
+                ddd: [telefone.codigoArea, Validators.required],
+                numero: [telefone.numero, Validators.required],
+              })
+            )
+          : []
+      ),
     });
   }
   salvar() {

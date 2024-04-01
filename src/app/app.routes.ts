@@ -9,23 +9,19 @@ import { JogoListComponent } from './components/jogo/jogo-list/jogo-list.compone
 import { JogoFormComponent } from './components/jogo/jogo-form/jogo-form.component';
 import { jogoResolver } from './components/jogo/resolver/jogo-resolver';
 import { HomeComponent } from './components/home/home.component';
-
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
-
+import { userResolver } from './components/user/resolver/user-resolver';
 import { RequisitoListComponent } from './components/requisitos/requisito-list/requisito-list.component';
 import { RequisitoFormComponent } from './components/requisitos/requisito-form/requisito-form.component';
 import { requisitoResolver } from './components/requisitos/resolver/requisito-resolver';
 import { GeneroListComponent } from './components/genero/genero-list/genero-list.component';
 import { GeneroFormComponent } from './components/genero/genero-form/genero-form.component';
 import { generoResolver } from './components/genero/resolver/genero-resolver';
-import { Fabricante } from './models/fabricante.model';
-import { FabricanteFormComponent } from './components/genero copy/fabricante-form/fabricante-form.component';
-import { FabricanteListComponent } from './components/genero copy/fabricante-list/fabricante-list.component';
-import { fabricanteResolver } from './components/genero copy/resolver/fabricante-resolver';
-import { userResolver } from './components/user/resolver/user-resolver';
-
+import { FabricanteListComponent } from './components/fabricante/fabricante-list/fabricante-list.component';
+import { FabricanteFormComponent } from './components/fabricante/fabricante-form/fabricante-form.component';
+import { fabricanteResolver } from './components/fabricante/resolver/fabricante-resolver';
 
 export const routes: Routes = [
   {
@@ -63,7 +59,11 @@ export const routes: Routes = [
     component: RequisitoListComponent,
     title: 'Lista de requisitos',
   },
-  { path: 'requisitos/new', component: RequisitoFormComponent, title: 'Novos Requisitos' },
+  {
+    path: 'requisitos/new',
+    component: RequisitoFormComponent,
+    title: 'Novos Requisitos',
+  },
   {
     path: 'requisitos/edit/:id',
     component: RequisitoFormComponent,
@@ -90,7 +90,11 @@ export const routes: Routes = [
     component: FabricanteListComponent,
     title: 'Lista de Fabricantes',
   },
-  { path: 'fabricantes/new', component: FabricanteFormComponent, title: 'Novo Fabricante' },
+  {
+    path: 'fabricantes/new',
+    component: FabricanteFormComponent,
+    title: 'Novo Fabricante',
+  },
   {
     path: 'fabricantes/edit/:id',
     component: FabricanteFormComponent,
@@ -102,7 +106,9 @@ export const routes: Routes = [
   { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' },
   { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo' },
   {
-    path: 'jogos/edit/:id', component: JogoFormComponent, resolve: { jogo: jogoResolver },
+    path: 'jogos/edit/:id',
+    component: JogoFormComponent,
+    resolve: { jogo: jogoResolver },
   },
 
   { path: 'home', component: HomeComponent, title: 'Home' },
