@@ -13,6 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
+
 import { RequisitoListComponent } from './components/requisitos/requisito-list/requisito-list.component';
 import { RequisitoFormComponent } from './components/requisitos/requisito-form/requisito-form.component';
 import { requisitoResolver } from './components/requisitos/resolver/requisito-resolver';
@@ -23,6 +24,8 @@ import { Fabricante } from './models/fabricante.model';
 import { FabricanteFormComponent } from './components/genero copy/fabricante-form/fabricante-form.component';
 import { FabricanteListComponent } from './components/genero copy/fabricante-list/fabricante-list.component';
 import { fabricanteResolver } from './components/genero copy/resolver/fabricante-resolver';
+import { userResolver } from './components/user/resolver/user-resolver';
+
 
 export const routes: Routes = [
   {
@@ -112,5 +115,11 @@ export const routes: Routes = [
     path: 'usuarios/cadastro',
     component: UserFormComponent,
     title: 'Cadastro de Usuário',
+  },
+
+  {
+    path: 'usuarios/edit/:id',
+    component: UserFormComponent,
+    resolve: { user: userResolver },
   },
 ];
