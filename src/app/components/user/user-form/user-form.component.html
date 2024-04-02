@@ -90,11 +90,7 @@
               }
             </mat-error>
           </mat-form-field>
-          <mat-form-field
-            id="perfilform"
-            appearance="fill"
-            class="full-width -input"
-          >
+          <mat-form-field appearance="fill" class="full-width -input">
             <mat-label>CPF</mat-label>
             <input matInput type="text" formControlName="cpf" />
             <mat-error
@@ -109,45 +105,30 @@
               }
             </mat-error>
           </mat-form-field>
-          <mat-form-field
-            id="perfilform"
-            appearance="fill"
-            class="full-width -input"
-          >
-            <mat-label>DDD </mat-label>
-            <input matInput type="text" formControlName="ddd" />
-            <mat-error
-              *ngIf="
-                formGroup.get('ddd')?.errors && formGroup.get('ddd')?.touched
-              "
+
+          <div formArrayName="listaTelefone">
+            <div
+              *ngFor="let telefone of listaTelefone.controls; let i = index"
+              [formGroupName]="i"
             >
-              @if(formGroup.get('ddd')?.errors?.['required']) {
-              <span>O ddd deve ser informado.</span>
-              } @if(formGroup.get('ddd')?.hasError('apiError')) {
-              <span>{{ formGroup.get("ddd")?.getError("apiError") }}</span>
-              }
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field
-            id="perfilform"
-            appearance="fill"
-            class="full-width -input"
-          >
-            <mat-label>Telefone</mat-label>
-            <input matInput type="text" formControlName="telefone" />
-            <mat-error
-              *ngIf="
-                formGroup.get('telefone')?.errors &&
-                formGroup.get('telefone')?.touched
-              "
-            >
-              @if(formGroup.get('telefone')?.errors?.['required']) {
-              <span>O telefone deve ser informado.</span>
-              } @if(formGroup.get('telefone')?.hasError('apiError')) {
-              <span>{{ formGroup.get("telefone")?.getError("apiError") }}</span>
-              }
-            </mat-error>
-          </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                class="full-width -input"
+                style="width: 50%"
+              >
+                <mat-label>DDD</mat-label>
+                <input matInput formControlName="codigoArea" />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="numero" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <button mat-raised-button color="primary" (click)="addTelefone()">
+            Add telefone
+          </button>
         </form>
       </mat-card-content>
       <mat-card-actions>

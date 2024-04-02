@@ -7,5 +7,5 @@ export class User {
   senha!: string;
   email!: string;
   cpf!: string;
-  telefones!: Telefone[];
+  listaTelefone!: Telefone[];
 }

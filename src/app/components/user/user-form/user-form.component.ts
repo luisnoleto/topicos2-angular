@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import {
+  FormArray,
+  FormArrayName,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,10 +17,14 @@ import { MatCardModule } from '@angular/material/card';
 import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormControlName } from '@angular/forms';
+import { Telefone } from '../../../models/telefone.model';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
+  // ...
+
   imports: [
     NgIf,
     ReactiveFormsModule,
@@ -26,6 +33,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatButtonModule,
     MatCardModule,
     RouterModule,
+    CommonModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css',
@@ -51,22 +59,29 @@ export class UserFormComponent {
       ],
       email: [user && user.email ? user.email : '', Validators.required],
       cpf: [user && user.cpf ? user.cpf : '', Validators.required],
-      telefones: formBuilder.array(
-        user && user.telefones
-          ? user.telefones.map((telefone) =>
-              formBuilder.group({
-                ddd: [telefone.codigoArea, Validators.required],
-                numero: [telefone.numero, Validators.required],
-              })
-            )
+      listaTelefone: this.formBuilder.array(
+        user && user.listaTelefone
+          ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
           : []
       ),
     });
   }
+
+  get listaTelefone() {
+    return this.formGroup.get('listaTelefone') as FormArray;
+  }
+
+  addTelefone() {
+    this.listaTelefone.push(
+      this.formBuilder.group({ codigoArea: '', numero: '' })
+    );
+  }
+
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const user = this.formGroup.value;
+      console.log(user.lista);
 
       const operacao =
         user.id == null
@@ -116,4 +131,11 @@ export class UserFormComponent {
       }
     }
   }
+}
+function addTelefone() {
+  throw new Error('Function not implemented.');
+}
+
+function telefones() {
+  throw new Error('Function not implemented.');
 }
