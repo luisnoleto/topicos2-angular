@@ -4,6 +4,7 @@
     flex-shrink: 0;
     background: #151517;
     align-self: center;
+    display: table;
     margin-top: 60px;
     margin-bottom: auto;
     margin-left: auto;
@@ -85,4 +86,19 @@ button[mat-raised-button]:not(:last-child) {
 #emailform{
     display: inline;
     width: 30%;
+}
+
+#cpfform{
+    width: 40%;
+}
+
+#dataform{
+    width: 40%;
+    margin-left: 193px;
+}
+
+#numeroform{
+    margin-left: 50px;
+    display: inline-flex;
+    
 }

@@ -90,7 +90,11 @@
               }
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="full-width -input">
+          <mat-form-field
+            id="cpfform"
+            appearance="fill"
+            class="full-width -input"
+          >
             <mat-label>CPF</mat-label>
             <input matInput type="text" formControlName="cpf" />
             <mat-error
@@ -105,21 +109,58 @@
               }
             </mat-error>
           </mat-form-field>
-
+          <mat-form-field
+            id="dataform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Data de Nascimento</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dataNascimento"
+            />
+            <mat-hint>DD/MM/AAAA</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="
+                formGroup.get('dataNascimento')?.errors &&
+                formGroup.get('dataNascimento')?.touched
+              "
+            >
+              @if (formGroup.get('dataNascimento')?.errors?.['required']) {
+              <span>A data de nascimento deve ser informada.</span>
+              } @if (formGroup.get('dataNascimento')?.hasError('apiError')) {
+              <span>{{
+                formGroup.get("dataNascimento")?.getError("apiError")
+              }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
           <div formArrayName="listaTelefone">
             <div
               *ngFor="let telefone of listaTelefone.controls; let i = index"
               [formGroupName]="i"
             >
               <mat-form-field
+                id="dddform"
                 appearance="fill"
                 class="full-width -input"
-                style="width: 50%"
+                style="width: 10%"
               >
                 <mat-label>DDD</mat-label>
                 <input matInput formControlName="codigoArea" />
               </mat-form-field>
-              <mat-form-field appearance="fill" class="full-width-input">
+              <mat-form-field
+                id="numeroform"
+                appearance="fill"
+                class="full-width-input"
+                style="width: 25%"
+              >
                 <mat-label>Número</mat-label>
                 <input matInput formControlName="numero" />
               </mat-form-field>
@@ -127,7 +168,15 @@
           </div>
 
           <button mat-raised-button color="primary" (click)="addTelefone()">
-            Add telefone
+            Adicionar Telefone
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="listaTelefone.controls.length > 0"
+            (click)="removeTelefone()"
+          >
+            Excluir Telefone
           </button>
         </form>
       </mat-card-content>

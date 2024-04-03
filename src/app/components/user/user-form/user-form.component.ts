@@ -18,11 +18,21 @@ import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControlName } from '@angular/forms';
-import { Telefone } from '../../../models/telefone.model';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS,
+} from '@angular/material/core';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+  ],
   // ...
 
   imports: [
@@ -34,6 +44,7 @@ import { Telefone } from '../../../models/telefone.model';
     MatCardModule,
     RouterModule,
     CommonModule,
+    MatDatepickerModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css',
@@ -59,6 +70,10 @@ export class UserFormComponent {
       ],
       email: [user && user.email ? user.email : '', Validators.required],
       cpf: [user && user.cpf ? user.cpf : '', Validators.required],
+      dataNascimento: [
+        user && user.dataNascimento ? user.dataNascimento : '',
+        Validators.required,
+      ],
       listaTelefone: this.formBuilder.array(
         user && user.listaTelefone
           ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
@@ -75,6 +90,12 @@ export class UserFormComponent {
     this.listaTelefone.push(
       this.formBuilder.group({ codigoArea: '', numero: '' })
     );
+  }
+
+  removeTelefone() {
+    if (this.listaTelefone.controls.length > 0) {
+      this.listaTelefone.removeAt(this.listaTelefone.controls.length - 1);
+    }
   }
 
   salvar() {
