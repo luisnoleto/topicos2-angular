@@ -22,6 +22,12 @@ import { generoResolver } from './components/genero/resolver/genero-resolver';
 import { FabricanteListComponent } from './components/fabricante/fabricante-list/fabricante-list.component';
 import { FabricanteFormComponent } from './components/fabricante/fabricante-form/fabricante-form.component';
 import { fabricanteResolver } from './components/fabricante/resolver/fabricante-resolver';
+import { PaisListComponent } from './components/pais/pais-list/pais-list.component';
+import { PaisFormComponent } from './components/pais/pais-form/pais-form.component';
+import { paisResolver } from './components/pais/resolver/pais-resolver';
+import { DesenvolvedoraListComponent } from './components/desenvolvedora/desenvolvedora-list/desenvolvedora-list.component';
+import { DesenvolvedoraFormComponent } from './components/desenvolvedora/desenvolvedora-form/desenvolvedora-form.component';
+import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/desenvolvedora-resolver';
 
 export const routes: Routes = [
   {
@@ -127,5 +133,33 @@ export const routes: Routes = [
     path: 'usuarios/edit/:id',
     component: UserFormComponent,
     resolve: { user: userResolver },
+  },
+
+  {
+    path: 'pais',
+    component: PaisListComponent,
+    title: 'Lista de Paises',
+  },
+  { path: 'pais/cadastro', component: PaisFormComponent, title: 'Novo Pais' },
+  {
+    path: 'pais/edit/:id',
+    component: PaisFormComponent,
+    resolve: { pais: paisResolver },
+  },
+
+  {
+    path: 'desenvolvedora',
+    component: DesenvolvedoraListComponent,
+    title: 'Lista de Desenvolvedoras',
+  },
+  {
+    path: 'desenvolvedora/cadastro',
+    component: DesenvolvedoraFormComponent,
+    title: 'Nova Desenvolvedora',
+  },
+  {
+    path: 'desenvolvedora/edit/:id',
+    component: DesenvolvedoraFormComponent,
+    resolve: { desenvolvedora: desenvolvedoraResolver },
   },
 ];
