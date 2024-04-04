@@ -64,7 +64,7 @@ export class FabricanteFormComponent {
           : this.fabricanteService.update(fabricante);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/fabricante'),
+        next: () => this.router.navigateByUrl('/plataforma-fabricante'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);

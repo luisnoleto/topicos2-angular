@@ -86,7 +86,7 @@ export class PlataformaFormComponent {
           : this.plataformaService.update(plataforma);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/dev-fabricante'),
+        next: () => this.router.navigateByUrl('/plataforma-fabricante'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
