@@ -1,6 +1,6 @@
 .fundoGerenciar{
-    width: 800px;
-    height: 650px;
+    width: 1197px;
+    height: 1000px;
     flex-shrink: 0;
     background: #151517;
     align-self: center;
@@ -38,8 +38,8 @@
 
 .table {
     width: 90%;
-    margin-left: 40px;
-    margin-bottom: 40px
+    margin-left: 60px;
+    margin-bottom: 60px;
 }
 
 
@@ -50,4 +50,36 @@
 .full-width-input {
     width: 100%;
     margin-bottom: 20px;
+}
+
+mat-card {
+    max-width: 1000px;
+    margin: auto;
+    background-color: #424242;
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-container {
+    padding: 2rem; 
+}
+
+button[mat-raised-button] {
+    width: 120px;
+}
+
+button[mat-raised-button]:not(:last-child) {
+    margin-right: 1rem;
+}
+
+#cnpjform{
+    width: 35%;
+    margin-right: 417px;
+}
+
+#paisform{
+    display: flex;
 }

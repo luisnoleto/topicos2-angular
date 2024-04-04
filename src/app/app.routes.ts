@@ -29,6 +29,10 @@ import { DesenvolvedoraListComponent } from './components/desenvolvedora/desenvo
 import { DesenvolvedoraFormComponent } from './components/desenvolvedora/desenvolvedora-form/desenvolvedora-form.component';
 import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/desenvolvedora-resolver';
 import { DevPaisComponent } from './components/dev-pais/dev-pais.component';
+import { PlataformaListComponent } from './components/plataforma/plataforma-list/plataforma-list.component';
+import { PlataformaFormComponent } from './components/plataforma/plataforma-form/plataforma-form.component';
+import { plataformaResolver } from './components/plataforma/resolver/plataforma-resolver';
+import { PlataformaFabricanteComponent } from './components/plataforma-fabricante/plataforma-fabricante.component';
 export const routes: Routes = [
   {
     path: 'estados',
@@ -92,17 +96,17 @@ export const routes: Routes = [
   // Fabricante
 
   {
-    path: 'fabricantes',
+    path: 'fabricante',
     component: FabricanteListComponent,
     title: 'Lista de Fabricantes',
   },
   {
-    path: 'fabricantes/new',
+    path: 'fabricante/cadastro',
     component: FabricanteFormComponent,
     title: 'Novo Fabricante',
   },
   {
-    path: 'fabricantes/edit/:id',
+    path: 'fabricante/edit/:id',
     component: FabricanteFormComponent,
     resolve: { fabricante: fabricanteResolver },
   },
@@ -167,5 +171,27 @@ export const routes: Routes = [
     path: 'dev-pais',
     component: DevPaisComponent,
     title: 'DevPais',
+  },
+
+  {
+    path: 'plataforma',
+    component: PlataformaListComponent,
+    title: 'Lista de Plataformas',
+  },
+  {
+    path: 'plataforma/cadastro',
+    component: PlataformaFormComponent,
+    title: 'Nova Plataforma',
+  },
+  {
+    path: 'plataforma/edit/:id',
+    component: PlataformaFormComponent,
+    resolve: { plataforma: plataformaResolver },
+  },
+
+  {
+    path: 'plataforma-fabricante',
+    component: PlataformaFabricanteComponent,
+    title: 'Plataforma Fabricante',
   },
 ];

@@ -1,9 +1,9 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Fabricantes - Cadastro e Edição</h1>
+    <h1 class="tituloGerenciar">Gerenciar Plataformas - Cadastro e Edição</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/fabricante">
-        Lista de Fabricantes
+      <button mat-raised-button color="primary" routerLink="/dev-fabricante">
+        Lista de Plataformas
       </button>
     </div>
   </div>
@@ -26,6 +26,16 @@
               }
             </mat-error>
           </mat-form-field>
+          <mat-form-field id="fabricanteForm">
+            <mat-label>Fabricante</mat-label>
+            <mat-select formControlName="fabricante">
+              <mat-option
+                *ngFor="let fabricante of fabricantes"
+                [value]="fabricante.id"
+                >{{ fabricante.nome }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
@@ -41,7 +51,7 @@
         >
           Excluir
         </button>
-        <button mat-raised-button routerLink="/fabricante">Cancelar</button>
+        <button mat-raised-button routerLink="/dev-fabricante">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>
