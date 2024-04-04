@@ -28,7 +28,7 @@ import { paisResolver } from './components/pais/resolver/pais-resolver';
 import { DesenvolvedoraListComponent } from './components/desenvolvedora/desenvolvedora-list/desenvolvedora-list.component';
 import { DesenvolvedoraFormComponent } from './components/desenvolvedora/desenvolvedora-form/desenvolvedora-form.component';
 import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/desenvolvedora-resolver';
-
+import { DevPaisComponent } from './components/dev-pais/dev-pais.component';
 export const routes: Routes = [
   {
     path: 'estados',
@@ -161,5 +161,11 @@ export const routes: Routes = [
     path: 'desenvolvedora/edit/:id',
     component: DesenvolvedoraFormComponent,
     resolve: { desenvolvedora: desenvolvedoraResolver },
+  },
+
+  {
+    path: 'dev-pais',
+    component: DevPaisComponent,
+    title: 'DevPais',
   },
 ];

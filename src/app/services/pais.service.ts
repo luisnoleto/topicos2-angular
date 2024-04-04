@@ -20,7 +20,7 @@ export class PaisService {
   }
 
   insert(pais: Pais): Observable<Pais> {
-    return this.httpClient.post<Pais>(this.baseUrl, pais);
+    return this.httpClient.post<Pais>(`${this.baseUrl}/cadastro`, pais);
   }
 
   update(pais: Pais): Observable<Pais> {

@@ -91,7 +91,7 @@ export class DesenvolvedoraFormComponent {
           : this.desenvolvedoraService.update(desenvolvedora);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/desenvolvedora'),
+        next: () => this.router.navigateByUrl('/dev-pais'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -124,7 +124,7 @@ export class DesenvolvedoraFormComponent {
       if (desenvolvedora.id != null) {
         this.desenvolvedoraService.delete(desenvolvedora).subscribe({
           next: () => {
-            this.router.navigateByUrl('/desenvolvedora');
+            this.router.navigateByUrl('/dev-pais');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
