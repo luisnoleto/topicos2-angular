@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +15,11 @@ import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Jogo } from '../../../models/jogo.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Genero } from '../../../models/genero.model';
+import { Plataforma } from '../../../models/plataforma.model';
+import { Desenvolvedora } from '../../../models/desenvolvedora.model';
+import { RequisitoService } from '../../../services/requisito.service';
 
 @Component({
   selector: 'app-jogo-form',
@@ -33,52 +39,57 @@ import { Jogo } from '../../../models/jogo.model';
 })
 export class JogoFormComponent {
   formGroup: FormGroup;
+  generos: Genero[] = [];
+  plataformas: Plataforma[] = [];
+  desenvolvedoras: Desenvolvedora[] = [];
+  classificacoes: string[] = ['Livre', '10 anos', '12 anos', '14 anos', '16 anos', '18 anos'];
 
   constructor(
     private formBuilder: FormBuilder,
     private jogoService: JogoService,
+    private requisitoService: RequisitoService,
+    // private desenvolvedoraService: DesenvolvedoraService,
+    // private generoService: GeneroService,
+    // private plataformaService: PlataformaService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+
+    
     const jogo: Jogo = activatedRoute.snapshot.data['jogo'];
 
     this.formGroup = formBuilder.group({
       id: [jogo && jogo.id ? jogo.id : null],
       nome: [jogo && jogo.nome ? jogo.nome : '', Validators.required],
-      descricao: [
-        jogo && jogo.descricao ? jogo.descricao : '',
-        Validators.required,
-      ],
+      descricao: [jogo && jogo.descricao ? jogo.descricao : '', Validators.required],
       preco: [jogo && jogo.preco ? jogo.preco : '', Validators.required],
-      estoque: [jogo && jogo.estoque ? jogo.estoque : '', Validators.required],
-      genero: [jogo && jogo.genero ? jogo.genero : '', Validators.required],
+      genero: [Genero],
+      plataforma: [jogo && jogo.plataforma ? jogo.plataforma : '', Validators.required],
+      requisitos: [jogo && jogo.requisitos ? jogo.requisitos : '', Validators.required],
+      desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora : '', Validators.required],
+      classificacao: [jogo && jogo.classificacao ? jogo.classificacao : '', Validators.required],      
     });
   }
 
   salvar() {
+    this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const jogo = this.formGroup.value;
-      if (jogo.id == null) {
-        this.jogoService.insert(jogo).subscribe({
-          next: (jogoCadastrado) => {
-            this.router.navigateByUrl('/jogos');
-          },
-          error: (err) => {
-            console.log('Erro ao Incluir' + JSON.stringify(err));
-          },
-        });
-      } else {
-        this.jogoService.update(jogo).subscribe({
-          next: (jogoAlterado) => {
-            this.router.navigateByUrl('/jogos');
-          },
-          error: (err) => {
-            console.log('Erro ao Editar' + JSON.stringify(err));
-          },
-        });
-      }
+      
+      const operacao = jogo.id == null 
+      ? this.jogoService.insert(jogo) 
+      : this.jogoService.update(jogo);
+
+      operacao.subscribe({
+        next: () => this.router.navigateByUrl('/jogos'),
+        error: (error: HttpErrorResponse) => {
+          console.log('Erro ao Salvar' + JSON.stringify(error));
+          this.tratarErros(error);
+        },
+      });
     }
   }
+    
 
   excluir() {
     if (this.formGroup.valid) {
@@ -95,4 +106,55 @@ export class JogoFormComponent {
       }
     }
   }
-}
+
+  
+  tratarErros(error: HttpErrorResponse){
+    if(error.status == 400){
+      if(error.error?.errors){
+        error.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.field);
+          console.log(validationError);
+          if(formControl){
+            console.log(formControl);
+            formControl.setErrors({ apiError: validationError.message});
+          }
+        });
+      };
+    } else if(error.status < 400) {
+      alert(error.error?.message || 'Erro generico no envio do formulario.');
+    } else if(error.status >= 500){
+      alert('Erro interno do Servidor. Por favor, tente novamente mais tarde.');
+    }
+  }
+
+
+  // errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+
+  //   nome: {
+  //     required: 'O nome deve ser informado.',
+  //     minlength: 'O nome deve conter ao menos 4 caracteres'
+  //   },
+  //   sigla: {
+  //     required: 'A sigla deve ser informada.',
+  //     minlength: 'A sigla deve possuir exatos 2 caracteres.',
+  //     maxlength: 'A sigla deve possuir exatos 2 caracteres.',
+  //     apiError: ''
+  //   }
+  // }
+
+  // getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+  //   if (!errors) {
+  //     return '';
+  //   }
+
+  //   for (const errorName in errors) {
+  //     if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+  //       return this.errorMessages[controlName][errorName];
+  //     }
+  //   }
+  //   return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  // }
+
+
+} 
+

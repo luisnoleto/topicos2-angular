@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './estado-list.component.css'
 })
 export class EstadoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'sigla', 'acao'];
+  displayedColumns: string[] = ['id', 'nome', 'acao'];
   estados: Estado[] = [];
 
   constructor(private estadoService: EstadoService) {

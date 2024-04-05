@@ -17,9 +17,9 @@ import { RouterModule } from '@angular/router';
     MatButton,
     MatFormField,
     MatMenuModule,
-    RouterModule,
+    RouterModule
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
 })
-export class ToolbarComponent {}
+export class ToolbarComponent { }

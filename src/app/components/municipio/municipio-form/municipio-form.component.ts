@@ -12,13 +12,14 @@ import { Estado } from '../../../models/estado.model';
 import { Municipio } from '../../../models/municipio.model';
 import { EstadoService } from '../../../services/estado.service';
 import { MunicipioService } from '../../../services/municipio.service';
+import { ToolbarComponent } from '../../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-municipio-form',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule,
     MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, 
-    RouterModule, MatSelectModule],
+    RouterModule, MatSelectModule, ToolbarComponent],
   templateUrl: './municipio-form.component.html',
   styleUrl: './municipio-form.component.css'
 })
