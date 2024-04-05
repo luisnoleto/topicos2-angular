@@ -1,12 +1,12 @@
-<mat-toolbar color="primary">
-  <div class="flex-container">
-    <span class="toolbar-title">Controle de Jogos</span>
-    <button mat-fab color="accent" routerLink="/jogos/new">
-      <mat-icon>add</mat-icon>
-    </button>
+<div class="fundoGerenciar">
+  <div class="gerenciar">
+    <h1 class="tituloGerenciar">Gerenciar Usuários</h1>
+    <div class="cadastroDiv">
+      <button mat-raised-button color="primary" routerLink="/usuarios/cadastro">
+        Cadastrar Usuário
+      </button>
+    </div>
   </div>
-</mat-toolbar>
-
 <table mat-table [dataSource]="jogos" class="mat-elevation-z8">
   <!-- Position Column -->
   <ng-container matColumnDef="id">
@@ -43,6 +43,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+</div>
 
 <mat-paginator>
   [pageSizeOptions] = "[5, 10, 15, 20]"

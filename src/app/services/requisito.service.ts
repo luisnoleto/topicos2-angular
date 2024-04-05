@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Requisito } from '../models/requisitos.model';
-import { Desempenho } from '../models/desempenho.model';
+
+import { DesempenhoDTO } from '../models/desempenhoDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,6 @@ export class RequisitoService {
 
   findAll(): Observable<Requisito[]> {
     return this.httpClient.get<Requisito[]>(this.baseUrl);
-  }
-
-  findByDesempenho(): Observable<Requisito[]> {
-    return this.httpClient.get<Requisito[]>(`${this.baseUrl}/desempenho/${Desempenho}`);
   }
 
   findById(id: string): Observable<Requisito> {
@@ -36,4 +33,7 @@ export class RequisitoService {
     return this.httpClient.delete<any>(`${this.baseUrl}/${Requisito.id}`);
   }
 
+  findAllPerfis(): Observable<DesempenhoDTO[]> {
+    return this.httpClient.get<DesempenhoDTO[]>(`${this.baseUrl}/desempenhos`);
+  }
 }

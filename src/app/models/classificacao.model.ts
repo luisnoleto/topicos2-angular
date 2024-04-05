@@ -1,4 +1,4 @@
-export record ClassificacaoDTO {
+export enum Classificacao {
     LIVRE = 'LIVRE',
     DEZ = 'DEZ',
     DOZE = 'DOZE',
@@ -10,3 +10,5 @@ export record ClassificacaoDTO {
 
 
   }
+
+  

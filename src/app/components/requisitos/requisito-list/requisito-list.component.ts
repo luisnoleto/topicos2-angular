@@ -19,7 +19,7 @@ import { GeneroService } from '../../../services/genero.service';
   styleUrl: './requisito-list.component.css'
 })
 export class RequisitoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'processador', ' sistemaOperacional', 'memoria', 'acao'];
+  displayedColumns: string[] = ['id', 'processador', 'sistemaOperacional', 'memoria', 'acao'];
   requisitos: Requisito[] = [];
 
 
@@ -34,6 +34,15 @@ export class RequisitoListComponent implements OnInit {
     })
   }
 
- 
+  excluir(requisito: Requisito) {
+    this.requisitoService.delete(requisito).subscribe({
+      next: () => {
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log('Erro ao Excluir' + JSON.stringify(err));
+      }
+    });
+  }
 
 }

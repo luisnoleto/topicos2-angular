@@ -1,4 +1,4 @@
-import { Desempenho } from "./desempenho.model";
+import { DesempenhoDTO } from "./desempenhoDTO.model";
 
 export class Requisito {
     id!: number;
@@ -7,6 +7,6 @@ export class Requisito {
     placaVideo!: string;
     sistemaOperacional!: string;
     armazenamento!: string;
-    desempenho!: Desempenho;
+    desempenho!: DesempenhoDTO;
   }
   
