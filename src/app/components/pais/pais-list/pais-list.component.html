@@ -1,18 +1,14 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Fabricantes</h1>
+    <h1 class="tituloGerenciar">Gerenciar Países</h1>
     <div class="cadastroDiv">
-      <button
-        mat-raised-button
-        color="primary"
-        routerLink="/fabricante/cadastro"
-      >
-        Cadastrar Fabricantes
+      <button mat-raised-button color="primary" routerLink="/pais/cadastro">
+        Cadastrar Países
       </button>
     </div>
   </div>
   <div class="table">
-    <table mat-table [dataSource]="fabricante" class="mat-elevation-z8">
+    <table mat-table [dataSource]="pais" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
         <td mat-cell *matCellDef="let element">{{ element.id }}</td>
@@ -34,16 +30,12 @@
           <button
             mat-icon-button
             color="primary"
-            [routerLink]="['/fabricante/edit', element.id]"
+            [routerLink]="['/pais/edit', element.id]"
           >
             <mat-icon>edit</mat-icon>
           </button>
 
-          <button
-            mat-icon-button
-            color="warn"
-            (click)="deleteFabricante(element)"
-          >
+          <button mat-icon-button color="warn" (click)="deletePais(element)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

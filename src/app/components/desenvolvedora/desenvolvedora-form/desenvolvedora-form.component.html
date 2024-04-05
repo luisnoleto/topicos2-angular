@@ -1,13 +1,11 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Fabricantes - Cadastro e Edição</h1>
+    <h1 class="tituloGerenciar">
+      Gerenciar Desenvolvedoras - Cadastro e Edição
+    </h1>
     <div class="cadastroDiv">
-      <button
-        mat-raised-button
-        color="primary"
-        routerLink="/plataforma-fabricante"
-      >
-        Lista de Fabricantes
+      <button mat-raised-button color="primary" routerLink="/dev-pais">
+        Lista de Desenvolvedoras
       </button>
     </div>
   </div>
@@ -30,6 +28,33 @@
               }
             </mat-error>
           </mat-form-field>
+          <mat-form-field
+            id="cnpjform"
+            appearance="fill"
+            class="full-width-input"
+          >
+            <mat-label>CNPJ</mat-label>
+            <input matInput type="text" formControlName="cnpj" />
+            <mat-error
+              *ngIf="
+                formGroup.get('cnpj')?.errors && formGroup.get('cnpj')?.touched
+              "
+            >
+              @if (formGroup.get('cnpj')?.errors?.['required']) {
+              <span>O cnpj deve ser informado.</span>
+              } @if (formGroup.get('cnpj')?.hasError('apiError')) {
+              <span>{{ formGroup.get("cnpj")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field id="paisForm">
+            <mat-label>País de Origem</mat-label>
+            <mat-select formControlName="pais">
+              <mat-option *ngFor="let pais of paises" [value]="pais.id">{{
+                pais.nome
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
@@ -45,9 +70,7 @@
         >
           Excluir
         </button>
-        <button mat-raised-button routerLink="/plataforma-fabricante">
-          Cancelar
-        </button>
+        <button mat-raised-button routerLink="/dev-pais">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>

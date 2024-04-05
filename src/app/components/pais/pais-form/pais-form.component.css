@@ -75,30 +75,7 @@ button[mat-raised-button]:not(:last-child) {
     margin-right: 1rem;
 }
 
-#loginform{
-    width: 40%;
-}
-#senhaform{
-    width: 40%;
-    margin-left: 193px;
-}
-
-#emailform{
-    display: inline;
-    width: 30%;
-}
-
-#cpfform{
-    width: 40%;
-}
-
-#dataform{
-    width: 40%;
-    margin-left: 193px;
-}
-
-#numeroform{
-    margin-left: 50px;
-    display: inline-flex;
-    
+#siglaform{
+    width: 35%;
+    margin-right: 417px;
 }

@@ -1,13 +1,9 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Fabricantes - Cadastro e Edição</h1>
+    <h1 class="tituloGerenciar">Gerenciar Países - Cadastro e Edição</h1>
     <div class="cadastroDiv">
-      <button
-        mat-raised-button
-        color="primary"
-        routerLink="/plataforma-fabricante"
-      >
-        Lista de Fabricantes
+      <button mat-raised-button color="primary" routerLink="/dev-pais">
+        Lista de Países
       </button>
     </div>
   </div>
@@ -30,6 +26,26 @@
               }
             </mat-error>
           </mat-form-field>
+          <mat-form-field
+            id="siglaform"
+            appearance="fill"
+            class="full-width-input"
+          >
+            <mat-label>Sigla</mat-label>
+            <input matInput type="text" formControlName="sigla" />
+            <mat-error
+              *ngIf="
+                formGroup.get('sigla')?.errors &&
+                formGroup.get('sigla')?.touched
+              "
+            >
+              @if (formGroup.get('sigla')?.errors?.['required']) {
+              <span>O sigla deve ser informado.</span>
+              } @if (formGroup.get('sigla')?.hasError('apiError')) {
+              <span>{{ formGroup.get("sigla")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
@@ -45,9 +61,7 @@
         >
           Excluir
         </button>
-        <button mat-raised-button routerLink="/plataforma-fabricante">
-          Cancelar
-        </button>
+        <button mat-raised-button routerLink="/dev-pais">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>

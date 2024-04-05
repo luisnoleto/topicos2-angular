@@ -1,28 +1,53 @@
-.toolbar-title {
-  flex: 1;
-  text-align: center;
+.fundoGerenciar{
+  width: 800px;
+  height: 650px;
+  flex-shrink: 0;
+  background: #151517;
+  align-self: center;
+  display: table;
+  margin-top: 60px;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-.flex-container {
+.gerenciar{
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: space-between;
 }
 
-.mat-column-id {
-  width: 5em;
-  border-right: 1px solid currentColor;
-  padding-right: 24px;
-  text-align: center;
+.tituloGerenciar {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 200px;
+  color: #FFFFFF;
+  margin-top: 20px;
+  margin-left: 60px;
+  
 }
-.mat-column-nome {
+
+.cadastroDiv{
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  margin-right: 60px;
+
+}
+
+.table {
+  width: 90%;
+  margin-left: 40px;
+  margin-bottom: 40px
+}
+
+
+.mat-elevation-z8 th, td {
+  color: #FFFFFF;
+}
+
+.full-width-input {
   width: 100%;
-}
-.mat-column-sigla {
-  text-align: center;
-  min-width: 5em;
-}
-.mat-column-acao {
-  text-align: center;
-  min-width: 10em;
+  margin-bottom: 20px;
 }

@@ -9,16 +9,16 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { PaisService } from '../../../services/pais.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Fabricante } from '../../../models/fabricante.model';
+import { Pais } from '../../../models/pais.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FabricanteService } from '../../../services/fabricante.service';
 
 @Component({
-  selector: 'app-fabricante-form',
+  selector: 'app-pais-form',
   standalone: true,
   imports: [
     NgIf,
@@ -30,25 +30,29 @@ import { FabricanteService } from '../../../services/fabricante.service';
     MatToolbarModule,
     RouterModule,
   ],
-  templateUrl: './fabricante-form.component.html',
-  styleUrl: './fabricante-form.component.css',
+  templateUrl: './pais-form.component.html',
+  styleUrl: './pais-form.component.css',
 })
-export class FabricanteFormComponent {
+export class PaisFormComponent {
   formGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private fabricanteService: FabricanteService,
+    private paisService: PaisService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    const fabricante: Fabricante = activatedRoute.snapshot.data['fabricante'];
+    const pais: Pais = activatedRoute.snapshot.data['pais'];
 
     this.formGroup = formBuilder.group({
-      id: [fabricante && fabricante.id ? fabricante.id : null],
+      id: [pais && pais.id ? pais.id : null],
       nome: [
-        fabricante && fabricante.nome ? fabricante.nome : '',
-        Validators.compose([Validators.required]),
+        pais && pais.nome ? pais.nome : '',
+        Validators.compose([Validators.required, Validators.minLength(4)]),
+      ],
+      sigla: [
+        pais && pais.sigla ? pais.sigla : '',
+        Validators.compose([Validators.required, Validators.minLength(2)]),
       ],
     });
   }
@@ -56,30 +60,48 @@ export class FabricanteFormComponent {
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const fabricante = this.formGroup.value;
+      const pais = this.formGroup.value;
 
       const operacao =
-        fabricante.id == null
-          ? this.fabricanteService.insert(fabricante)
-          : this.fabricanteService.update(fabricante);
+        pais.id == null
+          ? this.paisService.insert(pais)
+          : this.paisService.update(pais);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/plataforma-fabricante'),
+        next: () => this.router.navigateByUrl('/dev-pais'),
         error: (error: HttpErrorResponse) => {
-          console.log('Erro ao Salvar' + JSON.stringify(error));
+          console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
         },
       });
     }
   }
 
+  tratarErros(error: HttpErrorResponse) {
+    if (error.status === 400) {
+      if (error.error?.errors) {
+        error.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.fildName);
+          if (formControl) {
+            console.log(formControl);
+            formControl.setErrors({ apiError: validationError.message });
+          }
+        });
+      }
+    } else if (error.status < 500) {
+      alert(error.error?.message || 'Erro generico no enio do formulario');
+    } else if (error.status >= 500) {
+      alert('Erro interno do servidor. Por favor, tente novamente mais tarde.');
+    }
+  }
+
   excluir() {
     if (this.formGroup.valid) {
-      const fabricante = this.formGroup.value;
-      if (fabricante.id != null) {
-        this.fabricanteService.delete(fabricante).subscribe({
+      const pais = this.formGroup.value;
+      if (pais.id != null) {
+        this.paisService.delete(pais).subscribe({
           next: () => {
-            this.router.navigateByUrl('/fabricante');
+            this.router.navigateByUrl('/dev-pais');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -89,29 +111,15 @@ export class FabricanteFormComponent {
     }
   }
 
-  tratarErros(error: HttpErrorResponse) {
-    if (error.status == 400) {
-      if (error.error?.errors) {
-        error.error.errors.forEach((validationError: any) => {
-          const formControl = this.formGroup.get(validationError.field);
-          console.log(validationError);
-          if (formControl) {
-            console.log(formControl);
-            formControl.setErrors({ apiError: validationError.message });
-          }
-        });
-      }
-    } else if (error.status < 400) {
-      alert(error.error?.message || 'Erro generico no envio do formulario.');
-    } else if (error.status >= 500) {
-      alert('Erro interno do Servidor. Por favor, tente novamente mais tarde.');
-    }
-  }
-
   errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
     nome: {
       required: 'O nome deve ser informado.',
-      minlength: 'O nome deve ter no mínimo 6 caracteres.',
+      minlength: 'O nome deve conter ao menos 4 caracteres',
+    },
+    sigla: {
+      required: 'A sigla deve ser informada.',
+      minlength: 'A sigla deve possuir no minímo 2 caracteres.',
+      apiError: '',
     },
   };
 
