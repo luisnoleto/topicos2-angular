@@ -1,19 +1,5 @@
-<div class="fundoGerenciar">
-  <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Fabricantes</h1>
-    <div class="cadastroDiv">
-      <button
-        mat-raised-button
-        color="primary"
-        routerLink="/fabricante/cadastro"
-      >
-        Cadastrar Fabricantes
-      </button>
-    </div>
-  </div>
-</mat-toolbar>
 
-<table mat-table [dataSource]="fabricantes" class="mat-elevation-z8">
+<table mat-table [dataSource]="fabricante" class="mat-elevation-z8">
 
     <!-- Position Column -->
     <ng-container matColumnDef="id">
@@ -38,7 +24,7 @@
         </button>
         <button mat-icon-button 
                 color="warn"
-                (click)="excluir(element)">
+                (click)="deleteFabricante(element)">
                 <mat-icon>delete</mat-icon>
         </button>        
       </td>

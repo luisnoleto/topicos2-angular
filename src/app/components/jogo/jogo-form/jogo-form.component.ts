@@ -24,6 +24,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { GeneroService } from '../../../services/genero.service';
 import { Fabricante } from '../../../models/fabricante.model';
 import { FabricanteService } from '../../../services/fabricante.service';
+import { DesenvolvedoraService } from '../../../services/desenvolvedora.service';
+import { PlataformaService } from '../../../services/plataforma.service';
+import { Requisito } from '../../../models/requisitos.model';
 
 
 
@@ -48,6 +51,8 @@ export class JogoFormComponent {
   formGroup: FormGroup;
   generos: Genero[] = [];
   plataformas: Plataforma[] = [];
+  desenvolvedoras: Desenvolvedora[] = [];
+  requisitos: Requisito[] = [];
   classificacoes: string[] = ['Livre', '10 anos', '12 anos', '14 anos', '16 anos', '18 anos'];
 
 
@@ -56,9 +61,9 @@ export class JogoFormComponent {
     private formBuilder: FormBuilder,
     private jogoService: JogoService,
     private requisitoService: RequisitoService,
-    //private desenvolvedoraService: DesenvolvedoraService,
+    private desenvolvedoraService: DesenvolvedoraService,
     private generoService: GeneroService,
-    // private plataformaService: PlataformaService,
+    private plataformaService: PlataformaService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -70,7 +75,7 @@ export class JogoFormComponent {
       preco: ['', Validators.required],
       genero: [null],
       fabricante: [null],
-      //requisito: [null],
+      requisito: [null],
 
     });
   }
@@ -79,6 +84,24 @@ export class JogoFormComponent {
         this.generos = data;
         this.initializeForm();
       });
+
+      this.plataformaService.findAll().subscribe(data => {
+        this.plataformas = data;
+        this.initializeForm();
+      });
+
+      this.desenvolvedoraService.findAll().subscribe(data => {
+        this.desenvolvedoras = data;
+        this.initializeForm();
+      });
+
+      this.requisitoService.findAll().subscribe(data => {
+        this.requisitos = data;
+        this.initializeForm();
+      });
+
+
+
     }
 
     initializeForm() {
@@ -88,15 +111,25 @@ export class JogoFormComponent {
       const genero = this.generos
         .find(genero => genero.id === (jogo?.genero?.id || null));
 
+      const plataforma = this.plataformas
+        .find(plataforma => plataforma.id === (jogo?.plataforma?.id || null));
+
+      const desenvolvedora = this.desenvolvedoras
+        .find(desenvolvedora => desenvolvedora.id === (jogo?.desenvolvedora?.id || null));
+      
+      const requisito = this.requisitos
+        .find(requisito => requisito.id === (jogo?.requisitos?.id || null));
+      
+
       this.formGroup = this.formBuilder.group({
         id: [jogo && jogo.id ? jogo.id : null],
         nome: [jogo && jogo.nome ? jogo.nome : '', Validators.required],
         descricao: [jogo && jogo.descricao ? jogo.descricao : '', Validators.required],
         preco: [jogo && jogo.preco ? jogo.preco : '', Validators.required],
         genero: [genero],
-        //plataforma: [jogo && jogo.plataforma ? jogo.plataforma : '', Validators.required],
-        //requisitos: [jogo && jogo.requisitos ? jogo.requisitos : '', Validators.required],
-        //desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora : '', Validators.required],
+        plataforma: [plataforma],
+        requisitos: [requisito],
+        desenvolvedora: [desenvolvedora],
         classificacao: [jogo && jogo.classificacao ? jogo.classificacao : '', Validators.required],
       });
     }

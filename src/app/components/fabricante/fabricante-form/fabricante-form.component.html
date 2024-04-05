@@ -13,44 +13,6 @@
   </div>
   <div class="form-container">
     <mat-card>
-<<<<<<< HEAD
-        <mat-card-content>
-            <form [formGroup]="formGroup">
-
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Nome</mat-label>
-                    <input matInput type="text" formControlName="nome">
-                    <mat-error *ngIf="formGroup.get('nome')?.errors && formGroup.get('nome')?.touched">   
-                        {{getErrorMessage('nome', formGroup.get('nome')?.errors)}} 
-                        
-                        @if (formGroup.get('nome')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('nome')?.getError('apiError')}}</span>
-                        }
-                    </mat-error>
-                </mat-form-field>
-
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button 
-                    color="primary" 
-                    (click)="salvar()">
-                Salvar 
-            </button>
-            <button mat-raised-button 
-                    *ngIf="formGroup?.get('id')?.value"
-                    color="warn" 
-                    (click)="excluir()"
-                    [disabled]="formGroup.invalid"> 
-                Excluir 
-            </button>
-            <button mat-raised-button  
-                    routerLink="/fabricantes"> 
-                Cancelar 
-            </button>
-
-        </mat-card-actions>
-=======
       <mat-card-content>
         <form [formGroup]="formGroup">
           <mat-form-field appearance="fill" class="full-width-input">
@@ -87,7 +49,6 @@
           Cancelar
         </button>
       </mat-card-actions>
->>>>>>> d13ffad904f2652e09eb294859aa4a2bd976cde5
     </mat-card>
   </div>
 </div>

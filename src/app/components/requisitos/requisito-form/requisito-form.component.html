@@ -10,13 +10,7 @@
                     <mat-error *ngIf="formGroup.get('processador')?.errors && formGroup.get('processador')?.touched">   
                         {{getErrorMessage('processador', formGroup.get('processador')?.errors)}}  
                         
-                        @if(formGroup.get('processador')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
-                        }
 
-                        @if (formGroup.get('processador')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('processador')?.getError('apiError')}}</span>
-                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -26,13 +20,6 @@
                     <mat-error *ngIf="formGroup.get('memoria')?.errors && formGroup.get('memoria')?.touched">   
                         {{getErrorMessage('memoria', formGroup.get('memoria')?.errors)}}  
                         
-                        @if(formGroup.get('memoria')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
-                        }
-
-                        @if (formGroup.get('memoria')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('memoria')?.getError('apiError')}}</span>
-                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -42,13 +29,6 @@
                     <mat-error *ngIf="formGroup.get('placaVideo')?.errors && formGroup.get('placaVideo')?.touched">   
                         {{getErrorMessage('placaVideo', formGroup.get('placaVideo')?.errors)}}  
                         
-                        @if(formGroup.get('placaVideo')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
-                        }
-
-                        @if (formGroup.get('placaVideo')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('placaVideo')?.getError('apiError')}}</span>
-                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -57,14 +37,7 @@
                     <input matInput type="text" formControlName="sistemaOperacional">
                     <mat-error *ngIf="formGroup.get('sistemaOperacional')?.errors && formGroup.get('sistemaOperacional')?.touched">   
                         {{getErrorMessage('sistemaOperacional', formGroup.get('sistemaOperacional')?.errors)}}  
-                        
-                        @if(formGroup.get('sistemaOperacional')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
-                        }
 
-                        @if (formGroup.get('sistemaOperacional')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('sistemaOperacional')?.getError('apiError')}}</span>
-                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -74,30 +47,18 @@
                     <mat-error *ngIf="formGroup.get('armazenamento')?.errors && formGroup.get('armazenamento')?.touched">   
                         {{getErrorMessage('armazenamento', formGroup.get('armazenamento')?.errors)}}  
                         
-                        @if(formGroup.get('armazenamento')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
-                        }
-
-                        @if (formGroup.get('armazenamento')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('armazenamento')?.getError('apiError')}}</span>
-                        }
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
+                <mat-form-field appearance="fill">
                     <mat-label>Desempenho</mat-label>
-                    <input matInput type="text" formControlName="desempenho">
-                    <mat-error *ngIf="formGroup.get('desempenho')?.errors && formGroup.get('desempenho')?.touched">   
-                        {{getErrorMessage('desempenho', formGroup.get('desempenho')?.errors)}}  
-                        
-                        @if(formGroup.get('desempenho')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
+                    <mat-select formControlName="desempenho">
+                        @for (desempenho of desempenhos; track desempenho) {
+                            <mat-option [value]="desempenho">
+                                {{desempenho}}
+                            </mat-option>
                         }
-
-                        @if (formGroup.get('desempenho')?.hasError('apiError')) {
-                            <span>{{ formGroup.get('desempenho')?.getError('apiError')}}</span>
-                        }
-                    </mat-error>
+                    </mat-select>
                 </mat-form-field>
 
             </form>
