@@ -1,3 +1,5 @@
+import { Telefone } from './telefone.model';
+
 export class User {
   id!: number;
   nome!: string;
@@ -5,4 +7,6 @@ export class User {
   senha!: string;
   email!: string;
   cpf!: string;
+  dataNascimento!: Date;
+  listaTelefone!: Telefone[];
 }

@@ -9,24 +9,30 @@ import { JogoListComponent } from './components/jogo/jogo-list/jogo-list.compone
 import { JogoFormComponent } from './components/jogo/jogo-form/jogo-form.component';
 import { jogoResolver } from './components/jogo/resolver/jogo-resolver';
 import { HomeComponent } from './components/home/home.component';
-
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
-
+import { userResolver } from './components/user/resolver/user-resolver';
 import { RequisitoListComponent } from './components/requisitos/requisito-list/requisito-list.component';
 import { RequisitoFormComponent } from './components/requisitos/requisito-form/requisito-form.component';
 import { requisitoResolver } from './components/requisitos/resolver/requisito-resolver';
 import { GeneroListComponent } from './components/genero/genero-list/genero-list.component';
 import { GeneroFormComponent } from './components/genero/genero-form/genero-form.component';
 import { generoResolver } from './components/genero/resolver/genero-resolver';
-import { Fabricante } from './models/fabricante.model';
-import { FabricanteFormComponent } from './components/genero copy/fabricante-form/fabricante-form.component';
-import { FabricanteListComponent } from './components/genero copy/fabricante-list/fabricante-list.component';
-import { fabricanteResolver } from './components/genero copy/resolver/fabricante-resolver';
-import { userResolver } from './components/user/resolver/user-resolver';
-
-
+import { FabricanteListComponent } from './components/fabricante/fabricante-list/fabricante-list.component';
+import { FabricanteFormComponent } from './components/fabricante/fabricante-form/fabricante-form.component';
+import { fabricanteResolver } from './components/fabricante/resolver/fabricante-resolver';
+import { PaisListComponent } from './components/pais/pais-list/pais-list.component';
+import { PaisFormComponent } from './components/pais/pais-form/pais-form.component';
+import { paisResolver } from './components/pais/resolver/pais-resolver';
+import { DesenvolvedoraListComponent } from './components/desenvolvedora/desenvolvedora-list/desenvolvedora-list.component';
+import { DesenvolvedoraFormComponent } from './components/desenvolvedora/desenvolvedora-form/desenvolvedora-form.component';
+import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/desenvolvedora-resolver';
+import { DevPaisComponent } from './components/dev-pais/dev-pais.component';
+import { PlataformaListComponent } from './components/plataforma/plataforma-list/plataforma-list.component';
+import { PlataformaFormComponent } from './components/plataforma/plataforma-form/plataforma-form.component';
+import { plataformaResolver } from './components/plataforma/resolver/plataforma-resolver';
+import { PlataformaFabricanteComponent } from './components/plataforma-fabricante/plataforma-fabricante.component';
 export const routes: Routes = [
   {
     path: 'estados',
@@ -63,7 +69,11 @@ export const routes: Routes = [
     component: RequisitoListComponent,
     title: 'Lista de requisitos',
   },
-  { path: 'requisitos/new', component: RequisitoFormComponent, title: 'Novos Requisitos' },
+  {
+    path: 'requisitos/new',
+    component: RequisitoFormComponent,
+    title: 'Novos Requisitos',
+  },
   {
     path: 'requisitos/edit/:id',
     component: RequisitoFormComponent,
@@ -86,13 +96,17 @@ export const routes: Routes = [
   // Fabricante
 
   {
-    path: 'fabricantes',
+    path: 'fabricante',
     component: FabricanteListComponent,
     title: 'Lista de Fabricantes',
   },
-  { path: 'fabricantes/new', component: FabricanteFormComponent, title: 'Novo Fabricante' },
   {
-    path: 'fabricantes/edit/:id',
+    path: 'fabricante/cadastro',
+    component: FabricanteFormComponent,
+    title: 'Novo Fabricante',
+  },
+  {
+    path: 'fabricante/edit/:id',
     component: FabricanteFormComponent,
     resolve: { fabricante: fabricanteResolver },
   },
@@ -102,7 +116,9 @@ export const routes: Routes = [
   { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' },
   { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo' },
   {
-    path: 'jogos/edit/:id', component: JogoFormComponent, resolve: { jogo: jogoResolver },
+    path: 'jogos/edit/:id',
+    component: JogoFormComponent,
+    resolve: { jogo: jogoResolver },
   },
 
   { path: 'home', component: HomeComponent, title: 'Home' },
@@ -121,5 +137,61 @@ export const routes: Routes = [
     path: 'usuarios/edit/:id',
     component: UserFormComponent,
     resolve: { user: userResolver },
+  },
+
+  {
+    path: 'pais',
+    component: PaisListComponent,
+    title: 'Lista de Paises',
+  },
+  { path: 'pais/cadastro', component: PaisFormComponent, title: 'Novo Pais' },
+  {
+    path: 'pais/edit/:id',
+    component: PaisFormComponent,
+    resolve: { pais: paisResolver },
+  },
+
+  {
+    path: 'desenvolvedora',
+    component: DesenvolvedoraListComponent,
+    title: 'Lista de Desenvolvedoras',
+  },
+  {
+    path: 'desenvolvedora/cadastro',
+    component: DesenvolvedoraFormComponent,
+    title: 'Nova Desenvolvedora',
+  },
+  {
+    path: 'desenvolvedora/edit/:id',
+    component: DesenvolvedoraFormComponent,
+    resolve: { desenvolvedora: desenvolvedoraResolver },
+  },
+
+  {
+    path: 'dev-pais',
+    component: DevPaisComponent,
+    title: 'DevPais',
+  },
+
+  {
+    path: 'plataforma',
+    component: PlataformaListComponent,
+    title: 'Lista de Plataformas',
+  },
+  {
+    path: 'plataforma/cadastro',
+    component: PlataformaFormComponent,
+    title: 'Nova Plataforma',
+  },
+  {
+    path: 'plataforma/edit/:id',
+    component: PlataformaFormComponent,
+    resolve: { plataforma: plataformaResolver },
+  },
+
+  {
+    path: 'plataforma-fabricante',
+    component: PlataformaFabricanteComponent,
+    title: 'Plataforma Fabricante',
   },
 ];
