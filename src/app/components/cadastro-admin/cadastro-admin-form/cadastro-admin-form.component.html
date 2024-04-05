@@ -1,0 +1,208 @@
+<div class="fundoGerenciar">
+  <div class="gerenciar">
+    <h1 class="tituloGerenciar">Gerenciar Usuários - Cadastro e Edição</h1>
+    <div class="cadastroDiv">
+      <button mat-raised-button color="primary" routerLink="/usuarios">
+        Lista de Usuários
+      </button>
+    </div>
+  </div>
+  <div class="form-container">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="formGroup">
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Nome</mat-label>
+            <input matInput type="text" formControlName="nome" />
+            <mat-error
+              *ngIf="
+                formGroup.get('nome')?.errors && formGroup.get('nome')?.touched
+              "
+            >
+              @if (formGroup.get('nome')?.errors?.['required']) {
+              <span>O nome deve ser informado.</span>
+              } @if (formGroup.get('nome')?.hasError('apiError')) {
+              <span>{{ formGroup.get("nome")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            id="loginform"
+            appearance="fill"
+            class="full-width-input"
+          >
+            <mat-label>Login</mat-label>
+            <input matInput type="text" formControlName="login" />
+            <mat-error
+              *ngIf="
+                formGroup.get('login')?.errors &&
+                formGroup.get('login')?.touched
+              "
+            >
+              @if (formGroup.get('login')?.errors?.['required']) {
+              <span>O login deve ser informado.</span>
+              } @if (formGroup.get('login')?.hasError('apiError')) {
+              <span>{{ formGroup.get("login")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            id="senhaform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="senha" />
+            <mat-error
+              *ngIf="
+                formGroup.get('senha')?.errors &&
+                formGroup.get('senha')?.touched
+              "
+            >
+              @if (formGroup.get('senha')?.errors?.['required']) {
+              <span>A senha deve ser informada.</span>
+              @if(formGroup.get('senha')?.errors?.['minlength']) {
+              <span>A senha deve ter no mínimo 8 caracteres.</span>
+              } } @if (formGroup.get('senha')?.hasError('apiError')) {
+              <span>{{ formGroup.get("senha")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            id="emailform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+            <mat-error
+              *ngIf="
+                formGroup.get('email')?.errors &&
+                formGroup.get('email')?.touched
+              "
+            >
+              @if (formGroup.get('email')?.errors?.['required']) {
+              <span>O email deve ser informado.</span>
+              } @if (formGroup.get('email')?.errors?.['email']) {
+              <span>O email deve ser válido.</span>
+              } @if (formGroup.get('email')?.hasError('apiError')) {
+              <span>{{ formGroup.get("email")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            id="cpfform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>CPF</mat-label>
+            <input matInput type="text" formControlName="cpf" />
+            <mat-error
+              *ngIf="
+                formGroup.get('cpf')?.errors && formGroup.get('cpf')?.touched
+              "
+            >
+              @if (formGroup.get('cpf')?.errors?.['required']) {
+              <span>O cpf deve ser informado.</span>
+              } @if (formGroup.get('cpf')?.hasError('apiError')) {
+              <span>{{ formGroup.get("cpf")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field id="perfilForm">
+            <mat-label>Perfil</mat-label>
+            <mat-select formControlName="perfil">
+              <mat-option *ngFor="let perfil of perfis" [value]="perfil">{{
+                perfil.label
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field
+            id="dataform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Data de Nascimento</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dataNascimento"
+            />
+            <mat-hint>DD/MM/AAAA</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="
+                formGroup.get('dataNascimento')?.errors &&
+                formGroup.get('dataNascimento')?.touched
+              "
+            >
+              @if (formGroup.get('dataNascimento')?.errors?.['required']) {
+              <span>A data de nascimento deve ser informada.</span>
+              } @if (formGroup.get('dataNascimento')?.hasError('apiError')) {
+              <span>{{
+                formGroup.get("dataNascimento")?.getError("apiError")
+              }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <div formArrayName="listaTelefone">
+            <div
+              *ngFor="let telefone of listaTelefone.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <mat-form-field
+                id="dddform"
+                appearance="fill"
+                class="full-width -input"
+                style="width: 10%"
+              >
+                <mat-label>DDD</mat-label>
+                <input matInput formControlName="codigoArea" />
+              </mat-form-field>
+              <mat-form-field
+                id="numeroform"
+                appearance="fill"
+                class="full-width-input"
+                style="width: 25%"
+              >
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="numero" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <button mat-raised-button color="primary" (click)="addTelefone()">
+            Adicionar Telefone
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="listaTelefone.controls.length > 0"
+            (click)="removeTelefone()"
+          >
+            Excluir Telefone
+          </button>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="salvar()">
+          Salvar
+        </button>
+        <button
+          mat-raised-button
+          *ngIf="formGroup?.get('id')?.value"
+          color="warn"
+          (click)="excluir()"
+          [disabled]="formGroup.invalid"
+        >
+          Excluir
+        </button>
+        <button mat-raised-button routerLink="/usuarios">Cancelar</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

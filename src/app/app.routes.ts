@@ -33,7 +33,21 @@ import { PlataformaListComponent } from './components/plataforma/plataforma-list
 import { PlataformaFormComponent } from './components/plataforma/plataforma-form/plataforma-form.component';
 import { plataformaResolver } from './components/plataforma/resolver/plataforma-resolver';
 import { PlataformaFabricanteComponent } from './components/plataforma-fabricante/plataforma-fabricante.component';
+import { cadastroResolver } from './components/cadastro-admin/cadastro-admin-form/resolver/cadastro-admin-resolver';
+import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro-admin-form/cadastro-admin-form.component';
 export const routes: Routes = [
+  {
+    path: 'usuariologado/cadastro',
+    component: CadastroAdminFormComponent,
+    title: 'Cadastro de Usuário',
+  },
+
+  {
+    path: 'usuariologado/edit/:id',
+    component: CadastroAdminFormComponent,
+    resolve: { user: cadastroResolver },
+  },
+
   {
     path: 'estados',
     component: EstadoListComponent,
@@ -194,4 +208,6 @@ export const routes: Routes = [
     component: PlataformaFabricanteComponent,
     title: 'Plataforma Fabricante',
   },
+
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

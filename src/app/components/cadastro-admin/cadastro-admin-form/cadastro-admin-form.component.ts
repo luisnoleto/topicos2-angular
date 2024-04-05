@@ -20,14 +20,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormControlName } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
+import { PerfilDTO } from '../../../models/perfildto.model';
+import { MatOption } from '@angular/material/core';
 
 @Component({
-  selector: 'app-user-form',
+  selector: 'app-cadastro-admin-form',
   standalone: true,
   providers: [
     provideNativeDateAdapter(),
@@ -45,13 +48,15 @@ import {
     RouterModule,
     CommonModule,
     MatDatepickerModule,
+    MatOption,
+    MatSelectModule,
   ],
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css',
+  templateUrl: './cadastro-admin-form.component.html',
+  styleUrl: './cadastro-admin-form.component.css',
 })
-export class UserFormComponent {
+export class CadastroAdminFormComponent {
   formGroup: FormGroup;
-
+  perfis: PerfilDTO[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -74,6 +79,7 @@ export class UserFormComponent {
         user && user.dataNascimento ? user.dataNascimento : '',
         Validators.required,
       ],
+      perfil: [user && user.perfil ? user.perfil.id : '', Validators.required],
       listaTelefone: this.formBuilder.array(
         user && user.listaTelefone
           ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
@@ -97,17 +103,24 @@ export class UserFormComponent {
       this.listaTelefone.removeAt(this.listaTelefone.controls.length - 1);
     }
   }
+  ngOnInit(): void {
+    this.userService.findAllPerfis().subscribe((perfis) => {
+      this.perfis = perfis;
+    });
+  }
 
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const user = this.formGroup.value;
-      console.log(user.lista);
+      const user = { ...this.formGroup.value };
+      if (!user.perfil) {
+        console.error('Perfil não selecionado');
+        return;
+      }
 
-      const operacao =
-        user.id == null
-          ? this.userService.insert(user)
-          : this.userService.update(user);
+      let operacao;
+
+      operacao = this.userService.cadastrarUsuario(user);
 
       operacao.subscribe({
         next: () => this.router.navigateByUrl('/usuarios'),
@@ -152,11 +165,4 @@ export class UserFormComponent {
       }
     }
   }
-}
-function addTelefone() {
-  throw new Error('Function not implemented.');
-}
-
-function telefones() {
-  throw new Error('Function not implemented.');
 }
