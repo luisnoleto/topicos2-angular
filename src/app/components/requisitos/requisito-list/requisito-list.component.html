@@ -9,36 +9,43 @@
 
 <table mat-table [dataSource]="requisitos" class="mat-elevation-z8">
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-  
-    <!-- Nome Column -->
-    <ng-container matColumnDef="nome">
-      <th mat-header-cell *matHeaderCellDef> Nome </th>
-      <td mat-cell *matCellDef="let element"> {{element.processador}} </td>
-    </ng-container>
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
 
-    <!-- Acao Column -->
-    <ng-container matColumnDef="acao">
-      <th mat-header-cell *matHeaderCellDef> Ação </th>
-      <td mat-cell *matCellDef="let element"> 
-        <button mat-icon-button 
-                color="primary"
-                routerLink="/requisitos/edit/{{element.id}}">
-                <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button 
-                color="warn">
-                <mat-icon>delete</mat-icon>
-        </button>        
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  
-  
+  <!-- Nome Column -->
+  <ng-container matColumnDef="processador">
+    <th mat-header-cell *matHeaderCellDef> Processador </th>
+    <td mat-cell *matCellDef="let element"> {{element.processador}} </td>
+  </ng-container>
+
+  <!-- Nome Column -->
+  <ng-container matColumnDef="sistemaOperacional">
+    <th mat-header-cell *matHeaderCellDef> Sistema Operacional </th>
+    <td mat-cell *matCellDef="let element"> {{element.sistemaOperacional}} </td>
+  </ng-container>
+
+  <!-- Nome Column -->
+:  <ng-container matColumnDef="memoria">
+    <th mat-header-cell *matHeaderCellDef> Memoria </th>
+    <td mat-cell *matCellDef="let element"> {{element.memoria}} </td>
+  </ng-container>
+
+  <!-- Acao Column -->
+  <ng-container matColumnDef="acao">
+    <th mat-header-cell *matHeaderCellDef> Ação </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" routerLink="/requisitos/edit/{{element.id}}">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

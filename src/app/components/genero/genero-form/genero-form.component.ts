@@ -32,7 +32,7 @@ export class GeneroFormComponent {
 
     this.formGroup = formBuilder.group({
       id: [(genero && genero.id) ? genero.id : null],
-      processador: [(genero && genero.nome) ? genero.nome : '',Validators.compose([Validators.required])],    
+      nome: [(genero && genero.nome) ? genero.nome : '',Validators.compose([Validators.required])],    
     });
   }
 
@@ -96,7 +96,9 @@ export class GeneroFormComponent {
     nome: {
       required: 'O nome deve ser informado.',
       minlength: 'O nome deve ter no mínimo 6 caracteres.',
+      apiError: ' '
     },
+
   }
 
   getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
@@ -111,5 +113,7 @@ export class GeneroFormComponent {
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
+
+  
 
 }

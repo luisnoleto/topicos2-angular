@@ -7,7 +7,7 @@ import { Fabricante } from '../models/fabricante.model';
   providedIn: 'root'
 })
 export class FabricanteService {
-  private baseUrl = 'http://localhost:8080/Fabricantes';
+  private baseUrl = 'http://localhost:8080/fabricantes';
 
   constructor(private httpClient: HttpClient) {  }
 

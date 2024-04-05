@@ -45,6 +45,49 @@
                 </mat-error>
                 </mat-form-field>
 
+                <mat-form-field appearance="fill">
+                    <mat-label>Genero</mat-label>
+                    <mat-select formControlName="estado">
+                        @for (genero of generos; track genero.id) {
+                            <mat-option [value]="genero">
+                                {{genero.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                    <!--
+                <mat-form-field appearance="fill">
+                    <mat-label>Plataforma</mat-label>
+                    <mat-select formControlName="plataforma">
+                        @for (plataforma of plataformas; track plataforma.id) {
+                            <mat-option [value]="plataforma">
+                                {{plataforma.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Desenvolvedora</mat-label>
+                    <mat-select formControlName="requisito">
+                        @for (desenvolvedora of desenvolvedoras; track desenvolvedora.id) {
+                            <mat-option [value]="desenvolvedora">
+                                {{desenvolvedora.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                 -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Classificação</mat-label>
+                    <mat-select formControlName="classificacao">
+                        @for (classificacao of classificacoes; track classificacao) {
+                            <mat-option [value]="classificacao">
+                                {{classificacao}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
                
             </form>
         </mat-card-content>

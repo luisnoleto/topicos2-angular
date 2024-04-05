@@ -8,14 +8,8 @@
                     <mat-label>Nome</mat-label>
                     <input matInput type="text" formControlName="nome">
                     <mat-error *ngIf="formGroup.get('nome')?.errors && formGroup.get('nome')?.touched">   
-                        {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}  
+                        {{getErrorMessage('nome', formGroup.get('nome')?.errors)}} 
                         
-                        @if(formGroup.get('nome')?.errors?.['required']){
-                            <span>O nome deve possuir ao menos 4 caracteres.</span>
-                        }
-                        @if(formGroup.get('nome')?.errors?.['required']){
-                            <span>O valor não pode ser nulo.</span>
-                        }
                         @if (formGroup.get('nome')?.hasError('apiError')) {
                             <span>{{ formGroup.get('nome')?.getError('apiError')}}</span>
                         }

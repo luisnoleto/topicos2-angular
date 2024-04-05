@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-genero-list',
@@ -19,6 +20,7 @@ import { RouterModule } from '@angular/router';
 export class GeneroListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'acao'];
   generos: Genero[] = [];
+  http: any;
 
   constructor(private generoService: GeneroService) {
 
@@ -30,4 +32,14 @@ export class GeneroListComponent implements OnInit {
     })
   }
 
+  excluir(genero: Genero) {
+    this.generoService.delete(genero).subscribe({
+      next: () => {
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log('Erro ao Excluir' + JSON.stringify(err));
+      }
+    });
+  }
 }

@@ -84,6 +84,22 @@
                     </mat-error>
                 </mat-form-field>
 
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Desempenho</mat-label>
+                    <input matInput type="text" formControlName="desempenho">
+                    <mat-error *ngIf="formGroup.get('desempenho')?.errors && formGroup.get('desempenho')?.touched">   
+                        {{getErrorMessage('desempenho', formGroup.get('desempenho')?.errors)}}  
+                        
+                        @if(formGroup.get('desempenho')?.errors?.['required']){
+                            <span>O valor não pode ser nulo.</span>
+                        }
+
+                        @if (formGroup.get('desempenho')?.hasError('apiError')) {
+                            <span>{{ formGroup.get('desempenho')?.getError('apiError')}}</span>
+                        }
+                    </mat-error>
+                </mat-form-field>
+
             </form>
         </mat-card-content>
         <mat-card-actions>

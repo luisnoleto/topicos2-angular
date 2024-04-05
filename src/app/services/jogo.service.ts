@@ -11,8 +11,21 @@ export class JogoService {
 
   constructor(private httpClient: HttpClient) {}
 
-  findAll(): Observable<Jogo[]> {
-    return this.httpClient.get<Jogo[]>(this.baseUrl);
+  findAll(page?: number, pageSize?: number): Observable<Jogo[]> {
+    let params = {};
+
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        size: pageSize.toString(),
+        }
+    }
+
+    return this.httpClient.get<Jogo[]>(`${this.baseUrl}`, {params});
+  }
+
+  count(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   findById(id: string): Observable<Jogo> {

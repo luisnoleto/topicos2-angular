@@ -30,4 +30,15 @@ export class FabricanteListComponent implements OnInit {
     })
   }
 
+  excluir(fabricante: Fabricante) {
+    this.fabricanteService.delete(fabricante).subscribe({
+      next: () => {
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log('Erro ao Excluir' + JSON.stringify(err));
+      }
+    });
+  }
+
 }

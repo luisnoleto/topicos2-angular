@@ -32,7 +32,9 @@ export class FabricanteFormComponent {
 
     this.formGroup = formBuilder.group({
       id: [(fabricante && fabricante.id) ? fabricante.id : null],
-      processador: [(fabricante && fabricante.nome) ? fabricante.nome : '',Validators.compose([Validators.required])],    
+      nome: [(fabricante && fabricante.nome) ? fabricante.nome : '',
+      Validators.compose([Validators.required,
+      Validators.minLength(4)])], 
     });
   }
 
@@ -70,20 +72,19 @@ export class FabricanteFormComponent {
       }
     }
   }
-
   
   tratarErros(error: HttpErrorResponse){
     if(error.status == 400){
       if(error.error?.errors){
         error.error.errors.forEach((validationError: any) => {
-          const formControl = this.formGroup.get(validationError.field);
-          console.log(validationError);
+          const formControl = this.formGroup.get(validationError.fieldName);
           if(formControl){
             console.log(formControl);
             formControl.setErrors({ apiError: validationError.message});
           }
         });
       };
+      
     } else if(error.status < 400) {
       alert(error.error?.message || 'Erro generico no envio do formulario.');
     } else if(error.status >= 500){
@@ -95,7 +96,7 @@ export class FabricanteFormComponent {
 
     nome: {
       required: 'O nome deve ser informado.',
-      minlength: 'O nome deve ter no mínimo 6 caracteres.',
+      minlength: 'O nome deve ter no mínimo 4 caracteres.',
     },
   }
 

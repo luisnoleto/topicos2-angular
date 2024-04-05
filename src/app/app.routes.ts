@@ -19,10 +19,10 @@ import { requisitoResolver } from './components/requisitos/resolver/requisito-re
 import { GeneroListComponent } from './components/genero/genero-list/genero-list.component';
 import { GeneroFormComponent } from './components/genero/genero-form/genero-form.component';
 import { generoResolver } from './components/genero/resolver/genero-resolver';
-import { Fabricante } from './models/fabricante.model';
-import { FabricanteFormComponent } from './components/genero copy/fabricante-form/fabricante-form.component';
-import { FabricanteListComponent } from './components/genero copy/fabricante-list/fabricante-list.component';
-import { fabricanteResolver } from './components/genero copy/resolver/fabricante-resolver';
+import { FabricanteListComponent } from './components/fabricante/fabricante-list/fabricante-list.component';
+import { FabricanteFormComponent } from './components/fabricante/fabricante-form/fabricante-form.component';
+import { fabricanteResolver } from './components/fabricante/resolver/fabricante-resolver';
+
 
 export const routes: Routes = [
   {
@@ -56,7 +56,7 @@ export const routes: Routes = [
   // Requisitos
 
   {
-    path: 'requistos',
+    path: 'requisitos',
     component: RequisitoListComponent,
     title: 'Lista de requisitos',
   },

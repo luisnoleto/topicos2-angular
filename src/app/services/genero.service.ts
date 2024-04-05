@@ -7,7 +7,7 @@ import { Genero } from '../models/genero.model';
   providedIn: 'root'
 })
 export class GeneroService {
-  private baseUrl = 'http://localhost:8080/Generos';
+  private baseUrl = 'http://localhost:8080/generos';
 
   constructor(private httpClient: HttpClient) {  }
 

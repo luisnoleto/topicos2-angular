@@ -36,7 +36,8 @@ export class RequisitoFormComponent {
       memoria: [(requisito && requisito.memoria) ? requisito.memoria : '', Validators.compose([Validators.required])],
       armazenamento: [(requisito && requisito.armazenamento) ? requisito.armazenamento : '', Validators.compose([Validators.required])],
       placaVideo: [(requisito && requisito.placaVideo) ? requisito.placaVideo : '', Validators.compose([Validators.required])],
-      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.compose([Validators.required])],    
+      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.compose([Validators.required])],   
+      desempenho: [(requisito && requisito.desempenho) ? requisito.desempenho : '', Validators.compose([Validators.required])] 
     });
 
   }
