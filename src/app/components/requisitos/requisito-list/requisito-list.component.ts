@@ -7,6 +7,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { Genero } from '../../../models/genero.model';
+import { GeneroService } from '../../../services/genero.service';
 
 @Component({
   selector: 'app-requisito-list',
@@ -17,8 +19,10 @@ import { RouterModule } from '@angular/router';
   styleUrl: './requisito-list.component.css'
 })
 export class RequisitoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'processador', 'acao'];
+  displayedColumns: string[] = ['id', 'processador', 'sistemaOperacional', 'memoria', 'acao'];
   requisitos: Requisito[] = [];
+
+
 
   constructor(private requisitoService: RequisitoService) {
 
@@ -28,6 +32,17 @@ export class RequisitoListComponent implements OnInit {
     this.requisitoService.findAll().subscribe(data => {
       this.requisitos = data;
     })
+  }
+
+  excluir(requisito: Requisito) {
+    this.requisitoService.delete(requisito).subscribe({
+      next: () => {
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log('Erro ao Excluir' + JSON.stringify(err));
+      }
+    });
   }
 
 }

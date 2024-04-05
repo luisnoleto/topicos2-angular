@@ -79,7 +79,7 @@ export const routes: Routes = [
   // Requisitos
 
   {
-    path: 'requistos',
+    path: 'requisitos',
     component: RequisitoListComponent,
     title: 'Lista de requisitos',
   },

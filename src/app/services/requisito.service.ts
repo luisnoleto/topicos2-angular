@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Requisito } from '../models/requisitos.model';
 
+import { DesempenhoDTO } from '../models/desempenhoDTO.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class RequisitoService {
-  private baseUrl = 'http://localhost:8080/Requisitos';
+  private baseUrl = 'http://localhost:8080/requisitos';
 
   constructor(private httpClient: HttpClient) {  }
 
@@ -31,4 +33,7 @@ export class RequisitoService {
     return this.httpClient.delete<any>(`${this.baseUrl}/${Requisito.id}`);
   }
 
+  findAllPerfis(): Observable<DesempenhoDTO[]> {
+    return this.httpClient.get<DesempenhoDTO[]>(`${this.baseUrl}/desempenhos`);
+  }
 }

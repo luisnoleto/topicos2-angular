@@ -10,33 +10,52 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Requisito } from '../../../models/requisitos.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-requisito-form',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule,
-    MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, RouterModule],
+    MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, RouterModule, MatSelectModule ],
   templateUrl: './requisito-form.component.html',
   styleUrl: './requisito-form.component.css'
 })
 export class RequisitoFormComponent {
 
   formGroup: FormGroup;
+  desempenhos: string[] = ['Baixo', 'Médio', 'Alto'];
 
-  constructor(private formBuilder: FormBuilder,
+
+  constructor(
+    private formBuilder: FormBuilder,
     private RequisitoService: RequisitoService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
 
-    const requisito: Requisito = activatedRoute.snapshot.data['requisito'];
+  this.formGroup = this.formBuilder.group({
+    id: [null],
+    processador: ['', Validators.compose([Validators.required])],
+    memoria: ['', Validators.compose([Validators.required])],
+    armazenamento: ['', Validators.compose([Validators.required])],
+    placaVideo: ['', Validators.compose([Validators.required])],
+    sistemaOperacional: ['', Validators.compose([Validators.required])],
 
-    this.formGroup = formBuilder.group({
+  });
+}
+  
+    initialieForm() {
+
+    const requisito: Requisito = this.activatedRoute.snapshot.data['requisito'];
+
+
+    this.formGroup = this.formBuilder.group({
       id: [(requisito && requisito.id) ? requisito.id : null],
       processador: [(requisito && requisito.processador) ? requisito.processador : '',Validators.compose([Validators.required])],
       memoria: [(requisito && requisito.memoria) ? requisito.memoria : '', Validators.compose([Validators.required])],
       armazenamento: [(requisito && requisito.armazenamento) ? requisito.armazenamento : '', Validators.compose([Validators.required])],
       placaVideo: [(requisito && requisito.placaVideo) ? requisito.placaVideo : '', Validators.compose([Validators.required])],
-      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.compose([Validators.required])],    
+      sistemaOperacional: [(requisito && requisito.sistemaOperacional) ? requisito.sistemaOperacional : '', Validators.compose([Validators.required])],   
+      desempenho: [(requisito && requisito.desempenho) ? requisito.desempenho : '', Validators.compose([Validators.required])] 
     });
 
   }

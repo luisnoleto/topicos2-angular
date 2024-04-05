@@ -45,14 +45,81 @@
                 </mat-error>
                 </mat-form-field>
 
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Estoque</mat-label>
+                    <input matInput type="number" formControlName="estoque">
+                    <mat-error *ngIf="formGroup.get('estoque')?.errors && 
+                                        formGroup.get('estoque')?.touched">
+                    @if(formGroup.get('estoque')?.errors?.['required']){
+                        <span>O valor não pode ser nulo.</span>
+                    }
+                    @if(formGroup.get('estoque')?.hasError('apiError')){
+                        <span>{{formGroup.get('estoque')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Genero</mat-label>
+                    <mat-select formControlName="estado">
+                        @for (genero of generos; track genero.id) {
+                            <mat-option [value]="genero">
+                                {{genero.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Plataforma</mat-label>
+                    <mat-select formControlName="plataforma">
+                        @for (plataforma of plataformas; track plataforma.id) {
+                            <mat-option [value]="plataforma">
+                                {{plataforma.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Desenvolvedora</mat-label>
+                    <mat-select formControlName="desenvolvedora">
+                        @for (desenvolvedora of desenvolvedoras; track desenvolvedora.id) {
+                            <mat-option [value]="desenvolvedora">
+                                {{desenvolvedora.nome}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Requisito</mat-label>
+                    <mat-select formControlName="requisito">
+                        @for (requisito of requisitos; track requisito.id) {
+                            <mat-option [value]="requisito">
+                                {{requisito.desempenho}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field appearance="fill">
+                    <mat-label>Classificação</mat-label>
+                    <mat-select formControlName="classificacao">
+                        @for (classificacao of classificacoes; track classificacao) {
+                            <mat-option [value]="classificacao">
+                                {{classificacao}}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
                
             </form>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button 
                     color="primary" 
-                    (click)="salvar()"
-                    [disabled]="formGroup.invalid"> 
+                    (click)="salvar()"> 
                 Salvar 
             </button>
             <button mat-raised-button 

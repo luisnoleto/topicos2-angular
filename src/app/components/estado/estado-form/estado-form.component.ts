@@ -47,7 +47,9 @@ export class EstadoFormComponent {
     if (this.formGroup.valid) {
       const estado = this.formGroup.value;
 
-      const operacao = estado.id == null ? this.estadoService.insert(estado) : this.estadoService.update(estado);
+      const operacao = estado.id == null 
+      ? this.estadoService.insert(estado) 
+      : this.estadoService.update(estado);
 
       operacao.subscribe({
         next: () => this.router.navigateByUrl('/estados'),
@@ -71,7 +73,7 @@ export class EstadoFormComponent {
         });
       };
 
-    } else if (error.status < 500) {
+    } else if (error.status < 400) {
       alert(error.error ?.message || 'Erro generico no enio do formulario');
     } else if (error.status >= 500) {
       alert('Erro interno do servidor. Por favor, tente novamente mais tarde.');
