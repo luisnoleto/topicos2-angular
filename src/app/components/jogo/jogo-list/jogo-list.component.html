@@ -1,9 +1,9 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Usuários</h1>
+    <h1 class="tituloGerenciar">Gerenciar Jogos</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/usuarios/cadastro">
-        Cadastrar Usuário
+      <button mat-raised-button color="primary" routerLink='/jogos/new'>
+        Cadastrar Jogos
       </button>
     </div>
   </div>
@@ -43,7 +43,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-</div>
+
 
 <mat-paginator>
   [pageSizeOptions] = "[5, 10, 15, 20]"
@@ -51,3 +51,4 @@
   [length] = "totalRecords"
   (page) = "paginar ($event)"
 </mat-paginator>
+</div>

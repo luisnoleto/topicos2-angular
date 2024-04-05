@@ -1,9 +1,9 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Usuários</h1>
+    <h1 class="tituloGerenciar">Gerenciar Requisitos</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/usuarios/cadastro">
-        Cadastrar Usuário
+      <button mat-raised-button color="primary" routerLink="/requisitos/new">
+        Cadastrar Requisito
       </button>
     </div>
   </div>
@@ -42,7 +42,7 @@
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn"
-        (click)="excluir(element.id)"
+        (click)="excluir(element)"
         >
           <mat-icon>delete</mat-icon>
         </button>

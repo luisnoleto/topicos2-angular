@@ -1,4 +1,12 @@
-
+<div class="fundoGerenciar">
+  <div class="gerenciar">
+    <h1 class="tituloGerenciar">Gerenciar Fabricante</h1>
+    <div class="cadastroDiv">
+      <button mat-raised-button color="primary" routerLink="/fabricante/cadastro">
+        Cadastrar Fabricante
+      </button>
+    </div>
+  </div>
 <table mat-table [dataSource]="fabricante" class="mat-elevation-z8">
 
     <!-- Position Column -->
@@ -33,5 +41,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  
-  
+</div>
