@@ -28,13 +28,12 @@ import { paisResolver } from './components/pais/resolver/pais-resolver';
 import { DesenvolvedoraListComponent } from './components/desenvolvedora/desenvolvedora-list/desenvolvedora-list.component';
 import { DesenvolvedoraFormComponent } from './components/desenvolvedora/desenvolvedora-form/desenvolvedora-form.component';
 import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/desenvolvedora-resolver';
-import { DevPaisComponent } from './components/dev-pais/dev-pais.component';
 import { PlataformaListComponent } from './components/plataforma/plataforma-list/plataforma-list.component';
 import { PlataformaFormComponent } from './components/plataforma/plataforma-form/plataforma-form.component';
 import { plataformaResolver } from './components/plataforma/resolver/plataforma-resolver';
-import { PlataformaFabricanteComponent } from './components/plataforma-fabricante/plataforma-fabricante.component';
 import { cadastroResolver } from './components/cadastro-admin/cadastro-admin-form/resolver/cadastro-admin-resolver';
 import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro-admin-form/cadastro-admin-form.component';
+import { TelaAdministradorComponent } from './components/tela-administrador/tela-administrador.component';
 export const routes: Routes = [
   {
     path: 'usuariologado/cadastro',
@@ -110,7 +109,7 @@ export const routes: Routes = [
   // Fabricante
 
   {
-    path: 'fabricante',
+    path: 'fabricantes',
     component: FabricanteListComponent,
     title: 'Lista de Fabricantes',
   },
@@ -166,7 +165,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'desenvolvedora',
+    path: 'desenvolvedoras',
     component: DesenvolvedoraListComponent,
     title: 'Lista de Desenvolvedoras',
   },
@@ -182,13 +181,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'dev-pais',
-    component: DevPaisComponent,
-    title: 'DevPais',
-  },
-
-  {
-    path: 'plataforma',
+    path: 'plataformas',
     component: PlataformaListComponent,
     title: 'Lista de Plataformas',
   },
@@ -204,9 +197,9 @@ export const routes: Routes = [
   },
 
   {
-    path: 'plataforma-fabricante',
-    component: PlataformaFabricanteComponent,
-    title: 'Plataforma Fabricante',
+    path: 'tela-administrador',
+    component: TelaAdministradorComponent,
+    title: 'Tela Administrador',
   },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },

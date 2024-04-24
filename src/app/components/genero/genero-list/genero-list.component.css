@@ -1,9 +1,10 @@
 .fundoGerenciar{
-  width: 1197px;
-  height: 2130px;
+  width: 800px;
+  height: 650px;
   flex-shrink: 0;
   background: #151517;
   align-self: center;
+  display: table;
   margin-top: 60px;
   margin-bottom: auto;
   margin-left: auto;
@@ -37,15 +38,16 @@
 
 .table {
   width: 90%;
-  margin-left: 60px;
-  margin-bottom: 60px;
+  margin-left: 40px;
+  margin-bottom: 40px
 }
 
-.mat-elevation-z8{
-  background-color: #424242;
-  
-}
 
 .mat-elevation-z8 th, td {
   color: #FFFFFF;
+}
+
+.full-width-input {
+  width: 100%;
+  margin-bottom: 20px;
 }
