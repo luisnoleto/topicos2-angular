@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { MatTableModule } from '@angular/material/table';
@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {DialogModule} from '@angular/cdk/dialog';
-
+import { DialogModule } from '@angular/cdk/dialog';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +22,22 @@ import {DialogModule} from '@angular/cdk/dialog';
     MatButtonModule,
     ToolbarComponent,
     MatPaginatorModule,
-    DialogModule
-    
+    DialogModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'angular-loja-games';
+//export class AppComponent {
+//title = 'angular-loja-games';
+//}
+export class AppComponent implements OnInit {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.http
+      .get('https://jsonplaceholder.typicode.com/todos/1')
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
 }
