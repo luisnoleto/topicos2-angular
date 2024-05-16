@@ -1,30 +1,85 @@
-import { Component } from '@angular/core';
-import { MatCard } from '@angular/material/card';
-import { MatCardTitle } from '@angular/material/card';
-import { MatCardContent } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
-import { FormBuilder } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginService } from '../../services/login.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
-    MatFormField,
+    NgIf,
     ReactiveFormsModule,
-    MatButtonModule,
+    MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatToolbarModule,
     RouterModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {}
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const email = this.loginForm.get('email')!.value;
+      const password = this.loginForm.get('password')!.value;
+      this.loginService.login(email, password).subscribe({
+        next: (resp) => {
+          // redirecionar para a página principal
+          this.router.navigateByUrl('/home');
+        },
+        error: (err) => {
+          console.log(err);
+          this.showSnackbarTopPosition(
+            'Usuário ou senha Inválidos',
+            'Fechar',
+            2000
+          );
+        },
+      });
+    } else {
+      this.showSnackbarTopPosition('Dados inválidos', 'Fechar', 2000);
+    }
+  }
+
+  onRegister() {
+    // criar usuário
+  }
+
+  showSnackbarTopPosition(content: any, action: any, duration: any) {
+    this.snackBar.open(content, action, {
+      duration: 2000,
+      verticalPosition: 'top', // Allowed values are  'top' | 'bottom'
+      horizontalPosition: 'center', // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+    });
+  }
+}
