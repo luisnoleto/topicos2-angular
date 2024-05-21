@@ -1,49 +1,33 @@
 <mat-card class="loginCard">
   <mat-card-title id="titleLogin">Login</mat-card-title>
   <mat-card-content>
-    <form>
-      <p>
-        <mat-form-field class="formLogin">
-          <input
-            type="text"
-            matInput
-            placeholder="Usuário"
-            formControlName="username"
-          />
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field class="formLogin">
-          <input
-            type="password"
-            matInput
-            placeholder="Senha"
-            formControlName="password"
-          />
-        </mat-form-field>
-      </p>
-      <div class="button1">
-        <button
-          type="submit"
-          mat-button
-          id="buttonLogin"
-          routerLink="/usuarios"
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="login-input">
+        <input matInput placeholder="Email" formControlName="email" required />
+        <mat-error *ngIf="loginForm.get('email')!.hasError('required')"
+          >O email é obrigatório</mat-error
         >
-          Login
-        </button>
-      </div>
-
-      <div class="button2">
-        <button
-          type="submit"
-          mat-button
-          id="buttonCadastro"
-          routerLink="/usuarios/cadastro"
+      </mat-form-field>
+      <mat-form-field class="login-input">
+        <input
+          matInput
+          type="password"
+          placeholder="Senha"
+          formControlName="password"
+          required
+        />
+        <mat-error *ngIf="loginForm.get('password')!.hasError('required')"
+          >A senha é obrigatória</mat-error
         >
-          Fazer Cadastro
-        </button>
-      </div>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        class="login-button"
+        color="primary"
+        type="submit"
+      >
+        Login
+      </button>
     </form>
   </mat-card-content>
 </mat-card>
