@@ -11,8 +11,22 @@ export class MunicipioService {
 
   constructor(private httpClient: HttpClient) {  }
 
-  findAll(): Observable<Municipio[]> {
-    return this.httpClient.get<Municipio[]>(this.baseUrl);
+  findAll(page?: number, pageSize?: number): Observable<Municipio[]> {
+    // variavel de escopo de bloco
+    let params = {};
+
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+
+    return this.httpClient.get<Municipio[]>(`${this.baseUrl}`, {params});
+  }
+
+  count(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   findById(id: string): Observable<Municipio> {

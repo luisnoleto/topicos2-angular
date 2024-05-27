@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Route } from '@angular/router';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-fabricante-list',
@@ -20,6 +21,7 @@ import { Route } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatPaginatorModule
   ],
   templateUrl: './fabricante-list.component.html',
   styleUrl: './fabricante-list.component.css',
@@ -28,14 +30,24 @@ export class FabricanteListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'acao'];
   fabricante: Fabricante[] = [];
 
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
+
   constructor(private fabricanteService: FabricanteService) {}
 
   ngOnInit(): void {
-    this.fabricanteService.findAll().subscribe((data) => {
+    this.fabricanteService.findAll(this.page, this.pageSize).subscribe((data) => {
       this.fabricante = data;
       console.log(this.fabricante);
     });
+
+    this.fabricanteService.count().subscribe(data => {
+      this.totalRecords = data;
+      console.log(this.totalRecords);
+    });
   }
+
   deleteFabricante(fabricante: Fabricante) {
     this.fabricanteService.delete(fabricante).subscribe({
       next: () => {
@@ -45,5 +57,11 @@ export class FabricanteListComponent implements OnInit {
         console.log('Erro ao deletar Fabricante', err);
       },
     });
+  }
+
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 }

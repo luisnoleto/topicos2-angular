@@ -11,8 +11,22 @@ export class PaisService {
 
   constructor(private httpClient: HttpClient) {}
 
-  findAll(): Observable<Pais[]> {
-    return this.httpClient.get<Pais[]>(this.baseUrl);
+  findAll(page?: number, pageSize?: number): Observable<Pais[]> {
+    // variavel de escopo de bloco
+    let params = {};
+
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+
+    return this.httpClient.get<Pais[]>(`${this.baseUrl}`, {params});
+  }
+
+  count(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   findById(id: string): Observable<Pais> {

@@ -2,11 +2,7 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Desenvolvedora</h1>
     <div class="cadastroDiv">
-      <button
-        mat-raised-button
-        color="primary"
-        routerLink="/desenvolvedora/cadastro"
-      >
+      <button mat-raised-button color="primary" routerLink="/desenvolvedora/cadastro">
         Cadastrar Desenvolvedora
       </button>
     </div>
@@ -31,25 +27,17 @@
       <ng-container matColumnDef="pais">
         <th mat-header-cell *matHeaderCellDef>País</th>
         <td mat-cell *matCellDef="let element">{{ element.pais.nome }}</td>
-        ></ng-container
-      >
+        >
+      </ng-container>
 
       <ng-container id="acao" matColumnDef="acao">
         <th mat-header-cell *matHeaderCellDef>Ação</th>
         <td mat-cell *matCellDef="let element">
-          <button
-            mat-icon-button
-            color="primary"
-            [routerLink]="['/desenvolvedora/edit', element.id]"
-          >
+          <button mat-icon-button color="primary" [routerLink]="['/desenvolvedora/edit', element.id]">
             <mat-icon>edit</mat-icon>
           </button>
 
-          <button
-            mat-icon-button
-            color="warn"
-            (click)="deleteDesenvolvedora(element)"
-          >
+          <button mat-icon-button color="warn" (click)="deleteDesenvolvedora(element)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -58,5 +46,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" [pageSize]="pageSize" [length]="totalRecords"
+      (page)="paginar($event)">
+    </mat-paginator>
   </div>
+
 </div>

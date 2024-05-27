@@ -11,8 +11,22 @@ export class PlataformaService {
 
   constructor(private httpClient: HttpClient) {}
 
-  findAll(): Observable<Plataforma[]> {
-    return this.httpClient.get<Plataforma[]>(this.baseUrl);
+  findAll(page?: number, pageSize?: number): Observable<Plataforma[]> {
+    // variavel de escopo de bloco
+    let params = {};
+
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+
+    return this.httpClient.get<Plataforma[]>(`${this.baseUrl}`, {params});
+  }
+
+  count(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   findById(id: string): Observable<Plataforma> {

@@ -7,12 +7,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-estado-list',
   standalone: true,
   imports: [NgFor, MatTableModule, MatToolbarModule, MatIconModule
-  , MatButtonModule, RouterModule],
+  , MatButtonModule, RouterModule, MatPaginatorModule],
   templateUrl: './estado-list.component.html',
   styleUrl: './estado-list.component.css'
 })
@@ -20,14 +21,30 @@ export class EstadoListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'acao'];
   estados: Estado[] = [];
 
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
+
   constructor(private estadoService: EstadoService) {
 
   }
 
   ngOnInit(): void {
-    this.estadoService.findAll().subscribe(data => {
+    this.estadoService.findAll(this.page, this.pageSize).subscribe(data => {
       this.estados = data;
-    })
+      console.log(this.estados);
+    });
+
+    this.estadoService.count().subscribe(data => {
+      this.totalRecords = data;
+      console.log(this.totalRecords);
+    });
+  }
+
+  paginar(event:PageEvent): void{
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 
 }

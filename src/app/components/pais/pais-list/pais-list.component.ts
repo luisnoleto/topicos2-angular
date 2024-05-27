@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Route } from '@angular/router';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-pais-list',
@@ -20,6 +21,7 @@ import { Route } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatPaginatorModule
   ],
   templateUrl: './pais-list.component.html',
   styleUrl: './pais-list.component.css',
@@ -28,12 +30,21 @@ export class PaisListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'sigla', 'acao'];
   pais: Pais[] = [];
 
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
+
   constructor(private paisService: PaisService) {}
 
   ngOnInit(): void {
-    this.paisService.findAll().subscribe((data) => {
+    this.paisService.findAll(this.page, this.pageSize).subscribe((data) => {
       this.pais = data;
       console.log(this.pais);
+    });
+
+    this.paisService.count().subscribe(data => {
+      this.totalRecords = data;
+      console.log(this.totalRecords);
     });
   }
   deletePais(pais: Pais) {
@@ -46,5 +57,11 @@ export class PaisListComponent implements OnInit {
         console.log('Erro ao deletar Usuário', err);
       },
     });
+  }
+
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 }

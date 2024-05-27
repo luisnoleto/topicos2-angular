@@ -12,13 +12,14 @@ export class JogoService {
   constructor(private httpClient: HttpClient) {}
 
   findAll(page?: number, pageSize?: number): Observable<Jogo[]> {
+    // variavel de escopo de bloco
     let params = {};
 
     if (page !== undefined && pageSize !== undefined) {
       params = {
         page: page.toString(),
-        size: pageSize.toString(),
-        }
+        pageSize: pageSize.toString()
+      }
     }
 
     return this.httpClient.get<Jogo[]>(`${this.baseUrl}`, {params});

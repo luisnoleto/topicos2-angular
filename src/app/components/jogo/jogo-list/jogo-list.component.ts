@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
+
+
 @Component({
   selector: 'app-jogo-list',
   standalone: true,
@@ -20,7 +22,6 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
     MatButtonModule,
     RouterModule,
     MatPaginatorModule
-
   ],
   templateUrl: './jogo-list.component.html',
   styleUrl: './jogo-list.component.css',
@@ -29,27 +30,22 @@ export class JogoListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'acao'];
   jogos: Jogo[] = [];
 
-  constructor(private jogoService: JogoService) {}
-
   totalRecords = 0;
   pageSize = 5;
   page = 0;
 
+  constructor(private jogoService: JogoService) {}
+
   ngOnInit(): void {
-    this.jogoService.findAll(this.page, this.pageSize).subscribe((data) => {
+    this.jogoService.findAll(this.page, this.pageSize).subscribe(data => {
       this.jogos = data;
       console.log(this.jogos);
-
-      this.jogoService.count().subscribe((data) => {
-        this.totalRecords = data;
-        console.log(this.totalRecords);
-      });
     });
-  }
-  paginar(event: PageEvent): void{
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.ngOnInit();
+
+    this.jogoService.count().subscribe(data => {
+      this.totalRecords = data;
+      console.log(this.totalRecords);
+    });
   }
 
   excluir(jogo: Jogo) {
@@ -63,5 +59,10 @@ export class JogoListComponent implements OnInit {
     });
   }
 
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
+  }
 
 }

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Route } from '@angular/router';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-plataforma-list',
@@ -20,6 +21,7 @@ import { Route } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatPaginatorModule
   ],
   templateUrl: './plataforma-list.component.html',
   styleUrl: './plataforma-list.component.css',
@@ -28,12 +30,21 @@ export class PlataformaListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'fabricante', 'acao'];
   plataforma: Plataforma[] = [];
 
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
+
   constructor(private plataformaService: PlataformaService) {}
 
   ngOnInit(): void {
-    this.plataformaService.findAll().subscribe((data) => {
+    this.plataformaService.findAll(this.page, this.pageSize).subscribe((data) => {
       this.plataforma = data;
       console.log(this.plataforma);
+    });
+
+    this.plataformaService.count().subscribe(data => {
+      this.totalRecords = data;
+      console.log(this.totalRecords);
     });
   }
   deletePlataforma(plataforma: Plataforma) {
@@ -45,5 +56,11 @@ export class PlataformaListComponent implements OnInit {
         console.log('Erro ao deletar Plataforma', err);
       },
     });
+  }
+
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 }
