@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoginService } from '../../services/login.service';
 import { NgIf } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ import { NgIf } from '@angular/common';
     MatCardModule,
     MatToolbarModule,
     RouterModule,
+    HttpClientModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -43,16 +45,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.minLength(3)]],
+      login: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const email = this.loginForm.get('email')!.value;
+      const login = this.loginForm.get('login')!.value;
       const password = this.loginForm.get('password')!.value;
-      this.loginService.login(email, password).subscribe({
+      this.loginService.login(login, password).subscribe({
         next: (resp) => {
           // redirecionar para a página principal
           this.router.navigateByUrl('/home');

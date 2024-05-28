@@ -9,7 +9,7 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class LoginService {
-  private baseURL: string = 'http://localhost:8080/login';
+  private baseURL: string = 'http://localhost:8080/auth';
   private tokenKey = 'jwt_token';
   private usuarioLogadoKey = 'usuario_logado';
   private usuarioLogadoSubject = new BehaviorSubject<User | null>(null);
@@ -32,9 +32,9 @@ export class LoginService {
     }
   }
 
-  login(email: string, senha: string): Observable<any> {
+  login(login: string, senha: string): Observable<any> {
     const params = {
-      login: email,
+      login: login,
       senha: senha,
       perfil: 1,
     };
