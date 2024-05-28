@@ -1,51 +1,47 @@
-.loginCard{
-    margin-top: 10%;
-    margin-left: 30%;
-    margin-right: 30%;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    background-color: rgba(66, 66, 66, 1);
+login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #6E45E2, #FF6636);
 }
 
-#titleLogin{
-    text-align: center;
-    color: white;
+.login-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
-.button1{
-    display: flex;
-    justify-content: center;
-}
-
-.button2{
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    
-}
-
-#buttonLogin{
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    background-color: rgba(124, 77, 255, 1);
-    color: white;
+.login-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  display: block;
 }
 
 
-#buttonCadastro{
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    background-color: rgba(124, 77, 255, 1);
-    color: white;
 
+.login-title {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #333;
 }
 
-.login-input{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
+.login-input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.login-button {
+  width: 100%;
+  margin-top: 20px;
+  background: #FF6636;
+  color: #fff;
+  transition: background 0.3s;
+}
+
+.login-button:hover {
+  background: #FF5722;
 }

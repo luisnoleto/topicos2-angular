@@ -136,7 +136,7 @@ export const routes: Routes = [
 
   { path: 'home', component: HomeComponent, title: 'Home' },
 
-  { path: 'login', component: LoginComponent, title: 'Login' },
+  { path: 'login', component: LoginComponent, title: 'Login'},
 
   { path: 'usuarios', component: UserListComponent, title: 'Usuários' },
 
