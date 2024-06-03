@@ -46,15 +46,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       login: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+      senha: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
       const login = this.loginForm.get('login')!.value;
-      const password = this.loginForm.get('password')!.value;
-      this.loginService.login(login, password).subscribe({
+      const senha = this.loginForm.get('senha')!.value;
+      this.loginService.login(login, senha).subscribe({
         next: (resp) => {
           // redirecionar para a página principal
           this.router.navigateByUrl('/home');

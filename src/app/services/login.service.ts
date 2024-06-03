@@ -48,6 +48,7 @@ export class LoginService {
             this.setToken(authToken);
             const usuarioLogado = res.body;
             console.log(usuarioLogado);
+            console.log('Logged in user:', usuarioLogado);
             if (usuarioLogado) {
               this.setUsuarioLogado(usuarioLogado);
               this.usuarioLogadoSubject.next(usuarioLogado);
@@ -70,7 +71,9 @@ export class LoginService {
   }
 
   getToken(): string | null {
-    return this.localStorageService.getItem(this.tokenKey);
+    const token = this.localStorageService.getItem(this.tokenKey);
+    console.log('LoginService Token:', token);
+    return token;
   }
 
   removeToken(): void {
@@ -84,7 +87,17 @@ export class LoginService {
 
   isTokenExpired(): boolean {
     const token = this.getToken();
+    console.error('token: ' + token);
+    if (!token) {
+      return true;
+    }
 
-    return !token || this.jwtHelper.isTokenExpired(token);
+    try {
+      console.error('jwtHelper: ' + this.jwtHelper.isTokenExpired(token));
+      return this.jwtHelper.isTokenExpired(token);
+    } catch (error) {
+      console.error('Token inválido:', error);
+      return true;
+    }
   }
 }
