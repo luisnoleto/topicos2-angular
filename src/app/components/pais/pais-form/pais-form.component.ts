@@ -68,7 +68,7 @@ export class PaisFormComponent {
           : this.paisService.update(pais);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/dev-pais'),
+        next: () => this.router.navigateByUrl('/pais'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -101,7 +101,7 @@ export class PaisFormComponent {
       if (pais.id != null) {
         this.paisService.delete(pais).subscribe({
           next: () => {
-            this.router.navigateByUrl('/dev-pais');
+            this.router.navigateByUrl('/pais');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));

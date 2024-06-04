@@ -23,7 +23,19 @@
     <!-- Genero Column -->
     <ng-container matColumnDef="genero">
       <th mat-header-cell *matHeaderCellDef>Genero</th>
-      <td mat-cell *matCellDef="let element">{{ element.genero }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.genero.nome }}</td>
+    </ng-container>
+
+    <!-- Plataforma Column -->
+    <ng-container matColumnDef="plataforma">
+      <th mat-header-cell *matHeaderCellDef>Plataforma</th>
+      <td mat-cell *matCellDef="let element">{{ element.plataforma.nome }}</td>
+    </ng-container>
+
+    <!-- Desenvolvedora Column -->
+    <ng-container matColumnDef="desenvolvedora">
+      <th mat-header-cell *matHeaderCellDef>Desenvolvedora</th>
+      <td mat-cell *matCellDef="let element">{{ element.desenvolvedora.nome }}</td>
     </ng-container>
 
     <!-- Acao Column -->
@@ -33,8 +45,7 @@
         <button
           mat-icon-button
           color="primary"
-          routerLink="/jogos/edit/{{ element.id }}"
-        >
+          routerLink="/jogos/edit/{{ element.id }}">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="excluir(element)">

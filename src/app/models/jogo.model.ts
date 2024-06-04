@@ -1,5 +1,6 @@
 import { Classificacao } from './classificacao.model';
 import { Desenvolvedora } from './desenvolvedora.model';
+import { Fabricante } from './fabricante.model';
 import { Genero } from './genero.model';
 import { Plataforma } from './plataforma.model';
 import { Requisito } from './requisitos.model';
@@ -14,5 +15,6 @@ export class Jogo {
   requisitos!: Requisito;
   desenvolvedora!: Desenvolvedora;
   classificacao!: Classificacao;
+  fabricante!: Fabricante;
   nomeImagem!: string;
 }

@@ -45,20 +45,6 @@
                 </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Estoque</mat-label>
-                    <input matInput type="number" formControlName="estoque">
-                    <mat-error *ngIf="formGroup.get('estoque')?.errors && 
-                                        formGroup.get('estoque')?.touched">
-                    @if(formGroup.get('estoque')?.errors?.['required']){
-                        <span>O valor não pode ser nulo.</span>
-                    }
-                    @if(formGroup.get('estoque')?.hasError('apiError')){
-                        <span>{{formGroup.get('estoque')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
-
                 <mat-form-field appearance="fill">
                     <mat-label>Genero</mat-label>
                     <mat-select formControlName="estado">

@@ -68,14 +68,19 @@ export class JogoFormComponent {
     private activatedRoute: ActivatedRoute
   ) {
 
+    const jogo: Jogo =
+      activatedRoute.snapshot.data['jogo'];
+
     this.formGroup = formBuilder.group({
-      id: [null],
-      nome: ['', Validators.required],
-      descricao: ['', Validators.required],
-      preco: ['', Validators.required],
-      genero: [null],
-      fabricante: [null],
+      id: [jogo && jogo.id ? jogo.id : null],
+      nome: [jogo && jogo.nome ? jogo.nome : '', 
+      Validators.compose([Validators.required, Validators.minLength(3)])] ,
+      descricao: [jogo && jogo.descricao ? jogo.descricao : '',
+      Validators.compose([Validators.required, Validators.minLength(3)])],
+      preco: [jogo && jogo.preco ? jogo.preco : '', Validators.required],
+      genero: [jogo && jogo.genero ? jogo.genero : null],
       requisito: [null],
+  
 
     });
   }
@@ -198,12 +203,38 @@ export class JogoFormComponent {
         required: 'O nome deve ser informado.',
           minlength: 'O nome deve conter ao menos 4 caracteres'
       },
-      sigla: {
-        required: 'A sigla deve ser informada.',
-          minlength: 'A sigla deve possuir exatos 2 caracteres.',
-            maxlength: 'A sigla deve possuir exatos 2 caracteres.',
-              apiError: ''
-      }
+      descricao: {
+        required: 'A descrição deve ser informada.',
+          minlength: 'A descrição deve conter ao menos 4 caracteres'
+      },
+      preco: {
+        required: 'O preço deve ser informado.',
+          minlength: 'O preço deve conter ao menos 4 caracteres'
+      },
+      genero: {
+        required: 'O genero deve ser informado.',
+          minlength: 'O genero deve conter ao menos 4 caracteres'
+      },
+      plataforma: {
+        required: 'A plataforma deve ser informada.',
+          minlength: 'A plataforma deve conter ao menos 4 caracteres'
+      },
+      requisitos: {
+        required: 'O requisito deve ser informado.',
+          minlength: 'O requisito deve conter ao menos 4 caracteres'
+      },
+      desenvolvedora: {
+        required: 'A desenvolvedora deve ser informada.',
+          minlength: 'A desenvolvedora deve conter ao menos 4 caracteres'
+      },
+      classificacao: {
+        required: 'A classificação deve ser informada.',
+          minlength: 'A classificação deve conter ao menos 4 caracteres'
+      },
+      estoque: {
+        required: 'O estoque deve ser informado.',
+          minlength: 'O estoque deve conter ao menos 1 caracteres'
+      },
     }
 
     getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {

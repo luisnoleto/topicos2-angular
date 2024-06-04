@@ -32,7 +32,8 @@ export class GeneroFormComponent {
 
     this.formGroup = formBuilder.group({
       id: [(genero && genero.id) ? genero.id : null],
-      nome: [(genero && genero.nome) ? genero.nome : '',Validators.compose([Validators.required])],    
+      nome: [(genero && genero.nome) ? genero.nome : '',
+      Validators.compose([Validators.required, Validators.minLength(3)])],
     });
   }
 
@@ -40,10 +41,10 @@ export class GeneroFormComponent {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const genero = this.formGroup.value;
-      
-      const operacao = genero.id == null 
-      ? this.generoService.insert(genero) 
-      : this.generoService.update(genero);
+
+      const operacao = genero.id == null
+        ? this.generoService.insert(genero)
+        : this.generoService.update(genero);
 
       operacao.subscribe({
         next: () => this.router.navigateByUrl('/generos'),
@@ -71,31 +72,31 @@ export class GeneroFormComponent {
     }
   }
 
-  
-  tratarErros(error: HttpErrorResponse){
-    if(error.status == 400){
-      if(error.error?.errors){
+
+  tratarErros(error: HttpErrorResponse) {
+    if (error.status == 400) {
+      if (error.error?.errors) {
         error.error.errors.forEach((validationError: any) => {
           const formControl = this.formGroup.get(validationError.field);
           console.log(validationError);
-          if(formControl){
+          if (formControl) {
             console.log(formControl);
-            formControl.setErrors({ apiError: validationError.message});
+            formControl.setErrors({ apiError: validationError.message });
           }
         });
       };
-    } else if(error.status < 400) {
+    } else if (error.status < 400) {
       alert(error.error?.message || 'Erro generico no envio do formulario.');
-    } else if(error.status >= 500){
+    } else if (error.status >= 500) {
       alert('Erro interno do Servidor. Por favor, tente novamente mais tarde.');
     }
   }
 
-    errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
 
     nome: {
       required: 'O nome deve ser informado.',
-      minlength: 'O nome deve ter no mínimo 6 caracteres.',
+      minlength: 'O nome deve ter no mínimo 3 caracteres.',
       apiError: ' '
     },
 
@@ -114,6 +115,6 @@ export class GeneroFormComponent {
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 
-  
+
 
 }

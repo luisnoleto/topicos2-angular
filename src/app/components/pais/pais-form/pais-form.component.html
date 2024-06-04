@@ -2,7 +2,7 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Países - Cadastro e Edição</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/dev-pais">
+      <button mat-raised-button color="primary" routerLink="/pais">
         Lista de Países
       </button>
     </div>
@@ -16,12 +16,10 @@
             <input matInput type="text" formControlName="nome" />
             <mat-error
               *ngIf="
-                formGroup.get('nome')?.errors && formGroup.get('nome')?.touched
-              "
-            >
-              @if (formGroup.get('nome')?.errors?.['required']) {
-              <span>O nome deve ser informado.</span>
-              } @if (formGroup.get('nome')?.hasError('apiError')) {
+                formGroup.get('nome')?.errors && formGroup.get('nome')?.touched">
+               {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}
+            
+              @if (formGroup.get('nome')?.hasError('apiError')) {
               <span>{{ formGroup.get("nome")?.getError("apiError") }}</span>
               }
             </mat-error>
@@ -36,12 +34,10 @@
             <mat-error
               *ngIf="
                 formGroup.get('sigla')?.errors &&
-                formGroup.get('sigla')?.touched
-              "
-            >
-              @if (formGroup.get('sigla')?.errors?.['required']) {
-              <span>O sigla deve ser informado.</span>
-              } @if (formGroup.get('sigla')?.hasError('apiError')) {
+                formGroup.get('sigla')?.touched">
+                {{getErrorMessage('sigla', formGroup.get('sigla')?.errors)}}
+
+              @if (formGroup.get('sigla')?.hasError('apiError')) {
               <span>{{ formGroup.get("sigla")?.getError("apiError") }}</span>
               }
             </mat-error>
@@ -61,7 +57,7 @@
         >
           Excluir
         </button>
-        <button mat-raised-button routerLink="/dev-pais">Cancelar</button>
+        <button mat-raised-button routerLink="/pais">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>
