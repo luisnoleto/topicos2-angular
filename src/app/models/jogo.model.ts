@@ -14,4 +14,5 @@ export class Jogo {
   requisitos!: Requisito;
   desenvolvedora!: Desenvolvedora;
   classificacao!: Classificacao;
+  nomeImagem!: string;
 }

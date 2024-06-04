@@ -18,17 +18,43 @@ export class JogoService {
     if (page !== undefined && pageSize !== undefined) {
       params = {
         page: page.toString(),
-        pageSize: pageSize.toString()
-      }
+        pageSize: pageSize.toString(),
+      };
     }
 
-    return this.httpClient.get<Jogo[]>(`${this.baseUrl}`, {params});
+    return this.httpClient.get<Jogo[]>(`${this.baseUrl}`, { params });
   }
 
   count(): Observable<number> {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
+  countByNome(nome: string): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/search/${nome}/count`);
+  }
 
+  getUrlImagem(nomeImagem: string): string {
+    return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+
+  uploadImagem(id: number, nomeImagem: string, imagem: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('nomeImagem', imagem.name);
+    formData.append('imagem', imagem, imagem.name);
+
+    return this.httpClient.patch<Jogo>(
+      `${this.baseUrl}/image/upload`,
+      formData
+    );
+  }
+
+  save(jogo: Jogo): Observable<Jogo> {
+    const obj = {
+      nome: jogo.nome,
+      preco: jogo.preco,
+    };
+    return this.httpClient.post<Jogo>(`${this.baseUrl}`, obj);
+  }
   findById(id: string): Observable<Jogo> {
     return this.httpClient.get<Jogo>(`${this.baseUrl}/${id}`);
   }

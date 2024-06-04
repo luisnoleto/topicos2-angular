@@ -5,10 +5,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ToolbarComponent } from './components/template/toolbar/toolbar.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DialogModule } from '@angular/cdk/dialog';
 import { HttpClient } from '@angular/common/http';
+import { FooterComponent } from './components/template/footer/footer.component';
+import { SidebarComponent } from './components/template/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,8 @@ import { HttpClient } from '@angular/common/http';
     ToolbarComponent,
     MatPaginatorModule,
     DialogModule,
+    FooterComponent,
+    SidebarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -46,12 +46,6 @@
     font-size: small;
 }
 
-#biblioteca{
-    margin-right: 16px;
-    text-decoration: none;
-    color: white;
-    font-size: small;
-}
 
 .search{
     height: 25px;
@@ -75,3 +69,17 @@
     margin-left: 5px;
 }
 
+.carrinhoIcon{
+    display: flex;
+    padding: 16px 16px;
+    margin-left: 58%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+   
+}

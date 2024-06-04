@@ -1,25 +1,91 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, OnInit, signal } from '@angular/core';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardFooter,
+  MatCardTitle,
+} from '@angular/material/card';
+import { CarrinhoService } from '../../services/carrinho.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgFor } from '@angular/common';
 import { MatButton } from '@angular/material/button';
-import { MatFormField } from '@angular/material/form-field';
-import { MatMenuModule } from '@angular/material/menu';
-import { RouterModule } from '@angular/router';
+import { Jogo } from '../../models/jogo.model';
+import { JogoService } from '../../services/jogo.service';
+
+// tipo personalizado de dados, como classes e interfaces, porém mais simples.
+type Card = {
+  idJogo: number;
+  titulo: string;
+  preco: number;
+  urlImagem: string;
+};
 
 @Component({
-  selector: 'app-toolbar',
+  selector: 'app-jogo-card-list',
   standalone: true,
   imports: [
-    RouterOutlet,
-    MatToolbar,
-    MatIconModule,
+    MatCard,
+    MatCardActions,
+    MatCardContent,
+    MatCardTitle,
+    MatCardFooter,
+    NgFor,
     MatButton,
-    MatFormField,
-    MatMenuModule,
-    RouterModule
   ],
   templateUrl: './jogo-card-list.component.html',
   styleUrl: './jogo-card-list.component.css',
 })
-export class ToolbarComponent { }
+export class JogoCardListComponent implements OnInit {
+  cards = signal<Card[]>([]);
+  jogos: Jogo[] = [];
+
+  constructor(
+    private jogoService: JogoService,
+    private carrinhoService: CarrinhoService,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.carregarJogos();
+  }
+
+  carregarJogos() {
+    // buscando todos as jogos
+    this.jogoService.findAll(0, 10).subscribe((data) => {
+      this.jogos = data;
+      this.carregarCards();
+    });
+  }
+
+  carregarCards() {
+    const cards: Card[] = [];
+    this.jogos.forEach((jogo) => {
+      cards.push({
+        idJogo: jogo.id,
+        titulo: jogo.nome,
+        preco: jogo.preco,
+        urlImagem: this.jogoService.getUrlImagem(jogo.nomeImagem),
+      });
+    });
+    this.cards.set(cards);
+  }
+
+  adicionarAoCarrinho(card: Card) {
+    this.showSnackbarTopPosition('Produto adicionado ao carrinho!', 'Fechar');
+    this.carrinhoService.adicionar({
+      id: card.idJogo,
+      nome: card.titulo,
+      preco: card.preco,
+      quantidade: 1,
+    });
+  }
+
+  showSnackbarTopPosition(content: any, action: any) {
+    this.snackBar.open(content, action, {
+      duration: 2000,
+      verticalPosition: 'top', // Allowed values are  'top' | 'bottom'
+      horizontalPosition: 'center', // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+    });
+  }
+}

@@ -3,3 +3,24 @@
     text-align: center;
     font-size: small;
 }
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+#footerControl {
+    background-color: rgba(66, 66, 66, 1);
+    color: snow;
+    font-size: 20px;
+    font-weight: bold;
+}
