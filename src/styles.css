@@ -2,7 +2,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
-body { background-color: rgba(37, 37, 39, 1); }
+body { background-color: rgba(37, 37, 39, 1); 
+}
 .mat-toolbar.mat-padraoHeader {
     background-color: rgba(66, 66, 66, 1);
     color: white;
