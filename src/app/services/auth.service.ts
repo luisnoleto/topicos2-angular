@@ -3,23 +3,24 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from '../models/user.model';
+import { Usuario } from '../models/usuario.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
+
   private baseURL: string = 'http://localhost:8080/auth';
   private tokenKey = 'jwt_token';
   private usuarioLogadoKey = 'usuario_logado';
-  private usuarioLogadoSubject = new BehaviorSubject<User | null>(null);
+  private usuarioLogadoSubject = new BehaviorSubject<Usuario | null>(null);
 
-  constructor(
-    private http: HttpClient,
+  constructor(private http: HttpClient,
     private localStorageService: LocalStorageService,
-    private jwtHelper: JwtHelperService
-  ) {
+    private jwtHelper: JwtHelperService) {
+
     this.initUsuarioLogado();
+
   }
 
   private initUsuarioLogado() {
@@ -32,33 +33,32 @@ export class LoginService {
     }
   }
 
-  login(login: string, senha: string): Observable<any> {
-    const params = {
-      login: login,
-      senha: senha,
-      perfil: 1,
-    };
 
-    return this.http
-      .post(`${this.baseURL}`, params, { observe: 'response' })
-      .pipe(
-        tap((res: any) => {
-          const authToken = res.headers.get('Authorization') ?? '';
-          if (authToken) {
-            this.setToken(authToken);
-            const usuarioLogado = res.body;
-            console.log(usuarioLogado);
-            console.log('Logged in user:', usuarioLogado);
-            if (usuarioLogado) {
-              this.setUsuarioLogado(usuarioLogado);
-              this.usuarioLogadoSubject.next(usuarioLogado);
-            }
+  login(email: string, senha: string): Observable<any> {
+    const params = {
+      login: email,
+      senha: senha,
+      perfil: 1
+    }
+
+    //{ observe: 'response' } para garantir que a resposta completa seja retornada (incluindo o cabeçalho)
+    return this.http.post(`${this.baseURL}`, params, { observe: 'response' }).pipe(
+      tap((res: any) => {
+        const authToken = res.headers.get('Authorization') ?? '';
+        if (authToken) {
+          this.setToken(authToken);
+          const usuarioLogado = res.body;
+          console.log(usuarioLogado);
+          if (usuarioLogado) {
+            this.setUsuarioLogado(usuarioLogado);
+            this.usuarioLogadoSubject.next(usuarioLogado);
           }
-        })
-      );
+        }
+      })
+    );
   }
 
-  setUsuarioLogado(usuario: User): void {
+  setUsuarioLogado(usuario: Usuario): void {
     this.localStorageService.setItem(this.usuarioLogadoKey, usuario);
   }
 
@@ -71,9 +71,7 @@ export class LoginService {
   }
 
   getToken(): string | null {
-    const token = this.localStorageService.getItem(this.tokenKey);
-    console.log('LoginService Token:', token);
-    return token;
+    return this.localStorageService.getItem(this.tokenKey);
   }
 
   removeToken(): void {
@@ -84,6 +82,13 @@ export class LoginService {
     this.localStorageService.removeItem(this.usuarioLogadoKey);
     this.usuarioLogadoSubject.next(null);
   }
+
+  // isTokenExpired(): boolean {
+  //   const token = this.getToken();
+  //   // Verifica se o token é nulo ou está expirado
+  //   return !token || this.jwtHelper.isTokenExpired(token);
+  //   // npm install @auth0/angular-jwt
+  // }
 
   isTokenExpired(): boolean {
     const token = this.getToken();
@@ -100,4 +105,5 @@ export class LoginService {
       return true;
     }
   }
+
 }

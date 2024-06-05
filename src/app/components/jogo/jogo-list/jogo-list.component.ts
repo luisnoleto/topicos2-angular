@@ -27,7 +27,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
   styleUrl: './jogo-list.component.css',
 })
 export class JogoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'acao'];
+  displayedColumns: string[] = ['id', 'nome', 'genero','plataforma','desenvolvedora','acao'];
   jogos: Jogo[] = [];
 
   totalRecords = 0;

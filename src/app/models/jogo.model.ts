@@ -10,6 +10,7 @@ export class Jogo {
   nome!: string;
   descricao!: string;
   preco!: number;
+  estoque!: number;
   genero!: Genero;
   plataforma!: Plataforma;
   requisitos!: Requisito;
