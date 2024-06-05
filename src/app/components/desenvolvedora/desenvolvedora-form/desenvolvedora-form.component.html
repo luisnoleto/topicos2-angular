@@ -1,10 +1,10 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
     <h1 class="tituloGerenciar">
-      Gerenciar Desenvolvedoras - Cadastro e Edição
+    Desenvolvedoras
     </h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/dev-pais">
+      <button mat-raised-button color="primary" routerLink="/desenvolvedoras">
         Lista de Desenvolvedoras
       </button>
     </div>
@@ -13,36 +13,24 @@
     <mat-card>
       <mat-card-content>
         <form [formGroup]="formGroup">
-          <mat-form-field appearance="fill" class="full-width-input">
+          <mat-form-field id="nomeform" appearance="fill" class="full-width-input">
             <mat-label>Nome</mat-label>
-            <input matInput type="text" formControlName="nome" />
-            <mat-error
-              *ngIf="
-                formGroup.get('nome')?.errors && formGroup.get('nome')?.touched
-              "
-            >
-              @if (formGroup.get('nome')?.errors?.['required']) {
-              <span>O nome deve ser informado.</span>
-              } @if (formGroup.get('nome')?.hasError('apiError')) {
-              <span>{{ formGroup.get("nome")?.getError("apiError") }}</span>
-              }
+            <input matInput type="text" formControlName="nome">
+            <mat-error *ngIf="formGroup.get('nome')?.errors && formGroup.get('nome')?.touched">   
+                {{getErrorMessage('nome', formGroup.get('nome')?.errors)}} 
+                
+                @if (formGroup.get('nome')?.hasError('apiError')) {
+                    <span>{{ formGroup.get('nome')?.getError('apiError')}}</span>
+                }
             </mat-error>
-          </mat-form-field>
-          <mat-form-field
-            id="cnpjform"
-            appearance="fill"
-            class="full-width-input"
-          >
+        </mat-form-field>
+          <mat-form-field id="cnpjform" appearance="fill" class="full-width-input">
             <mat-label>CNPJ</mat-label>
             <input matInput type="text" formControlName="cnpj" />
-            <mat-error
-              *ngIf="
-                formGroup.get('cnpj')?.errors && formGroup.get('cnpj')?.touched
-              "
-            >
-              @if (formGroup.get('cnpj')?.errors?.['required']) {
-              <span>O cnpj deve ser informado.</span>
-              } @if (formGroup.get('cnpj')?.hasError('apiError')) {
+            <mat-error *ngIf="formGroup.get('cnpj')?.errors && formGroup.get('cnpj')?.touched">
+              {{getErrorMessage('cnpj', formGroup.get('cnpj')?.errors)}}
+
+              @if (formGroup.get('cnpj')?.hasError('apiError')) {
               <span>{{ formGroup.get("cnpj")?.getError("apiError") }}</span>
               }
             </mat-error>
@@ -52,7 +40,7 @@
             <mat-select formControlName="pais">
               <mat-option *ngFor="let pais of paises" [value]="pais.id">{{
                 pais.nome
-              }}</mat-option>
+                }}</mat-option>
             </mat-select>
           </mat-form-field>
         </form>
@@ -61,16 +49,11 @@
         <button mat-raised-button color="primary" (click)="salvar()">
           Salvar
         </button>
-        <button
-          mat-raised-button
-          *ngIf="formGroup?.get('id')?.value"
-          color="warn"
-          (click)="excluir()"
-          [disabled]="formGroup.invalid"
-        >
+        <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"
+          [disabled]="formGroup.invalid">
           Excluir
         </button>
-        <button mat-raised-button routerLink="/dev-pais">Cancelar</button>
+        <button mat-raised-button routerLink="/desenvolvedoras">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -48,7 +48,7 @@ export class FabricanteFormComponent {
       id: [(fabricante && fabricante.id) ? fabricante.id : null],
       nome: [(fabricante && fabricante.nome) ? fabricante.nome : '',
       Validators.compose([Validators.required,
-      Validators.minLength(4)])], 
+      Validators.minLength(4)])],
     });
   }
 
@@ -63,7 +63,7 @@ export class FabricanteFormComponent {
           : this.fabricanteService.update(fabricante);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/plataforma-fabricante'),
+        next: () => this.router.navigateByUrl('/fabricantes'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -78,7 +78,7 @@ export class FabricanteFormComponent {
       if (fabricante.id != null) {
         this.fabricanteService.delete(fabricante).subscribe({
           next: () => {
-            this.router.navigateByUrl('/fabricante');
+            this.router.navigateByUrl('/fabricantes');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -116,8 +116,7 @@ export class FabricanteFormComponent {
 
   getErrorMessage(
     controlName: string,
-    errors: ValidationErrors | null | undefined
-  ): string {
+    errors: ValidationErrors | null | undefined): string {
     if (!errors) {
       return '';
     }

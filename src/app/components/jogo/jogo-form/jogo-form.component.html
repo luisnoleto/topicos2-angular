@@ -8,12 +8,8 @@
                     <input matInput type="text" formControlName="nome">
                     <mat-error *ngIf="formGroup.get('nome')?.errors && 
                                         formGroup.get('nome')?.touched">
-                    @if(formGroup.get('nome')?.errors?.['required']){
-                        <span>O nome deve possuir ao menos 4 caracteres.</span>
-                    }
-                    @if(formGroup.get('nome')?.errors?.['required']){
-                        <span>O nome deve ser informado.</span>
-                    }
+                    {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}
+
                     @if(formGroup.get('nome')?.hasError('apiError')){
                         <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
                     }
@@ -25,6 +21,8 @@
                     <input matInput type="text" formControlName="descricao">
                     <mat-error *ngIf="formGroup.get('descricao')?.errors && 
                                         formGroup.get('descricao')?.touched">
+                    {{getErrorMessage('descricao', formGroup.get('descricao')?.errors)}}
+
                     @if(formGroup.get('descricao')?.hasError('apiError')){
                         <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
                     }
@@ -36,9 +34,8 @@
                     <input matInput type="number" formControlName="preco">
                     <mat-error *ngIf="formGroup.get('preco')?.errors && 
                                         formGroup.get('preco')?.touched">
-                    @if(formGroup.get('preco')?.errors?.['required']){
-                        <span>O valor não pode ser nulo.</span>
-                    }
+                    {{getErrorMessage('preco', formGroup.get('preco')?.errors)}}
+
                     @if(formGroup.get('preco')?.hasError('apiError')){
                         <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
                     }
@@ -50,9 +47,8 @@
                     <input matInput type="number" formControlName="estoque">
                     <mat-error *ngIf="formGroup.get('estoque')?.errors && 
                                         formGroup.get('estoque')?.touched">
-                    @if(formGroup.get('estoque')?.errors?.['required']){
-                        <span>O valor não pode ser nulo.</span>
-                    }
+                    {{getErrorMessage('estoque', formGroup.get('estoque')?.errors)}}
+
                     @if(formGroup.get('estoque')?.hasError('apiError')){
                         <span>{{formGroup.get('estoque')?.getError('apiError')}}</span>
                     }
@@ -137,4 +133,3 @@
         </mat-card-actions>
     </mat-card>
 </div>
-

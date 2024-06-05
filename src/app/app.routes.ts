@@ -9,7 +9,7 @@ import { JogoListComponent } from './components/jogo/jogo-list/jogo-list.compone
 import { JogoFormComponent } from './components/jogo/jogo-form/jogo-form.component';
 import { jogoResolver } from './components/jogo/resolver/jogo-resolver';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './account/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { userResolver } from './components/user/resolver/user-resolver';

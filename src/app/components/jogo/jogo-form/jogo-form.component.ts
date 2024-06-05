@@ -68,17 +68,34 @@ export class JogoFormComponent {
     private activatedRoute: ActivatedRoute
   ) {
 
-    this.formGroup = formBuilder.group({
-      id: [null],
-      nome: ['', Validators.required],
-      descricao: ['', Validators.required],
-      preco: ['', Validators.required],
-      genero: [null],
-      fabricante: [null],
-      requisito: [null],
+    const jogo: Jogo =
+      activatedRoute.snapshot.data['jogo'];
 
+      this.formGroup = this.formBuilder.group({
+        id: [jogo && jogo.id ? jogo.id : null],
+        nome: [jogo && jogo.nome ? jogo.nome : '', 
+        Validators.compose([Validators.required, Validators.minLength(4)])],
+        descricao: [jogo && jogo.descricao ? jogo.descricao : '', 
+        Validators.compose([Validators.required, Validators.minLength(4)])],
+        preco: [jogo && jogo.preco ? jogo.preco : '', 
+        Validators.compose([Validators.required])],
+        estoque: [jogo && jogo.estoque ? jogo.estoque : '', 
+        Validators.required],
+        genero: [jogo && jogo.genero ? jogo.genero : '',
+         Validators.required],
+        plataforma: [jogo && jogo.plataforma ? jogo.plataforma : '',
+         Validators.required],
+        requisitos: [jogo && jogo.requisitos ? jogo.requisitos : '',
+         Validators.required],
+        desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora : '',
+         Validators.required],
+        classificacao: [jogo && jogo.classificacao ? jogo.classificacao : '',
+         Validators.required],
+        nomeImagem: [jogo && jogo.nomeImagem ? jogo.nomeImagem : ''],
+        
     });
   }
+
     ngOnInit(): void {
       this.generoService.findAll().subscribe(data => {
         this.generos = data;
@@ -99,9 +116,6 @@ export class JogoFormComponent {
         this.requisitos = data;
         this.initializeForm();
       });
-
-
-
     }
 
     initializeForm() {
@@ -118,21 +132,9 @@ export class JogoFormComponent {
         .find(desenvolvedora => desenvolvedora.id === (jogo?.desenvolvedora?.id || null));
       
       const requisito = this.requisitos
-        .find(requisito => requisito.id === (jogo?.requisitos?.id || null));
-      
-
-      this.formGroup = this.formBuilder.group({
-        id: [jogo && jogo.id ? jogo.id : null],
-        nome: [jogo && jogo.nome ? jogo.nome : '', Validators.required],
-        descricao: [jogo && jogo.descricao ? jogo.descricao : '', Validators.required],
-        preco: [jogo && jogo.preco ? jogo.preco : '', Validators.required],
-        genero: [genero],
-        plataforma: [plataforma],
-        requisitos: [requisito],
-        desenvolvedora: [desenvolvedora],
-        classificacao: [jogo && jogo.classificacao ? jogo.classificacao : '', Validators.required],
-      });
-    }
+        .find(requisito => requisito.id === (jogo?.requisitos?.id || null));      
+      };
+    
 
 
     salvar() {
@@ -153,7 +155,6 @@ export class JogoFormComponent {
         });
       }
     }
-
 
     excluir() {
       if (this.formGroup.valid) {
@@ -198,12 +199,31 @@ export class JogoFormComponent {
         required: 'O nome deve ser informado.',
           minlength: 'O nome deve conter ao menos 4 caracteres'
       },
-      sigla: {
-        required: 'A sigla deve ser informada.',
-          minlength: 'A sigla deve possuir exatos 2 caracteres.',
-            maxlength: 'A sigla deve possuir exatos 2 caracteres.',
-              apiError: ''
-      }
+      descricao: {
+        required: 'A descrição deve ser informada.',
+          minlength: 'A descrição deve conter ao menos 4 caracteres'
+      },
+      preco: {
+        required: 'O preço deve ser informado.',
+      },
+      genero: {
+        required: 'O genero deve ser informado.',
+      },
+      plataforma: {
+        required: 'A plataforma deve ser informada.',
+      },
+      requisitos: {
+        required: 'O requisito deve ser informado.',
+      },
+      desenvolvedora: {
+        required: 'A desenvolvedora deve ser informada.',
+      },
+      classificacao: {
+        required: 'A classificação deve ser informada.',
+      },
+      estoque: {
+        required: 'O estoque deve ser informado.',
+      },
     }
 
     getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {

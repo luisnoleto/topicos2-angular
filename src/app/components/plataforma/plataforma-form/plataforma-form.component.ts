@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -78,7 +79,6 @@ export class PlataformaFormComponent {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const plataforma = this.formGroup.value;
-      console.log(plataforma.lista);
 
       const operacao =
         plataforma.id == null
@@ -86,7 +86,7 @@ export class PlataformaFormComponent {
           : this.plataformaService.update(plataforma);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/plataforma-fabricante'),
+        next: () => this.router.navigateByUrl('/plataforma'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -127,5 +127,30 @@ export class PlataformaFormComponent {
         });
       }
     }
+  }
+
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+
+    nome: {
+      required: 'O nome deve ser informado.',
+      minlength: 'O nome deve conter ao menos 4 caracteres'
+    },
+    fabricante: {
+      required: 'O fabricante deve ser informado.',
+    }
+
+  }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors) {
+      return '';
+    }
+
+    for (const errorName in errors) {
+      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 }

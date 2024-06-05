@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -58,18 +59,18 @@ export class DesenvolvedoraFormComponent {
       activatedRoute.snapshot.data['desenvolvedora'];
 
     this.formGroup = formBuilder.group({
-      id: desenvolvedora && desenvolvedora.id ? desenvolvedora.id : null,
+      id: [(desenvolvedora && desenvolvedora.id) ? desenvolvedora.id : null],
       nome: [
-        desenvolvedora && desenvolvedora.nome ? desenvolvedora.nome : '',
-        Validators.required,
+        (desenvolvedora && desenvolvedora.nome) ? desenvolvedora.nome : '',
+        Validators.compose([Validators.required, Validators.minLength(4)])
       ],
       cnpj: [
         desenvolvedora && desenvolvedora.cnpj ? desenvolvedora.cnpj : '',
-        Validators.required,
+        Validators.compose([Validators.required, Validators.minLength(14), Validators.maxLength(14)]),
       ],
       pais: [
         desenvolvedora && desenvolvedora.pais ? desenvolvedora.pais.id : null,
-        Validators.required,
+        Validators.compose([Validators.required])
       ],
     });
   }
@@ -83,7 +84,6 @@ export class DesenvolvedoraFormComponent {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const desenvolvedora = this.formGroup.value;
-      console.log(desenvolvedora.lista);
 
       const operacao =
         desenvolvedora.id == null
@@ -91,7 +91,7 @@ export class DesenvolvedoraFormComponent {
           : this.desenvolvedoraService.update(desenvolvedora);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/dev-pais'),
+        next: () => this.router.navigateByUrl('/desenvolvedoras'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -113,18 +113,19 @@ export class DesenvolvedoraFormComponent {
         });
       }
     } else if (error.status < 400) {
-      alert(error.error?.message || 'Erro não tratado.');
+      alert(error.error?.message || 'Erro genérico no envio do formulário.');
     } else if (error.status >= 500) {
-      alert('Erro interno.');
+      alert('Erro interno do servidor. Por favor, tente novamente mais tarde.');
     }
   }
+
   excluir() {
     if (this.formGroup.valid) {
       const desenvolvedora = this.formGroup.value;
       if (desenvolvedora.id != null) {
         this.desenvolvedoraService.delete(desenvolvedora).subscribe({
           next: () => {
-            this.router.navigateByUrl('/dev-pais');
+            this.router.navigateByUrl('/desenvolvedoras');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -132,5 +133,35 @@ export class DesenvolvedoraFormComponent {
         });
       }
     }
+  }
+
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+
+    nome: {
+      required: 'O nome deve ser informado.',
+      minlength: 'O nome deve conter ao menos 4 caracteres'
+    },
+    cnpj: {
+      required: 'O CNPJ deve ser informado.',
+      minlength: 'O CNPJ deve possuir exatos 14 caracteres.',
+      maxlength: 'O CNPJ deve possuir exatos 14 caracteres.',
+      apiError: ''
+    },
+    pais: {
+      required: 'O país deve ser informado.',
+    }
+  }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors) {
+      return '';
+    }
+
+    for (const errorName in errors) {
+      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 }
