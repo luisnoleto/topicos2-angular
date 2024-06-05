@@ -3,6 +3,7 @@ import { ToolbarComponent } from '../template/toolbar/toolbar.component';
 import { RouterOutlet } from '@angular/router';
 import { JogoCardListComponent } from '../jogo-card-list/jogo-card-list.component';
 import { FooterComponent } from '../template/footer/footer.component';
+import { CarouselComponent } from '../carousel/carousel.component';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { FooterComponent } from '../template/footer/footer.component';
     RouterOutlet,
     JogoCardListComponent,
     FooterComponent,
+    CarouselComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

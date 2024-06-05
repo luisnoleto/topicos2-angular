@@ -1,0 +1,12 @@
+
+
+.slide {
+    border-radius: 15px; /* Adjust as needed */
+    overflow: hidden; /* This is important to make the images also have rounded corners */
+}
+
+.img-style {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
