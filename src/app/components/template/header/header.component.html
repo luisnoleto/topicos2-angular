@@ -2,7 +2,7 @@
   <button (click)="clickMenu()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
   </button>
-  <span>GL Games - Jogos</span>
+  <span>GL Games</span>
 
   <span class="example-spacer"></span>
   <button routerLink="/carrinho" mat-icon-button class="demo-section example-icon favorite-icon" aria-label="Example icon-button with heart icon">
@@ -10,12 +10,12 @@
   </button>
 
     <!-- Botão para deslogar, aparece apenas quando usuário está logado -->
-  <button value= "blah" *ngIf="usuarioLogado" mat-icon-button (click)="deslogar()">
+  <button *ngIf="usuarioLogado" mat-icon-button (click)="deslogar()">
     <mat-icon>exit_to_app</mat-icon>
   </button>
 
   <!-- Botão para fazer login, aparece apenas quando usuário não está logado -->
-  <button value= "blah" *ngIf="!usuarioLogado" mat-icon-button  routerLink="/login">
+  <button *ngIf="!usuarioLogado" mat-icon-button  routerLink="/login">
     <mat-icon>input</mat-icon>
   </button>
   

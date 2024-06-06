@@ -31,16 +31,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.minLength(3)]],
+      login: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const email = this.loginForm.get('email')!.value;
+      const login = this.loginForm.get('login')!.value;
       const password = this.loginForm.get('password')!.value;
-      this.authService.login(email, password).subscribe({
+      this.authService.login(login, password).subscribe({
         next: (resp) => {
           // redirecionar para a página principal
           this.router.navigateByUrl('/');

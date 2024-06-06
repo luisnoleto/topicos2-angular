@@ -211,4 +211,7 @@ export const routes: Routes = [
   { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
 
     { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
-];
+
+
+
+  ];

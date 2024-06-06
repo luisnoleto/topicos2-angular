@@ -4,8 +4,8 @@
         <h2 class="login-title">Bem-vindo</h2>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="login-input">
-                <input matInput placeholder="Email" formControlName="email" required>
-                <mat-error *ngIf="loginForm.get('email')!.hasError('required')">O email é obrigatório</mat-error>
+                <input matInput placeholder="Login" formControlName="login" required>
+                <mat-error *ngIf="loginForm.get('login')!.hasError('required')">O login é obrigatório</mat-error>
             </mat-form-field>
             <mat-form-field class="login-input">
                 <input matInput type="password" placeholder="Senha" formControlName="password" required>

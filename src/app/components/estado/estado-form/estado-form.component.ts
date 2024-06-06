@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Estado } from '../../../models/estado.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-estado-form',
@@ -26,7 +27,8 @@ export class EstadoFormComponent {
   constructor(private formBuilder: FormBuilder,
     private estadoService: EstadoService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
 
     const estado: Estado = activatedRoute.snapshot.data['estado'];
 
@@ -52,7 +54,7 @@ export class EstadoFormComponent {
       : this.estadoService.update(estado);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/estados'),
+        next: () => this.voltarPagina(),
         error: (error:HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -86,7 +88,7 @@ export class EstadoFormComponent {
       if (estado.id != null) {
         this.estadoService.delete(estado).subscribe({
           next: () => {
-            this.router.navigateByUrl('/estados');
+            this.voltarPagina();
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -121,6 +123,10 @@ export class EstadoFormComponent {
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  }
+
+  voltarPagina() {
+    this.location.back();
   }
 
 }
