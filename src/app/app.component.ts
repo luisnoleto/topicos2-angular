@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ToolbarComponent } from './components/template/toolbar/toolbar.component';
+import { HeaderComponent } from './components/template/header/header.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DialogModule } from '@angular/cdk/dialog';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,7 @@ import { SidebarComponent } from './components/template/sidebar/sidebar.componen
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    ToolbarComponent,
+    HeaderComponent,
     MatPaginatorModule,
     DialogModule,
     FooterComponent,

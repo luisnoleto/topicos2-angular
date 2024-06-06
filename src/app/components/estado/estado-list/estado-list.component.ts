@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Location, NgIf } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Estado } from '../../../models/estado.model';
 import { EstadoService } from '../../../services/estado.service';
 import { NgFor } from '@angular/common';
@@ -6,7 +10,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
