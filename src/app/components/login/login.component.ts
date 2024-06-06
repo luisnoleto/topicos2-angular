@@ -9,13 +9,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../../services/auth.service';
 import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';	
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule,
     MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule,
-    RouterModule],
+    RouterModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
