@@ -17,7 +17,7 @@ import { Estado } from '../../../models/estado.model';
 import { Municipio } from '../../../models/municipio.model';
 import { EstadoService } from '../../../services/estado.service';
 import { MunicipioService } from '../../../services/municipio.service';
-import { ToolbarComponent } from '../../template/toolbar/toolbar.component';
+import { HeaderComponent } from '../../template/header/header.component';
 
 @Component({
   selector: 'app-municipio-form',
@@ -32,7 +32,7 @@ import { ToolbarComponent } from '../../template/toolbar/toolbar.component';
     MatToolbarModule,
     RouterModule,
     MatSelectModule,
-    ToolbarComponent,
+    HeaderComponent,
   ],
   templateUrl: './municipio-form.component.html',
   styleUrl: './municipio-form.component.css',

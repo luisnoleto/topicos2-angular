@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ToolbarComponent } from '../template/toolbar/toolbar.component';
+import { HeaderComponent } from '../template/header/header.component';
 import { RouterOutlet } from '@angular/router';
 import { JogoCardListComponent } from '../jogo-card-list/jogo-card-list.component';
 import { FooterComponent } from '../template/footer/footer.component';
@@ -9,7 +9,7 @@ import { CarouselComponent } from '../carousel/carousel.component';
   selector: 'app-home',
   standalone: true,
   imports: [
-    ToolbarComponent,
+    HeaderComponent,
     RouterOutlet,
     JogoCardListComponent,
     FooterComponent,

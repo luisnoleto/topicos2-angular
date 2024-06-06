@@ -59,6 +59,14 @@ export class JogoService {
     return this.httpClient.get<Jogo>(`${this.baseUrl}/${id}`);
   }
 
+  findByNome(nome: string, pagina: number, tamanhoPagina: number): Observable<Jogo[]> {
+    const params = {
+      page: pagina.toString(),
+      pageSize: tamanhoPagina.toString()
+    }
+    return this.httpClient.get<Jogo[]>(`${this.baseUrl}/search/${nome}`, { params });
+  }
+
   insert(jogo: Jogo): Observable<Jogo> {
     return this.httpClient.post<Jogo>(this.baseUrl, jogo);
   }

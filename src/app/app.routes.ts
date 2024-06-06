@@ -34,7 +34,11 @@ import { plataformaResolver } from './components/plataforma/resolver/plataforma-
 import { cadastroResolver } from './components/cadastro-admin/cadastro-admin-form/resolver/cadastro-admin-resolver';
 import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro-admin-form/cadastro-admin-form.component';
 import { TelaAdministradorComponent } from './components/tela-administrador/tela-administrador.component';
+import { CarrinhoComponent } from './components/carrinho/carrinho.component';
+import { JogoCardListComponent } from './components/jogo-card-list/jogo-card-list.component';
 export const routes: Routes = [
+  
+
   {
     path: 'usuariologado/cadastro',
     component: CadastroAdminFormComponent,
@@ -203,4 +207,11 @@ export const routes: Routes = [
     component: TelaAdministradorComponent,
     title: 'Tela Administrador',
   },
-];
+
+  { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
+
+    { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
+
+
+
+  ];

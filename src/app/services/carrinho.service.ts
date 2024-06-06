@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { ItemCarrinho } from '../models/itemcarrinho.model';
+import { Jogo } from '../models/jogo.model';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CarrinhoService {
 
   private carrinhoSubject = new BehaviorSubject<ItemCarrinho[]>([]);
@@ -16,14 +18,14 @@ export class CarrinhoService {
     this.carrinhoSubject.next(carrinhoArmazenado);
   }
 
-  adicionar(consulta: ItemCarrinho): void {
+  adicionar(jogo: ItemCarrinho): void {
     const carrinhoAtual = this.carrinhoSubject.value;
-    const itemExistente = carrinhoAtual.find(item => item.id === consulta.id);
+    const itemExistente = carrinhoAtual.find(item => item.id === jogo.id);
 
     if (itemExistente) {
-      itemExistente.quantidade += consulta.quantidade || 1;
+      itemExistente.quantidade += jogo.quantidade || 1;
     } else {
-      carrinhoAtual.push({ ...consulta });
+      carrinhoAtual.push({ ...jogo });
     }
 
     this.carrinhoSubject.next(carrinhoAtual);
