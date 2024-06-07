@@ -36,9 +36,8 @@ import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro
 import { TelaAdministradorComponent } from './components/tela-administrador/tela-administrador.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { JogoCardListComponent } from './components/jogo-card-list/jogo-card-list.component';
+import { authGuard } from './guard/auth.guard';
 export const routes: Routes = [
-  
-
   {
     path: 'usuariologado/cadastro',
     component: CadastroAdminFormComponent,
@@ -49,34 +48,40 @@ export const routes: Routes = [
     path: 'usuariologado/edit/:id',
     component: CadastroAdminFormComponent,
     resolve: { user: cadastroResolver },
+    canActivate: [authGuard],
   },
 
   {
     path: 'estados',
     component: EstadoListComponent,
     title: 'Lista de Estados',
+    canActivate: [authGuard],
   },
   { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado' },
   {
     path: 'estados/edit/:id',
     component: EstadoFormComponent,
     resolve: { estado: estadoResolver },
+    canActivate: [authGuard],
   },
 
   {
     path: 'municipios',
     component: MunicipioListComponent,
     title: 'Lista de Municipios',
+    canActivate: [authGuard],
   },
   {
     path: 'municipios/new',
     component: MunicipioFormComponent,
     title: 'Novo Municipio',
+    canActivate: [authGuard],
   },
   {
     path: 'municipios/edit/:id',
     component: MunicipioFormComponent,
     resolve: { municipio: municipioResolver },
+    canActivate: [authGuard],
   },
 
   // Requisitos
@@ -85,16 +90,19 @@ export const routes: Routes = [
     path: 'requisitos',
     component: RequisitoListComponent,
     title: 'Lista de requisitos',
+    canActivate: [authGuard],
   },
   {
     path: 'requisitos/new',
     component: RequisitoFormComponent,
     title: 'Novos Requisitos',
+    canActivate: [authGuard],
   },
   {
     path: 'requisitos/edit/:id',
     component: RequisitoFormComponent,
     resolve: { requisito: requisitoResolver },
+    canActivate: [authGuard],
   },
 
   // genero
@@ -102,12 +110,19 @@ export const routes: Routes = [
     path: 'generos',
     component: GeneroListComponent,
     title: 'Lista de Generos',
+    canActivate: [authGuard],
   },
-  { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero' },
+  {
+    path: 'generos/new',
+    component: GeneroFormComponent,
+    title: 'Novo Genero',
+    canActivate: [authGuard],
+  },
   {
     path: 'generos/edit/:id',
     component: GeneroFormComponent,
     resolve: { genero: generoResolver },
+    canActivate: [authGuard],
   },
 
   // Fabricante
@@ -116,26 +131,40 @@ export const routes: Routes = [
     path: 'fabricantes',
     component: FabricanteListComponent,
     title: 'Lista de Fabricantes',
+    canActivate: [authGuard],
   },
   {
     path: 'fabricante/cadastro',
     component: FabricanteFormComponent,
     title: 'Novo Fabricante',
+    canActivate: [authGuard],
   },
   {
     path: 'fabricante/edit/:id',
     component: FabricanteFormComponent,
     resolve: { fabricante: fabricanteResolver },
+    canActivate: [authGuard],
   },
 
   // Jogos
 
-  { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' },
-  { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo' },
+  {
+    path: 'jogos',
+    component: JogoListComponent,
+    title: 'Lista de Jogos',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'jogos/new',
+    component: JogoFormComponent,
+    title: 'Novo Jogo',
+    canActivate: [authGuard],
+  },
   {
     path: 'jogos/edit/:id',
     component: JogoFormComponent,
     resolve: { jogo: jogoResolver },
+    canActivate: [authGuard],
   },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -144,7 +173,12 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent, title: 'Login' },
 
-  { path: 'usuarios', component: UserListComponent, title: 'Usuários' },
+  {
+    path: 'usuarios',
+    component: UserListComponent,
+    title: 'Usuários',
+    canActivate: [authGuard],
+  },
 
   {
     path: 'usuarios/cadastro',
@@ -156,62 +190,83 @@ export const routes: Routes = [
     path: 'usuarios/edit/:id',
     component: UserFormComponent,
     resolve: { user: userResolver },
+    canActivate: [authGuard],
   },
 
   {
     path: 'pais',
     component: PaisListComponent,
     title: 'Lista de Paises',
+    canActivate: [authGuard],
   },
-  { path: 'pais/cadastro', component: PaisFormComponent, title: 'Novo Pais' },
+  {
+    path: 'pais/cadastro',
+    component: PaisFormComponent,
+    title: 'Novo Pais',
+    canActivate: [authGuard],
+  },
   {
     path: 'pais/edit/:id',
     component: PaisFormComponent,
     resolve: { pais: paisResolver },
+    canActivate: [authGuard],
   },
 
   {
     path: 'desenvolvedoras',
     component: DesenvolvedoraListComponent,
     title: 'Lista de Desenvolvedoras',
+    canActivate: [authGuard],
   },
   {
     path: 'desenvolvedora/cadastro',
     component: DesenvolvedoraFormComponent,
     title: 'Nova Desenvolvedora',
+    canActivate: [authGuard],
   },
   {
     path: 'desenvolvedora/edit/:id',
     component: DesenvolvedoraFormComponent,
     resolve: { desenvolvedora: desenvolvedoraResolver },
+    canActivate: [authGuard],
   },
 
   {
     path: 'plataformas',
     component: PlataformaListComponent,
     title: 'Lista de Plataformas',
+    canActivate: [authGuard],
   },
   {
     path: 'plataforma/cadastro',
     component: PlataformaFormComponent,
     title: 'Nova Plataforma',
+    canActivate: [authGuard],
   },
   {
     path: 'plataforma/edit/:id',
     component: PlataformaFormComponent,
     resolve: { plataforma: plataformaResolver },
+    canActivate: [authGuard],
   },
 
   {
     path: 'tela-administrador',
     component: TelaAdministradorComponent,
     title: 'Tela Administrador',
+    canActivate: [authGuard],
   },
 
-  { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
+  {
+    path: 'produtos',
+    component: JogoCardListComponent,
+    title: 'Produtos à Venda',
+  },
 
-    { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
-
-
-
-  ];
+  {
+    path: 'carrinho',
+    component: CarrinhoComponent,
+    title: 'Carrinho de pedidos',
+    canActivate: [authGuard],
+  },
+];
