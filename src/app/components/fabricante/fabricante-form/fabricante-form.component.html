@@ -3,10 +3,7 @@
     <h1 class="tituloGerenciar">Gerenciar Fabricantes - Cadastro e Edição</h1>
     <div class="cadastroDiv">
       <button
-        mat-raised-button
-        color="primary"
-        routerLink="/plataforma-fabricante"
-      >
+        mat-raised-button color="primary" (click)="voltarPagina()">
         Lista de Fabricantes
       </button>
     </div>
@@ -42,7 +39,7 @@
         >
           Excluir
         </button>
-        <button mat-raised-button routerLink="/plataforma-fabricante">
+        <button mat-raised-button (click)="voltarPagina()">
           Cancelar
         </button>
       </mat-card-actions>

@@ -50,4 +50,12 @@ export class DesenvolvedoraService {
   delete(desenvolvedora: Desenvolvedora): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${desenvolvedora.id}`);
   }
+
+  alterarSituacao(desenvolvedora: Desenvolvedora): Observable<Desenvolvedora> {
+    return this.httpClient.patch<Desenvolvedora>(`${this.baseUrl}/alterarSituacao/${desenvolvedora.id}`,
+      desenvolvedora
+    );
+  }
+
+
 }

@@ -2,12 +2,12 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Desenvolvedora</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/desenvolvedora/cadastro">
+      <button mat-raised-button color="primary" routerLink="/admin/desenvolvedoras/new">
         Cadastrar Desenvolvedora
       </button>
     </div>
   </div>
-  <div class="table">
+  <div class="table"   >
     <table mat-table [dataSource]="desenvolvedora" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -32,9 +32,11 @@
       <ng-container id="acao" matColumnDef="acao">
         <th mat-header-cell *matHeaderCellDef>Ação</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" [routerLink]="['/desenvolvedora/edit', element.id]">
+          <button mat-icon-button color="primary" routerLink="/admin/desenvolvedoras/edit/{{element.id}}">
             <mat-icon>edit</mat-icon>
           </button>
+
+          <mat-slide-toggle [checked]="element.ativo" (click)="openDialog($event, element)"></mat-slide-toggle>
 
           <button mat-icon-button color="warn" (click)="deleteDesenvolvedora(element)">
             <mat-icon>delete</mat-icon>

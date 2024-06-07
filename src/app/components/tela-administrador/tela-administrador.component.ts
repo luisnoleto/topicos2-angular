@@ -6,6 +6,7 @@ import { PlataformaListComponent } from '../plataforma/plataforma-list/plataform
 import { GeneroListComponent } from '../genero/genero-list/genero-list.component';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../template/footer/footer.component';
 
 @Component({
   selector: 'app-tela-administrador.',
@@ -19,44 +20,45 @@ import { Router } from '@angular/router';
     PlataformaListComponent,
     GeneroListComponent,
     MatCardModule,
+    FooterComponent,
   ],
 })
 export class TelaAdministradorComponent {
   constructor(private router: Router) {}
 
   navigateToPaisList() {
-    this.router.navigate(['/pais']);
+    this.router.navigate(['admin/pais']);
   }
 
   navigateToDesenvolvedoraList() {
-    this.router.navigate(['/desenvolvedoras']);
+    this.router.navigate(['admin/desenvolvedoras']);
   }
 
   navigateToJogoList() {
-    this.router.navigate(['/jogos']);
+    this.router.navigate(['admin/jogos']);
   }
 
   navigateToPlataformaList() {
-    this.router.navigate(['/plataformas']);
+    this.router.navigate(['admin/plataformas']);
   }
 
   navigateToGeneroList() {
-    this.router.navigate(['/generos']);
+    this.router.navigate(['admin/generos']);
   }
 
   navigateToFabricanteList() {
-    this.router.navigate(['/fabricantes']);
+    this.router.navigate(['admin/fabricantes']);
   }
 
   navigateToEstadoList() {
-    this.router.navigate(['/estados']);
+    this.router.navigate(['admin/estados']);
   }
 
   navigateToMunicipioList() {
-    this.router.navigate(['/municipios']);
+    this.router.navigate(['admin/municipios']);
   }
 
   navigateToRequisitoList() {
-    this.router.navigate(['/requisitos']);
+    this.router.navigate(['admin/requisitos']);
   }
 }

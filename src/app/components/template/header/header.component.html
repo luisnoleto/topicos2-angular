@@ -45,7 +45,9 @@
     <mat-icon>login</mat-icon>
   </button>
 
-  <!-- Nome do usuário logado --><ng-container *ngIf="usuarioLogado">
+  
+  <!-- Nome do usuário logado -->
+ <ng-container *ngIf="usuarioLogado">
     <button mat-button [matMenuTriggerFor]="menu">
       <span class="usuarioNome">{{ usuarioLogado.nome }}</span>
       <mat-menu #menu="matMenu">
@@ -59,3 +61,4 @@
     </button>
   </ng-container>
 </mat-toolbar>
+

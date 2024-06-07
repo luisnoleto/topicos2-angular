@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { Fabricante } from '../../../models/fabricante.model';
 import { FabricanteService } from '../../../services/fabricante.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-plataforma-form',
@@ -53,7 +54,8 @@ export class PlataformaFormComponent {
     private plataformaService: PlataformaService,
     private fabricanteService: FabricanteService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     const plataforma: Plataforma = activatedRoute.snapshot.data['plataforma'];
 
@@ -86,7 +88,7 @@ export class PlataformaFormComponent {
           : this.plataformaService.update(plataforma);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/plataforma'),
+        next: () => this.voltarPagina(),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -152,5 +154,9 @@ export class PlataformaFormComponent {
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  }
+
+  voltarPagina() {
+    this.location.back();
   }
 }

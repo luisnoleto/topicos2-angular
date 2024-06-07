@@ -4,7 +4,7 @@
     Desenvolvedoras
     </h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/desenvolvedoras">
+      <button mat-raised-button color="primary" (click)="voltarPagina()">
         Lista de Desenvolvedoras
       </button>
     </div>
@@ -53,7 +53,7 @@
           [disabled]="formGroup.invalid">
           Excluir
         </button>
-        <button mat-raised-button routerLink="/desenvolvedoras">Cancelar</button>
+        <button mat-raised-button (click)="voltarPagina()">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>

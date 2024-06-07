@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { Pais } from '../../../models/pais.model';
 import { PaisService } from '../../../services/pais.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-desenvolvedora-form',
@@ -39,7 +40,7 @@ import { PaisService } from '../../../services/pais.service';
     CommonModule,
     MatDatepickerModule,
     FormsModule,
-    MatSelectModule,
+    MatSelectModule
   ],
   templateUrl: './desenvolvedora-form.component.html',
   styleUrl: './desenvolvedora-form.component.css',
@@ -53,7 +54,8 @@ export class DesenvolvedoraFormComponent {
     private desenvolvedoraService: DesenvolvedoraService,
     private paisService: PaisService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     const desenvolvedora: Desenvolvedora =
       activatedRoute.snapshot.data['desenvolvedora'];
@@ -91,7 +93,7 @@ export class DesenvolvedoraFormComponent {
           : this.desenvolvedoraService.update(desenvolvedora);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/desenvolvedoras'),
+        next: () => this.router.navigateByUrl('admin/desenvolvedoras'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -125,7 +127,7 @@ export class DesenvolvedoraFormComponent {
       if (desenvolvedora.id != null) {
         this.desenvolvedoraService.delete(desenvolvedora).subscribe({
           next: () => {
-            this.router.navigateByUrl('/desenvolvedoras');
+            this.router.navigateByUrl('admin/desenvolvedoras');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -163,5 +165,9 @@ export class DesenvolvedoraFormComponent {
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  }
+
+  voltarPagina() {
+    this.location.back();
   }
 }

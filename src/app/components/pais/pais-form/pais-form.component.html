@@ -2,7 +2,7 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Países - Cadastro e Edição</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/pais">
+      <button mat-raised-button color="primary" (click)="voltarPagina()">
         Lista de Países
       </button>
     </div>
@@ -53,11 +53,10 @@
           *ngIf="formGroup?.get('id')?.value"
           color="warn"
           (click)="excluir()"
-          [disabled]="formGroup.invalid"
-        >
+          [disabled]="formGroup.invalid">
           Excluir
         </button>
-        <button mat-raised-button routerLink="/pais">Cancelar</button>
+        <button mat-raised-button (click)="voltarPagina()">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>

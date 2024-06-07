@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Genero } from '../../../models/genero.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-genero-form',
@@ -26,7 +27,8 @@ export class GeneroFormComponent {
   constructor(private formBuilder: FormBuilder,
     private generoService: GeneroService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
 
     const genero: Genero = activatedRoute.snapshot.data['genero'];
 
@@ -47,7 +49,7 @@ export class GeneroFormComponent {
         : this.generoService.update(genero);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/generos'),
+        next: () => this.voltarPagina(),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -115,6 +117,9 @@ export class GeneroFormComponent {
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 
+  voltarPagina(){
+    this.location.back();
+  }
 
 
 }
