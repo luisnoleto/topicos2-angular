@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { ItemCarrinho } from '../models/itemcarrinho.model';
-import { Jogo } from '../models/jogo.model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -19,6 +18,7 @@ export class CarrinhoService {
     const carrinhoArmazenado = localStorageService.getItem('carrinho') || [];
     this.carrinhoSubject.next(carrinhoArmazenado);
   }
+
   getUrlImagem(nomeImagem: string): string {
     if (!nomeImagem) {
       // Return a default image or handle the absence of an image name appropriately
@@ -59,6 +59,17 @@ export class CarrinhoService {
 
   obter(): ItemCarrinho[] {
     return this.carrinhoSubject.value;
+  }
+
+  atualizarItem(item: ItemCarrinho): void {
+    const carrinhoAtual = this.carrinhoSubject.value;
+    const itemIndex = carrinhoAtual.findIndex((i) => i.id === item.id);
+
+    if (itemIndex !== -1) {
+      carrinhoAtual[itemIndex] = item;
+      this.carrinhoSubject.next(carrinhoAtual);
+      this.atualizarArmazenamentoLocal();
+    }
   }
 
   private atualizarArmazenamentoLocal(): void {
