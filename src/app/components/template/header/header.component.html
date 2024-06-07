@@ -1,25 +1,64 @@
-<mat-toolbar color="primary">
-  <button (click)="clickMenu()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
+<mat-toolbar color="padraoHeader">
+  <button
+    (click)="clickMenu()"
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
   </button>
-  <span>GL Games</span>
+  <a href="/home">
+    <img
+      class="logo-loja"
+      src="/assets/logoGL.svg"
+      alt="Global Logo"
+      aria-hidden="true"
+    />
+  </a>
+  <a href="/home" alt="GL Games" style="text-decoration: none"
+    ><span>GL Games</span></a
+  >
 
   <span class="example-spacer"></span>
-  <button routerLink="/carrinho" mat-icon-button class="demo-section example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon [matBadge]="qtdItensCarrinho"  matBadgeColor="warn" matBadgePosition="after" matBadgeOverlap="false">shopping_cart</mat-icon>
+  <button
+    routerLink="/carrinho"
+    mat-icon-button
+    class="demo-section example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon
+      [matBadge]="qtdItensCarrinho"
+      matBadgeColor="warn"
+      matBadgePosition="after"
+      matBadgeOverlap="false"
+      >shopping_cart</mat-icon
+    >
   </button>
 
-    <!-- Botão para deslogar, aparece apenas quando usuário está logado -->
+  <!-- Botão para deslogar, aparece apenas quando usuário está logado -->
   <button *ngIf="usuarioLogado" mat-icon-button (click)="deslogar()">
-    <mat-icon>exit_to_app</mat-icon>
+    <mat-icon>logout</mat-icon>
   </button>
 
   <!-- Botão para fazer login, aparece apenas quando usuário não está logado -->
-  <button *ngIf="!usuarioLogado" mat-icon-button  routerLink="/login">
-    <mat-icon>input</mat-icon>
+  <button *ngIf="!usuarioLogado" mat-icon-button routerLink="/login">
+    <mat-icon>login</mat-icon>
   </button>
+
   
   <!-- Nome do usuário logado -->
-  <span *ngIf="usuarioLogado">{{usuarioLogado.nome}}</span>
-
+ <ng-container *ngIf="usuarioLogado">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <span class="usuarioNome">{{ usuarioLogado.nome }}</span>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          [routerLink]="['/usuarios/edit/', usuarioLogado.id]"
+        >
+          Editar Perfil
+        </button>
+      </mat-menu>
+    </button>
+  </ng-container>
 </mat-toolbar>
+

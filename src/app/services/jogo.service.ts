@@ -33,6 +33,10 @@ export class JogoService {
   }
 
   getUrlImagem(nomeImagem: string): string {
+    if (!nomeImagem) {
+      // Return a default image or handle the absence of an image name appropriately
+      return './assets/padraosemImagem.jpg'; // Adjust this path to your default image
+    }
     return `${this.baseUrl}/image/download/${nomeImagem}`;
   }
 
@@ -55,16 +59,22 @@ export class JogoService {
     };
     return this.httpClient.post<Jogo>(`${this.baseUrl}`, obj);
   }
-  findById(id: string): Observable<Jogo> {
+  findById(id: number): Observable<Jogo> {
     return this.httpClient.get<Jogo>(`${this.baseUrl}/${id}`);
   }
 
-  findByNome(nome: string, pagina: number, tamanhoPagina: number): Observable<Jogo[]> {
+  findByNome(
+    nome: string,
+    pagina: number,
+    tamanhoPagina: number
+  ): Observable<Jogo[]> {
     const params = {
       page: pagina.toString(),
-      pageSize: tamanhoPagina.toString()
-    }
-    return this.httpClient.get<Jogo[]>(`${this.baseUrl}/search/${nome}`, { params });
+      pageSize: tamanhoPagina.toString(),
+    };
+    return this.httpClient.get<Jogo[]>(`${this.baseUrl}/search/${nome}`, {
+      params,
+    });
   }
 
   insert(jogo: Jogo): Observable<Jogo> {

@@ -5,11 +5,9 @@ import { ItemCarrinho } from '../models/itemcarrinho.model';
 import { Jogo } from '../models/jogo.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class CarrinhoService {
-
   private carrinhoSubject = new BehaviorSubject<ItemCarrinho[]>([]);
   carrinho$ = this.carrinhoSubject.asObservable();
 
@@ -17,10 +15,17 @@ export class CarrinhoService {
     const carrinhoArmazenado = localStorageService.getItem('carrinho') || [];
     this.carrinhoSubject.next(carrinhoArmazenado);
   }
+  getUrlImagem(nomeImagem: string): string {
+    if (!nomeImagem) {
+      // Return a default image or handle the absence of an image name appropriately
+      return './assets/padraosemImagem.jpg'; // Adjust this path to your default image
+    }
+    return `http://localhost:8080/jogos/image/download/${nomeImagem}`;
+  }
 
   adicionar(jogo: ItemCarrinho): void {
     const carrinhoAtual = this.carrinhoSubject.value;
-    const itemExistente = carrinhoAtual.find(item => item.id === jogo.id);
+    const itemExistente = carrinhoAtual.find((item) => item.id === jogo.id);
 
     if (itemExistente) {
       itemExistente.quantidade += jogo.quantidade || 1;
@@ -39,7 +44,9 @@ export class CarrinhoService {
 
   remover(item: ItemCarrinho): void {
     const carrinhoAtual = this.carrinhoSubject.value;
-    const carrinhoAtualizado = carrinhoAtual.filter(itemCarrinho => itemCarrinho !== item);
+    const carrinhoAtualizado = carrinhoAtual.filter(
+      (itemCarrinho) => itemCarrinho.id !== item.id
+    );
 
     this.carrinhoSubject.next(carrinhoAtualizado);
     this.atualizarArmazenamentoLocal();
@@ -47,10 +54,12 @@ export class CarrinhoService {
 
   obter(): ItemCarrinho[] {
     return this.carrinhoSubject.value;
-    
   }
 
   private atualizarArmazenamentoLocal(): void {
-    localStorage.setItem('carrinho', JSON.stringify(this.carrinhoSubject.value));
+    localStorage.setItem(
+      'carrinho',
+      JSON.stringify(this.carrinhoSubject.value)
+    );
   }
 }

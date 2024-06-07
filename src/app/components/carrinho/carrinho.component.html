@@ -1,14 +1,38 @@
-<ng-container *ngIf="carrinhoItens.length > 0; else carrinhoVazio">
-  <div *ngFor="let item of carrinhoItens" class="carrinho-item">
-    <h3>{{ item.nome }}</h3>
-    <p>Preço: {{ item.preco }}</p>
-    <p>Quantidade: {{ item.quantidade }}</p>
-    <p>Total: {{ item.quantidade * item.preco }}</p>
-    <button mat-raised-button color="warn" (click)="removerItem(item)">Remover do Carrinho</button>
+<ng-container *ngIf="updatedCarrinhoItens.length > 0; else carrinhoVazio">
+  <div class="checkout-container">
+    <div *ngFor="let item of updatedCarrinhoItens" class="checkout-item">
+      <mat-card class="card-item">
+        <img mat-card-image [src]="item.urlImagem" alt="{{ item.nome }}" />
+
+        <mat-card-title class="centered-text">{{ item.nome }}</mat-card-title>
+
+        <br />
+        <mat-card-content class="centered-text">
+          Preço: {{ item.preco }}<br />
+          Quantidade: {{ item.quantidade }}<br />
+          Total: {{ item.quantidade * item.preco }}
+        </mat-card-content>
+
+        <mat-card-actions class="centered-text">
+          <button mat-raised-button color="primary" (click)="removerItem(item)">
+            Remover do Carrinho
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
-  <p>Total do Carrinho: {{ calcularTotal() }}</p>
-  <button mat-raised-button color="primary" (click)="finalizarCompra()" >Finalizar Compra</button>
+  <div class="checkout-summary">
+    <div class="totalBox">
+      <p>Total do Carrinho: {{ calcularTotal() }}</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="finalizarCompra()">
+      Finalizar Compra
+    </button>
+  </div>
 </ng-container>
+
 <ng-template #carrinhoVazio>
-  <p>O carrinho está vazio.</p>
-</ng-template> 
+  <div class="carrinho-vazio-container">
+    <p class="carrinho-vazio-message">O carrinho está vazio.</p>
+  </div>
+</ng-template>

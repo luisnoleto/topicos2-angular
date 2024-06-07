@@ -1,17 +1,44 @@
-<div class="login-container">
-    <div class="login-box">
-        <img class="login-icon" src="/assets/icons/passkey.svg" alt="Passkey">
-        <h2 class="login-title">Bem-vindo</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="login-input">
-                <input matInput placeholder="Login" formControlName="login" required>
-                <mat-error *ngIf="loginForm.get('login')!.hasError('required')">O login é obrigatório</mat-error>
-            </mat-form-field>
-            <mat-form-field class="login-input">
-                <input matInput type="password" placeholder="Senha" formControlName="password" required>
-                <mat-error *ngIf="loginForm.get('password')!.hasError('required')">A senha é obrigatória</mat-error>
-            </mat-form-field>
-            <button mat-raised-button class="login-button" color="primary" type="submit">Login</button>
-        </form>
-    </div>
+<div class="login-card">
+  <div class="login-box">
+    <span class="login-icon">
+      <mat-icon>account_circle</mat-icon>
+    </span>
+    <h2 class="login-title">Bem-vindo</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="login-input">
+        <input matInput placeholder="Login" formControlName="login" required />
+        <mat-error *ngIf="loginForm.get('login')!.hasError('required')"
+          >O login é obrigatório</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="login-input">
+        <input
+          matInput
+          type="password"
+          placeholder="Senha"
+          formControlName="password"
+          required
+        />
+        <mat-error *ngIf="loginForm.get('password')!.hasError('required')"
+          >A senha é obrigatória</mat-error
+        >
+      </mat-form-field>
+      <button
+        mat-raised-button
+        class="login-button"
+        color="primary"
+        type="submit"
+      >
+        Login
+      </button>
+    </form>
+    <button
+      mat-raised-button
+      class="login-button"
+      color="primary"
+      [routerLink]="'/usuarios/cadastro'"
+    >
+      Criar Conta
+    </button>
+  </div>
 </div>

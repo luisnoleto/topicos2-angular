@@ -55,9 +55,10 @@ export const routes: Routes = [
       { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
       { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
     ]
-  },
+
   
   {
+
     path: 'admin',
     component: AdminTemplateComponent,
     title: 'e-commerce',
@@ -110,6 +111,10 @@ export const routes: Routes = [
     ]
   },
   
-
-
-  ];
+  {
+    path: 'carrinho',
+    component: CarrinhoComponent,
+    title: 'Carrinho de pedidos',
+    canActivate: [authGuard],
+  },
+];

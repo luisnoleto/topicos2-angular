@@ -1,18 +1,18 @@
 .content-container {
-    padding: 20px; /* Add padding to the container */
-    max-width: 1200px; /* Set a maximum width for the container */
-    margin: 0 auto; /* Center the container */
+    padding: 20px; 
+    max-width: 1200px; 
+    margin: 0 auto; 
 }
 
 .cards-section {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start; /* Align items from the start */
-    gap: 45px; /* Spacing between cards */
+    justify-content: start; 
+    gap: 45px; 
 }
 
 .card-item {
-    flex: 0 0 calc(20% - 45px); /* 25% width for each card minus the gap */
+    flex: 0 0 calc(20% - 45px); 
     box-sizing: border-box;
 }
 
@@ -25,7 +25,7 @@ mat-card {
 
 mat-card img {
     width: 100%;
-    height: auto;
+    height: 240px;
     object-fit: cover;
     margin-bottom: 16px;
 }
