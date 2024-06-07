@@ -72,6 +72,7 @@ export const routes: Routes = [
         resolve: { user: userResolver },
         canActivate: [authGuard],
       },
+    
     ],
   },
   {
@@ -279,10 +280,4 @@ export const routes: Routes = [
     ],
   },
 
-  {
-    path: 'carrinho',
-    component: CarrinhoComponent,
-    title: 'Carrinho de pedidos',
-    canActivate: [authGuard],
-  },
 ];
