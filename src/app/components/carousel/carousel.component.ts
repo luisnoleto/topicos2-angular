@@ -19,6 +19,9 @@ export class CarouselComponent {
   slides = [
     { img: '../assets/carousel1.png', id: 'jogo1' },
     { img: '../assets/carousel2.png', id: 'jogo2' },
+    { img: '../assets/carousel3.png', id: 'jogo3' },
+    { img: '../assets/carousel4.png', id: 'jogo4' },
+    { img: '../assets/carousel5.png', id: 'jogo5' },
   ];
 
   slideConfig = {

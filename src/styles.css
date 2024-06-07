@@ -19,3 +19,41 @@ body { background-color: rgba(37, 37, 39, 1);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* styles.css */
+
+/* Ensure the html and body take full height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Set the app-root to flex container */
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Make the content area grow to take the remaining space */
+.content {
+    flex: 1;
+}
+
+/* Footer specific styles */
+.footer {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+#footerControl {
+    background-color: rgba(66, 66, 66, 1);
+    color: snow;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.toolbar-title {
+    flex: 1;
+    text-align: center;
+    font-size: small;
+}

@@ -1,0 +1,56 @@
+<div class="fazer-pedido">
+  <div class="order-summary">
+    <div class="total">
+      <p>Total</p>
+      <p>{{ calcularTotal() | currency : "BRL" }}</p>
+    </div>
+    <div class="endereco">
+      <h2>Endereço</h2>
+      <p>Seus Endereços</p>
+      <div class="endereco-lista">
+        <mat-card *ngFor="let endereco of enderecos" class="endereco-item">
+          {{ endereco }}
+        </mat-card>
+        <mat-card class="endereco-item add-endereco">
+          ADICIONAR NOVO ENDEREÇO +
+        </mat-card>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="continuarPagamento()">
+      Continuar para pagamento
+    </button>
+  </div>
+  <div class="jogos-container">
+    <ng-container *ngIf="updatedCarrinhoItens.length > 0; else carrinhoVazio">
+      <div class="checkout-container">
+        <div *ngFor="let item of updatedCarrinhoItens" class="checkout-item">
+          <mat-card class="card-item">
+            <img mat-card-image [src]="item.urlImagem" alt="{{ item.nome }}" />
+            <mat-card-title class="centered-text">{{
+              item.nome
+            }}</mat-card-title>
+            <mat-card-content class="centered-text">
+              Preço: {{ item.preco | currency : "BRL" }}<br />
+              Quantidade: {{ item.quantidade }}<br />
+              Subtotal: {{ item.quantidade * item.preco | currency : "BRL" }}
+            </mat-card-content>
+            <mat-card-actions class="centered-text">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="removerItem(item)"
+              >
+                Remover do Carrinho
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #carrinhoVazio>
+      <div class="carrinho-vazio-container">
+        <p class="carrinho-vazio-message">O carrinho está vazio.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
