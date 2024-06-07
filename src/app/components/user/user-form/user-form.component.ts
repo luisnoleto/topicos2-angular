@@ -110,7 +110,7 @@ export class UserFormComponent {
           : this.userService.update(user);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/usuarios'),
+        next: () => this.router.navigateByUrl('/login'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
