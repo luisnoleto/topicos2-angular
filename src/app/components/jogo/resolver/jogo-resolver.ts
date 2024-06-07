@@ -11,5 +11,6 @@ export const jogoResolver: ResolveFn<Jogo> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  return inject(JogoService).findById(route.paramMap.get('id')!);
+  const id = +route.paramMap.get('id')!;
+  return inject(JogoService).findById(id);
 };

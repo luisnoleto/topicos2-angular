@@ -45,8 +45,17 @@
     <mat-icon>login</mat-icon>
   </button>
 
-  <!-- Nome do usuário logado -->
-  <span class="usuarioNome" *ngIf="usuarioLogado">{{
-    usuarioLogado.nome
-  }}</span>
+  <!-- Nome do usuário logado --><ng-container *ngIf="usuarioLogado">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <span class="usuarioNome">{{ usuarioLogado.nome }}</span>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          [routerLink]="['/usuarios/edit/', usuarioLogado.id]"
+        >
+          Editar Perfil
+        </button>
+      </mat-menu>
+    </button>
+  </ng-container>
 </mat-toolbar>
