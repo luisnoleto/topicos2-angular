@@ -8,9 +8,25 @@
 
         <br />
         <mat-card-content class="centered-text">
-          Preço: {{ item.preco }}<br />
-          Quantidade: {{ item.quantidade }}<br />
-          Total: {{ item.quantidade * item.preco }}
+          Preço: {{ item.preco | number : "1.2-2" }}<br />
+          <div class="quantity-container">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="removerQuantidade(item)"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span>{{ item.quantidade }}</span>
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="addQuantidade(item)"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          Total: {{ item.quantidade * item.preco | number : "1.2-2" }}
         </mat-card-content>
 
         <mat-card-actions class="centered-text">
@@ -23,7 +39,7 @@
   </div>
   <div class="checkout-summary">
     <div class="totalBox">
-      <p>Total do Carrinho: {{ calcularTotal() }}</p>
+      <p>Total do Carrinho: {{ calcularTotal() | number : "1.2-2" }}</p>
     </div>
     <button mat-raised-button color="primary" (click)="finalizarCompra()">
       Finalizar Compra

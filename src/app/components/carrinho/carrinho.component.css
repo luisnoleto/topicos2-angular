@@ -79,3 +79,15 @@ mat-card img {
     text-align: center;
     font-size: 1.2em;
 }
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .quantity-container button {
+    width: 36px;
+    height: 36px;
+  }
