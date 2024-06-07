@@ -32,5 +32,16 @@ mat-card img {
 
 .centered-text {
     text-align: center;
+    color: #fff;
+}
+#mais button {
+    width: 100%; /* Make button take full width of its parent */
+    justify-content: center; /* Center text for flex items, if the button is displayed as flex */
 }
 
+mat-card-actions {
+    width: 100%; /* Take full width to ensure centering inside the card */
+    display: flex;
+    justify-content: center; /* Center children horizontally */
+    align-items: center; /* Center children vertically, if needed */
+}

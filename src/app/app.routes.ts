@@ -39,6 +39,8 @@ import { JogoCardListComponent } from './components/jogo-card-list/jogo-card-lis
 import { UserTemplateComponent } from './components/template/user-template/user-template.component';
 import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 import { authGuard } from './guard/auth.guard';
+import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
+import { PagamentoComponent } from './components/pagamento/pagamento.component';
 
 export const routes: Routes = [
   {
@@ -72,7 +74,19 @@ export const routes: Routes = [
         resolve: { user: userResolver },
         canActivate: [authGuard],
       },
-    
+      {
+        path: 'finalizar-pedido',
+        component: FazerPedidoComponent,
+        title: 'Finalizar Pedido',
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'finalizar-pedido/pagamento',
+        component: PagamentoComponent,
+        title: 'Pagamento',
+        canActivate: [authGuard],
+      },
     ],
   },
   {
@@ -279,5 +293,4 @@ export const routes: Routes = [
       },
     ],
   },
-
 ];

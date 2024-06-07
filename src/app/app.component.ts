@@ -11,6 +11,9 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { HttpClient } from '@angular/common/http';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { SidebarComponent } from './components/template/sidebar/sidebar.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getPortuguesePaginatorIntl } from './services/portuguese-paginator-intl.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +30,10 @@ import { SidebarComponent } from './components/template/sidebar/sidebar.componen
     DialogModule,
     FooterComponent,
     SidebarComponent,
+    CommonModule,
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

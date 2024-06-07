@@ -10,29 +10,39 @@ import { CarrinhoService } from '../../../services/carrinho.service';
 import { Subscription } from 'rxjs';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbar, MatIcon, MatBadge, MatButton, MatIconButton, RouterModule, MatMenuModule, CommonModule],
+  imports: [
+    MatToolbar,
+    MatIcon,
+    MatBadge,
+    MatButton,
+    MatIconButton,
+    RouterModule,
+    MatMenuModule,
+    CommonModule,
+  ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
   usuarioLogado: Usuario | null = null;
   private subscription = new Subscription();
 
   qtdItensCarrinho: number = 0;
 
-  constructor(private sidebarService: SidebarService,
+  constructor(
+    private sidebarService: SidebarService,
     private carrinhoService: CarrinhoService,
     private authService: AuthService,
-    private localStorageService: LocalStorageService) {
-
-  }
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.obterQtdItensCarrinho();
@@ -48,19 +58,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   obterQtdItensCarrinho() {
-    this.carrinhoService.carrinho$.subscribe(itens => {
-      this.qtdItensCarrinho = itens.length
+    this.carrinhoService.carrinho$.subscribe((itens) => {
+      this.qtdItensCarrinho = itens.length;
     });
   }
 
   obterUsuarioLogado() {
-    this.subscription.add(this.authService.getUsuarioLogado().subscribe(
-      usuario => this.usuarioLogado = usuario
-    ));
+    this.subscription.add(
+      this.authService
+        .getUsuarioLogado()
+        .subscribe((usuario) => (this.usuarioLogado = usuario))
+    );
+  }
+  pedidos() {
+    this.router.navigateByUrl('/pedidos');
   }
 
   deslogar() {
-    this.authService.removeToken()
+    this.authService.removeToken();
     this.authService.removeUsuarioLogado();
     this.carrinhoService.removerTudo();
   }

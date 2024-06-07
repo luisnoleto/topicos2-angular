@@ -9,6 +9,7 @@ import { MatCardContent } from '@angular/material/card';
 import { MatCardTitle } from '@angular/material/card';
 import { forkJoin, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrinho',
@@ -31,7 +32,8 @@ export class CarrinhoComponent implements OnInit {
 
   constructor(
     private carrinhoService: CarrinhoService,
-    private jogoService: JogoService
+    private jogoService: JogoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,9 +65,8 @@ export class CarrinhoComponent implements OnInit {
   }
 
   finalizarCompra(): void {
-    // Finalizar compra logic
+    this.router.navigate(['/finalizar-pedido']);
   }
-
   calcularTotal(): number {
     return this.updatedCarrinhoItens.reduce(
       (total, item) => total + item.preco * item.quantidade,
@@ -73,4 +74,3 @@ export class CarrinhoComponent implements OnInit {
     );
   }
 }
-
