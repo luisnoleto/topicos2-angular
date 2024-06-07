@@ -5,4 +5,5 @@ export class Desenvolvedora {
   nome!: string;
   cnpj!: string;
   pais!: Pais;
+  ativo!: boolean;
 }

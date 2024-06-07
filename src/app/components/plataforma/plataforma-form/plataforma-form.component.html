@@ -5,7 +5,7 @@
       <button
         mat-raised-button
         color="primary"
-        routerLink="/plataforma-fabricante"
+        (click)="voltarPagina()"
       >
         Lista de Plataformas
       </button>
@@ -53,7 +53,7 @@
         >
           Excluir
         </button>
-        <button mat-raised-button routerLink="/plataforma-fabricante">
+        <button mat-raised-button (click)="voltarPagina()">
           Cancelar
         </button>
       </mat-card-actions>

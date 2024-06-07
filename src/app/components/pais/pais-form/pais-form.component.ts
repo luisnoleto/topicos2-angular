@@ -16,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Pais } from '../../../models/pais.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pais-form',
@@ -40,7 +41,8 @@ export class PaisFormComponent {
     private formBuilder: FormBuilder,
     private paisService: PaisService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     const pais: Pais = activatedRoute.snapshot.data['pais'];
 
@@ -68,7 +70,7 @@ export class PaisFormComponent {
           : this.paisService.update(pais);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/pais'),
+        next: () => this.voltarPagina(),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -140,5 +142,9 @@ export class PaisFormComponent {
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  }
+
+  voltarPagina() {
+    this.location.back();
   }
 }

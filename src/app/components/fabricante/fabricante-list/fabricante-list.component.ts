@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Route } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-fabricante-list',
@@ -34,7 +35,7 @@ export class FabricanteListComponent implements OnInit {
   pageSize = 5;
   page = 0;
 
-  constructor(private fabricanteService: FabricanteService) {}
+  constructor(private fabricanteService: FabricanteService, private location: Location) {}
 
   ngOnInit(): void {
     this.fabricanteService.findAll(this.page, this.pageSize).subscribe((data) => {
@@ -63,5 +64,9 @@ export class FabricanteListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  voltarPagina() {
+  this.location.back();
   }
 }

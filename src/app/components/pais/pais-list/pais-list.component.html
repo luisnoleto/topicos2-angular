@@ -2,7 +2,7 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Países</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/pais/cadastro">
+      <button mat-raised-button color="primary" routerLink="/admin/pais/new">
         Cadastrar Países
       </button>
     </div>
@@ -27,11 +27,7 @@
       <ng-container id="acao" matColumnDef="acao">
         <th mat-header-cell *matHeaderCellDef>Ação</th>
         <td mat-cell *matCellDef="let element">
-          <button
-            mat-icon-button
-            color="primary"
-            [routerLink]="['/pais/edit', element.id]"
-          >
+          <button mat-icon-button color="primary" routerLink="/admin/pais/edit/{{element.id}}">
             <mat-icon>edit</mat-icon>
           </button>
 

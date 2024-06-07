@@ -2,7 +2,7 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Genero</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/generos/new">
+      <button mat-raised-button color="primary" routerLink="/admin/generos/new">
         Cadastrar Genero
       </button>
     </div>
@@ -26,18 +26,13 @@
     <ng-container matColumnDef="acao">
       <th mat-header-cell *matHeaderCellDef> Ação </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" routerLink="/generos/edit/{{element.id}}">
+        <button mat-icon-button color="primary" routerLink="/admin/generos/edit/{{element.id}}">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="excluir(element)">
           <mat-icon>delete</mat-icon>
         </button>
-
-
-
       </td>
-
-
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

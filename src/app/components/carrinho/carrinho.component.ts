@@ -36,4 +36,6 @@ export class CarrinhoComponent implements OnInit {
     return 1;
   }
 
+
+
 }

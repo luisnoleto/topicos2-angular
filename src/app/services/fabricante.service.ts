@@ -35,7 +35,7 @@ export class FabricanteService {
 
   insert(fabricante: Fabricante): Observable<Fabricante> {
     return this.httpClient.post<Fabricante>(
-      `${this.baseUrl}/cadastro`,
+      `${this.baseUrl}`,
       fabricante
     );
   }

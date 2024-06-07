@@ -5,7 +5,7 @@
       <button
         mat-raised-button
         color="primary"
-        routerLink="/plataforma/cadastro"
+        routerLink="/admin/plataformas/new"
       >
         Cadastrar Plataforma
       </button>
@@ -35,7 +35,7 @@
           <button
             mat-icon-button
             color="primary"
-            [routerLink]="['/plataforma/edit', element.id]"
+            routerLink="/admin/plataformas/edit/{{element.id}}"
           >
             <mat-icon>edit</mat-icon>
           </button>

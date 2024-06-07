@@ -36,182 +36,80 @@ import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro
 import { TelaAdministradorComponent } from './components/tela-administrador/tela-administrador.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { JogoCardListComponent } from './components/jogo-card-list/jogo-card-list.component';
+import { UserTemplateComponent } from './components/template/user-template/user-template.component';
+import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
+import { authGuard } from './guard/auth.guard';
+
 export const routes: Routes = [
   
+  {
+    path: '',
+    component: UserTemplateComponent,
+    title: 'e-commerce',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home'},
 
-  {
-    path: 'usuariologado/cadastro',
-    component: CadastroAdminFormComponent,
-    title: 'Cadastro de Usuário',
-  },
+      { path: 'home', component: HomeComponent, title: 'Home' },
 
-  {
-    path: 'usuariologado/edit/:id',
-    component: CadastroAdminFormComponent,
-    resolve: { user: cadastroResolver },
+      { path: 'login', component: LoginComponent, title: 'Login' },
+      { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
+      { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
+    ]
   },
+  
+  {
+    path: 'admin',
+    component: AdminTemplateComponent,
+    title: 'e-commerce',
+    children: [
+      { path: '', pathMatch: 'full',  redirectTo: 'tela-administrador'},
 
-  {
-    path: 'estados',
-    component: EstadoListComponent,
-    title: 'Lista de Estados',
-  },
-  { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado' },
-  {
-    path: 'estados/edit/:id',
-    component: EstadoFormComponent,
-    resolve: { estado: estadoResolver },
-  },
+      { path: 'tela-administrador', component: TelaAdministradorComponent, title: 'Tela Administrador'},
 
-  {
-    path: 'municipios',
-    component: MunicipioListComponent,
-    title: 'Lista de Municipios',
+      
+      { path: 'usuarios', component: UserListComponent, title: 'Usuários', canActivate: [authGuard] },
+      { path: 'usuarios/new', component: UserFormComponent, title: 'Cadastro de Usuário', canActivate: [authGuard]  },
+      { path: 'usuarios/edit/:id', component: UserFormComponent, resolve: { user: userResolver } , canActivate: [authGuard]},
+      
+      { path: 'pais', component: PaisListComponent, title: 'Lista de Paises' , canActivate: [authGuard]},
+      { path: 'pais/new', component: PaisFormComponent, title: 'Novo Pais', canActivate: [authGuard] },
+      { path: 'pais/edit/:id', component: PaisFormComponent, resolve: { pais: paisResolver } , canActivate: [authGuard]},
+      
+      { path: 'desenvolvedoras', component: DesenvolvedoraListComponent, title: 'Lista de Desenvolvedoras', canActivate: [authGuard] },
+      { path: 'desenvolvedoras/new', component: DesenvolvedoraFormComponent, title: 'Nova Desenvolvedora', canActivate: [authGuard] },
+      { path: 'desenvolvedoras/edit/:id', component: DesenvolvedoraFormComponent, resolve: { desenvolvedora: desenvolvedoraResolver }, canActivate: [authGuard] },
+      
+      { path: 'plataformas', component: PlataformaListComponent, title: 'Lista de Plataformas', canActivate: [authGuard] },
+      { path: 'plataformas/new', component: PlataformaFormComponent, title: 'Nova Plataforma',  canActivate: [authGuard]  },
+      { path: 'plataformas/edit/:id', component: PlataformaFormComponent, resolve: { plataforma: plataformaResolver }, canActivate: [authGuard] },
+      
+      { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' , canActivate: [authGuard]},
+      { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado', canActivate: [authGuard]  },
+      { path: 'estados/edit/:id', component: EstadoFormComponent, resolve: { estado: estadoResolver }, canActivate: [authGuard] },
+      
+      { path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municipios', canActivate: [authGuard] },
+      { path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Municipio', canActivate: [authGuard]  },
+      { path: 'municipios/edit/:id', component: MunicipioFormComponent, resolve: { municipio: municipioResolver }, canActivate: [authGuard] },
+      
+      { path: 'requisitos', component: RequisitoListComponent, title: 'Lista de requisitos', canActivate: [authGuard] },
+      { path: 'requisitos/new', component: RequisitoFormComponent, title: 'Novos Requisitos', canActivate: [authGuard]  },
+      { path: 'requisitos/edit/:id', component: RequisitoFormComponent, resolve: { requisito: requisitoResolver } , canActivate: [authGuard]},
+     
+      { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' , canActivate: [authGuard]},
+      { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero', canActivate: [authGuard]  },
+      { path: 'generos/edit/:id', component: GeneroFormComponent, resolve: { genero: generoResolver } , canActivate: [authGuard]},
+      
+      { path: 'fabricantes', component: FabricanteListComponent, title: 'Lista de Fabricantes', canActivate: [authGuard] },
+      { path: 'fabricantes/new', component: FabricanteFormComponent, title: 'Novo Fabricante', canActivate: [authGuard]  },
+      { path: 'fabricantes/edit/:id', component: FabricanteFormComponent, resolve: { fabricante: fabricanteResolver } , canActivate: [authGuard]},
+      
+      { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' , canActivate: [authGuard]},
+      { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo', canActivate: [authGuard]  },
+      { path: 'jogos/edit/:id', component: JogoFormComponent, resolve: { jogo: jogoResolver } , canActivate: [authGuard]},      
+  
+    ]
   },
-  {
-    path: 'municipios/new',
-    component: MunicipioFormComponent,
-    title: 'Novo Municipio',
-  },
-  {
-    path: 'municipios/edit/:id',
-    component: MunicipioFormComponent,
-    resolve: { municipio: municipioResolver },
-  },
-
-  // Requisitos
-
-  {
-    path: 'requisitos',
-    component: RequisitoListComponent,
-    title: 'Lista de requisitos',
-  },
-  {
-    path: 'requisitos/new',
-    component: RequisitoFormComponent,
-    title: 'Novos Requisitos',
-  },
-  {
-    path: 'requisitos/edit/:id',
-    component: RequisitoFormComponent,
-    resolve: { requisito: requisitoResolver },
-  },
-
-  // genero
-  {
-    path: 'generos',
-    component: GeneroListComponent,
-    title: 'Lista de Generos',
-  },
-  { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero' },
-  {
-    path: 'generos/edit/:id',
-    component: GeneroFormComponent,
-    resolve: { genero: generoResolver },
-  },
-
-  // Fabricante
-
-  {
-    path: 'fabricantes',
-    component: FabricanteListComponent,
-    title: 'Lista de Fabricantes',
-  },
-  {
-    path: 'fabricante/cadastro',
-    component: FabricanteFormComponent,
-    title: 'Novo Fabricante',
-  },
-  {
-    path: 'fabricante/edit/:id',
-    component: FabricanteFormComponent,
-    resolve: { fabricante: fabricanteResolver },
-  },
-
-  // Jogos
-
-  { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' },
-  { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo' },
-  {
-    path: 'jogos/edit/:id',
-    component: JogoFormComponent,
-    resolve: { jogo: jogoResolver },
-  },
-
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-
-  { path: 'home', component: HomeComponent, title: 'Home' },
-
-  { path: 'login', component: LoginComponent, title: 'Login' },
-
-  { path: 'usuarios', component: UserListComponent, title: 'Usuários' },
-
-  {
-    path: 'usuarios/cadastro',
-    component: UserFormComponent,
-    title: 'Cadastro de Usuário',
-  },
-
-  {
-    path: 'usuarios/edit/:id',
-    component: UserFormComponent,
-    resolve: { user: userResolver },
-  },
-
-  {
-    path: 'pais',
-    component: PaisListComponent,
-    title: 'Lista de Paises',
-  },
-  { path: 'pais/cadastro', component: PaisFormComponent, title: 'Novo Pais' },
-  {
-    path: 'pais/edit/:id',
-    component: PaisFormComponent,
-    resolve: { pais: paisResolver },
-  },
-
-  {
-    path: 'desenvolvedoras',
-    component: DesenvolvedoraListComponent,
-    title: 'Lista de Desenvolvedoras',
-  },
-  {
-    path: 'desenvolvedora/cadastro',
-    component: DesenvolvedoraFormComponent,
-    title: 'Nova Desenvolvedora',
-  },
-  {
-    path: 'desenvolvedora/edit/:id',
-    component: DesenvolvedoraFormComponent,
-    resolve: { desenvolvedora: desenvolvedoraResolver },
-  },
-
-  {
-    path: 'plataformas',
-    component: PlataformaListComponent,
-    title: 'Lista de Plataformas',
-  },
-  {
-    path: 'plataforma/cadastro',
-    component: PlataformaFormComponent,
-    title: 'Nova Plataforma',
-  },
-  {
-    path: 'plataforma/edit/:id',
-    component: PlataformaFormComponent,
-    resolve: { plataforma: plataformaResolver },
-  },
-
-  {
-    path: 'tela-administrador',
-    component: TelaAdministradorComponent,
-    title: 'Tela Administrador',
-  },
-
-  { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
-
-    { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
-
+  
 
 
   ];

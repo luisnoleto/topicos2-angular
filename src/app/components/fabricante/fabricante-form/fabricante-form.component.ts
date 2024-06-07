@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Fabricante } from '../../../models/fabricante.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FabricanteService } from '../../../services/fabricante.service';
+import{ Location } from '@angular/common';
 
 @Component({
   selector: 'app-fabricante-form',
@@ -36,11 +37,13 @@ import { FabricanteService } from '../../../services/fabricante.service';
 export class FabricanteFormComponent {
   formGroup: FormGroup;
 
+
   constructor(
     private formBuilder: FormBuilder,
     private fabricanteService: FabricanteService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     const fabricante: Fabricante = activatedRoute.snapshot.data['fabricante'];
 
@@ -63,7 +66,7 @@ export class FabricanteFormComponent {
           : this.fabricanteService.update(fabricante);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/fabricantes'),
+        next: () => this.voltarPagina(),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -78,7 +81,7 @@ export class FabricanteFormComponent {
       if (fabricante.id != null) {
         this.fabricanteService.delete(fabricante).subscribe({
           next: () => {
-            this.router.navigateByUrl('/fabricantes');
+            this.router.navigateByUrl('admin/fabricantes');
           },
           error: (err) => {
             console.log('Erro ao Excluir' + JSON.stringify(err));
@@ -130,5 +133,8 @@ export class FabricanteFormComponent {
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  }
+  voltarPagina() {
+    this.location.back();
   }
 }
