@@ -41,76 +41,244 @@ import { AdminTemplateComponent } from './components/template/admin-template/adm
 import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-  
   {
     path: '',
     component: UserTemplateComponent,
     title: 'e-commerce',
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'home'},
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
 
       { path: 'home', component: HomeComponent, title: 'Home' },
 
       { path: 'login', component: LoginComponent, title: 'Login' },
-      { path: 'produtos', component: JogoCardListComponent, title: 'Produtos à Venda'},
-      { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho de pedidos'},
-    ]
-
-  
+      {
+        path: 'produtos',
+        component: JogoCardListComponent,
+        title: 'Produtos à Venda',
+      },
+      {
+        path: 'carrinho',
+        component: CarrinhoComponent,
+        title: 'Carrinho de pedidos',
+      },
+      {
+        path: 'usuarios/new',
+        component: UserFormComponent,
+        title: 'Cadastro de Usuário',
+      },
+      {
+        path: 'usuarios/edit/:id',
+        component: UserFormComponent,
+        resolve: { user: userResolver },
+        canActivate: [authGuard],
+      },
+    ],
+  },
   {
-
     path: 'admin',
     component: AdminTemplateComponent,
     title: 'e-commerce',
     children: [
-      { path: '', pathMatch: 'full',  redirectTo: 'tela-administrador'},
+      { path: '', pathMatch: 'full', redirectTo: 'tela-administrador' },
 
-      { path: 'tela-administrador', component: TelaAdministradorComponent, title: 'Tela Administrador'},
+      {
+        path: 'tela-administrador',
+        component: TelaAdministradorComponent,
+        title: 'Tela Administrador',
+      },
 
-      
-      { path: 'usuarios', component: UserListComponent, title: 'Usuários', canActivate: [authGuard] },
-      { path: 'usuarios/new', component: UserFormComponent, title: 'Cadastro de Usuário', canActivate: [authGuard]  },
-      { path: 'usuarios/edit/:id', component: UserFormComponent, resolve: { user: userResolver } , canActivate: [authGuard]},
-      
-      { path: 'pais', component: PaisListComponent, title: 'Lista de Paises' , canActivate: [authGuard]},
-      { path: 'pais/new', component: PaisFormComponent, title: 'Novo Pais', canActivate: [authGuard] },
-      { path: 'pais/edit/:id', component: PaisFormComponent, resolve: { pais: paisResolver } , canActivate: [authGuard]},
-      
-      { path: 'desenvolvedoras', component: DesenvolvedoraListComponent, title: 'Lista de Desenvolvedoras', canActivate: [authGuard] },
-      { path: 'desenvolvedoras/new', component: DesenvolvedoraFormComponent, title: 'Nova Desenvolvedora', canActivate: [authGuard] },
-      { path: 'desenvolvedoras/edit/:id', component: DesenvolvedoraFormComponent, resolve: { desenvolvedora: desenvolvedoraResolver }, canActivate: [authGuard] },
-      
-      { path: 'plataformas', component: PlataformaListComponent, title: 'Lista de Plataformas', canActivate: [authGuard] },
-      { path: 'plataformas/new', component: PlataformaFormComponent, title: 'Nova Plataforma',  canActivate: [authGuard]  },
-      { path: 'plataformas/edit/:id', component: PlataformaFormComponent, resolve: { plataforma: plataformaResolver }, canActivate: [authGuard] },
-      
-      { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' , canActivate: [authGuard]},
-      { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado', canActivate: [authGuard]  },
-      { path: 'estados/edit/:id', component: EstadoFormComponent, resolve: { estado: estadoResolver }, canActivate: [authGuard] },
-      
-      { path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municipios', canActivate: [authGuard] },
-      { path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Municipio', canActivate: [authGuard]  },
-      { path: 'municipios/edit/:id', component: MunicipioFormComponent, resolve: { municipio: municipioResolver }, canActivate: [authGuard] },
-      
-      { path: 'requisitos', component: RequisitoListComponent, title: 'Lista de requisitos', canActivate: [authGuard] },
-      { path: 'requisitos/new', component: RequisitoFormComponent, title: 'Novos Requisitos', canActivate: [authGuard]  },
-      { path: 'requisitos/edit/:id', component: RequisitoFormComponent, resolve: { requisito: requisitoResolver } , canActivate: [authGuard]},
-     
-      { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' , canActivate: [authGuard]},
-      { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero', canActivate: [authGuard]  },
-      { path: 'generos/edit/:id', component: GeneroFormComponent, resolve: { genero: generoResolver } , canActivate: [authGuard]},
-      
-      { path: 'fabricantes', component: FabricanteListComponent, title: 'Lista de Fabricantes', canActivate: [authGuard] },
-      { path: 'fabricantes/new', component: FabricanteFormComponent, title: 'Novo Fabricante', canActivate: [authGuard]  },
-      { path: 'fabricantes/edit/:id', component: FabricanteFormComponent, resolve: { fabricante: fabricanteResolver } , canActivate: [authGuard]},
-      
-      { path: 'jogos', component: JogoListComponent, title: 'Lista de Jogos' , canActivate: [authGuard]},
-      { path: 'jogos/new', component: JogoFormComponent, title: 'Novo Jogo', canActivate: [authGuard]  },
-      { path: 'jogos/edit/:id', component: JogoFormComponent, resolve: { jogo: jogoResolver } , canActivate: [authGuard]},      
-  
-    ]
+      {
+        path: 'usuarios',
+        component: UserListComponent,
+        title: 'Usuários',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'usuarios/new',
+        component: UserFormComponent,
+        title: 'Cadastro de Usuário',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'usuarios/edit/:id',
+        component: UserFormComponent,
+        resolve: { user: userResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'pais',
+        component: PaisListComponent,
+        title: 'Lista de Paises',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'pais/new',
+        component: PaisFormComponent,
+        title: 'Novo Pais',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'pais/edit/:id',
+        component: PaisFormComponent,
+        resolve: { pais: paisResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'desenvolvedoras',
+        component: DesenvolvedoraListComponent,
+        title: 'Lista de Desenvolvedoras',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'desenvolvedoras/new',
+        component: DesenvolvedoraFormComponent,
+        title: 'Nova Desenvolvedora',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'desenvolvedoras/edit/:id',
+        component: DesenvolvedoraFormComponent,
+        resolve: { desenvolvedora: desenvolvedoraResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'plataformas',
+        component: PlataformaListComponent,
+        title: 'Lista de Plataformas',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'plataformas/new',
+        component: PlataformaFormComponent,
+        title: 'Nova Plataforma',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'plataformas/edit/:id',
+        component: PlataformaFormComponent,
+        resolve: { plataforma: plataformaResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'estados',
+        component: EstadoListComponent,
+        title: 'Lista de Estados',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'estados/new',
+        component: EstadoFormComponent,
+        title: 'Novo Estado',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'estados/edit/:id',
+        component: EstadoFormComponent,
+        resolve: { estado: estadoResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'municipios',
+        component: MunicipioListComponent,
+        title: 'Lista de Municipios',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'municipios/new',
+        component: MunicipioFormComponent,
+        title: 'Novo Municipio',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'municipios/edit/:id',
+        component: MunicipioFormComponent,
+        resolve: { municipio: municipioResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'requisitos',
+        component: RequisitoListComponent,
+        title: 'Lista de requisitos',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'requisitos/new',
+        component: RequisitoFormComponent,
+        title: 'Novos Requisitos',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'requisitos/edit/:id',
+        component: RequisitoFormComponent,
+        resolve: { requisito: requisitoResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'generos',
+        component: GeneroListComponent,
+        title: 'Lista de Generos',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'generos/new',
+        component: GeneroFormComponent,
+        title: 'Novo Genero',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'generos/edit/:id',
+        component: GeneroFormComponent,
+        resolve: { genero: generoResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'fabricantes',
+        component: FabricanteListComponent,
+        title: 'Lista de Fabricantes',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'fabricantes/new',
+        component: FabricanteFormComponent,
+        title: 'Novo Fabricante',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'fabricantes/edit/:id',
+        component: FabricanteFormComponent,
+        resolve: { fabricante: fabricanteResolver },
+        canActivate: [authGuard],
+      },
+
+      {
+        path: 'jogos',
+        component: JogoListComponent,
+        title: 'Lista de Jogos',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'jogos/new',
+        component: JogoFormComponent,
+        title: 'Novo Jogo',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'jogos/edit/:id',
+        component: JogoFormComponent,
+        resolve: { jogo: jogoResolver },
+        canActivate: [authGuard],
+      },
+    ],
   },
-  
+
   {
     path: 'carrinho',
     component: CarrinhoComponent,
