@@ -109,7 +109,7 @@ export class JogoFormComponent {
       this.initializeForm();
     });
 
-    this.desenvolvedoraService.findAll().subscribe(data => {
+    this.desenvolvedoraService.findByAtivo(true).subscribe(data => {
       this.desenvolvedoras = data;
       this.initializeForm();
     });

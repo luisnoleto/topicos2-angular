@@ -57,5 +57,9 @@ export class DesenvolvedoraService {
     );
   }
 
+  findByAtivo(ativo: boolean): Observable<Desenvolvedora[]> {
+    return this.httpClient.get<Desenvolvedora[]>(`${this.baseUrl}/search/ativo/${ativo}`);
+  }
+
 
 }
