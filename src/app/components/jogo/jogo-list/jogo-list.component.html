@@ -48,6 +48,9 @@
           routerLink="/jogos/edit/{{ element.id }}">
           <mat-icon>edit</mat-icon>
         </button>
+
+        <mat-slide-toggle [checked]="element.ativo" (click)="openDialog($event, element)"></mat-slide-toggle>
+
         <button mat-icon-button color="warn" (click)="excluir(element)">
           <mat-icon>delete</mat-icon>
         </button>

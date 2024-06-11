@@ -50,4 +50,10 @@ export class FabricanteService {
   delete(Fabricante: Fabricante): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${Fabricante.id}`);
   }
+
+  alterarSituacao(fabricante: Fabricante): Observable<Fabricante> {
+    return this.httpClient.patch<Fabricante>(`${this.baseUrl}/alterarSituacao/${fabricante.id}`,
+      fabricante
+    );
+  }
 }

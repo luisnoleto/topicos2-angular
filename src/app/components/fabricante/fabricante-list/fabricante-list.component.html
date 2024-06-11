@@ -36,6 +36,9 @@
           >
             <mat-icon>edit</mat-icon>
           </button>
+          
+          <mat-slide-toggle [checked]="element.ativo" (click)="openDialog($event, element)"></mat-slide-toggle>
+          
           <button
             mat-icon-button
             color="warn"

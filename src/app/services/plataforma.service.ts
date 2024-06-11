@@ -50,4 +50,10 @@ export class PlataformaService {
   delete(plataforma: Plataforma): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${plataforma.id}`);
   }
+
+  alterarSituacao(plataforma: Plataforma): Observable<Plataforma> {
+    return this.httpClient.patch<Plataforma>(`${this.baseUrl}/alterarSituacao/${plataforma.id}`,
+      plataforma
+    );
+  }
 }

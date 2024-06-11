@@ -13,9 +13,6 @@ import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { userResolver } from './components/user/resolver/user-resolver';
-import { RequisitoListComponent } from './components/requisitos/requisito-list/requisito-list.component';
-import { RequisitoFormComponent } from './components/requisitos/requisito-form/requisito-form.component';
-import { requisitoResolver } from './components/requisitos/resolver/requisito-resolver';
 import { GeneroListComponent } from './components/genero/genero-list/genero-list.component';
 import { GeneroFormComponent } from './components/genero/genero-form/genero-form.component';
 import { generoResolver } from './components/genero/resolver/genero-resolver';
@@ -213,25 +210,6 @@ export const routes: Routes = [
         path: 'municipios/edit/:id',
         component: MunicipioFormComponent,
         resolve: { municipio: municipioResolver },
-        canActivate: [authGuard],
-      },
-
-      {
-        path: 'requisitos',
-        component: RequisitoListComponent,
-        title: 'Lista de requisitos',
-        canActivate: [authGuard],
-      },
-      {
-        path: 'requisitos/new',
-        component: RequisitoFormComponent,
-        title: 'Novos Requisitos',
-        canActivate: [authGuard],
-      },
-      {
-        path: 'requisitos/edit/:id',
-        component: RequisitoFormComponent,
-        resolve: { requisito: requisitoResolver },
         canActivate: [authGuard],
       },
 

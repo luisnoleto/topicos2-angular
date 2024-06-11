@@ -44,4 +44,10 @@ export class PaisService {
   delete(pais: Pais): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${pais.id}`);
   }
+
+  alterarSituacao(pais: Pais): Observable<Pais> {
+    return this.httpClient.patch<Pais>(`${this.baseUrl}/alterarSituacao/${pais.id}`,
+      pais
+    );
+  }
 }

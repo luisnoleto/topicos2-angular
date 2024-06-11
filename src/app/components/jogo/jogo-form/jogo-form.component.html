@@ -55,6 +55,71 @@
                 </mat-error>
                 </mat-form-field>
 
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Processador</mat-label>
+                    <input matInput type="number" formControlName="processador">
+                    <mat-error *ngIf="formGroup.get('processador')?.errors && 
+                                        formGroup.get('processador')?.touched">
+                    {{getErrorMessage('processador', formGroup.get('processador')?.errors)}}
+
+                    @if(formGroup.get('processador')?.hasError('apiError')){
+                        <span>{{formGroup.get('processador')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Memoria</mat-label>
+                    <input matInput type="number" formControlName="memoria">
+                    <mat-error *ngIf="formGroup.get('memoria')?.errors && 
+                                        formGroup.get('memoria')?.touched">
+                    {{getErrorMessage('memoria', formGroup.get('memoria')?.errors)}}
+
+                    @if(formGroup.get('memoria')?.hasError('apiError')){
+                        <span>{{formGroup.get('memoria')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Placa de Video</mat-label>
+                    <input matInput type="number" formControlName="placaVideo">
+                    <mat-error *ngIf="formGroup.get('placaVideo')?.errors && 
+                                        formGroup.get('placaVideo')?.touched">
+                    {{getErrorMessage('placaVideo', formGroup.get('placaVideo')?.errors)}}
+
+                    @if(formGroup.get('placaVideo')?.hasError('apiError')){
+                        <span>{{formGroup.get('placaVideo')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Sistema Operacional</mat-label>
+                    <input matInput type="number" formControlName="sistemaOperacional">
+                    <mat-error *ngIf="formGroup.get('sistemaOperacional')?.errors && 
+                                        formGroup.get('sistemaOperacional')?.touched">
+                    {{getErrorMessage('sistemaOperacional', formGroup.get('sistemaOperacional')?.errors)}}
+
+                    @if(formGroup.get('sistemaOperacional')?.hasError('apiError')){
+                        <span>{{formGroup.get('sistemaOperacional')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>armazenamento</mat-label>
+                    <input matInput type="number" formControlName="armazenamento">
+                    <mat-error *ngIf="formGroup.get('armazenamento')?.errors && 
+                                        formGroup.get('armazenamento')?.touched">
+                    {{getErrorMessage('armazenamento', formGroup.get('armazenamento')?.errors)}}
+
+                    @if(formGroup.get('armazenamento')?.hasError('apiError')){
+                        <span>{{formGroup.get('armazenamento')?.getError('apiError')}}</span>
+                    }
+                </mat-error>
+                </mat-form-field>
+
                 <mat-form-field appearance="fill">
                     <mat-label>Genero</mat-label>
                     <mat-select formControlName="estado">
@@ -83,17 +148,6 @@
                         @for (desenvolvedora of desenvolvedoras; track desenvolvedora.id) {
                             <mat-option [value]="desenvolvedora">
                                 {{desenvolvedora.nome}}
-                            </mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Requisito</mat-label>
-                    <mat-select formControlName="requisito">
-                        @for (requisito of requisitos; track requisito.id) {
-                            <mat-option [value]="requisito">
-                                {{requisito.desempenho}}
                             </mat-option>
                         }
                     </mat-select>
