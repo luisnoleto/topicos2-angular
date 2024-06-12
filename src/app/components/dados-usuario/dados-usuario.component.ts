@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Subscription } from 'rxjs';
 import {
   FormArray,
   FormArrayName,
@@ -14,8 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { UserService } from '../../../services/user.service';
-import { User } from '../../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControlName } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -25,18 +28,12 @@ import {
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
-import { PerfilDTO } from '../../../models/perfildto.model';
+import { NgModule } from '@angular/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-
 @Component({
-  selector: 'app-user-form',
+  selector: 'app-dados-usuario',
   standalone: true,
-  providers: [
-    provideNativeDateAdapter(),
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-  ],
-  // ...
-
   imports: [
     NgIf,
     ReactiveFormsModule,
@@ -48,22 +45,26 @@ import { MatSelectModule } from '@angular/material/select';
     CommonModule,
     MatDatepickerModule,
     MatSelectModule,
+    MatNativeDateModule,
   ],
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css',
+  templateUrl: './dados-usuario.component.html',
+  styleUrl: './dados-usuario.component.css',
 })
-export class UserFormComponent {
+export class DadosUsuarioComponent implements OnInit {
   formGroup: FormGroup;
-  perfis: PerfilDTO[] = [];
+  showAddresses = false;
+  usuarioLogado: User | null = null;
+  private subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
+    private localStorageService: LocalStorageService,
     private router: Router,
+    private userService: UserService,
     private activatedRoute: ActivatedRoute
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
-    this.loadPerfis();
     this.formGroup = formBuilder.group({
       id: user && user.id ? user.id : null,
       nome: [user && user.nome ? user.nome : '', Validators.required],
@@ -81,7 +82,19 @@ export class UserFormComponent {
       ),
     });
   }
-
+  ngOnInit(): void {
+    this.obterUsuarioLogado();
+  }
+  obterUsuarioLogado() {
+    this.subscription.add(
+      this.authService
+        .getUsuarioLogado()
+        .subscribe((usuario) => (this.usuarioLogado = usuario))
+    );
+  }
+  toggleAddresses() {
+    this.showAddresses = !this.showAddresses;
+  }
   get listaTelefone() {
     return this.formGroup.get('listaTelefone') as FormArray;
   }
@@ -110,7 +123,9 @@ export class UserFormComponent {
           : this.userService.update(user);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/admin/usuarios'),
+        next: () => {
+          location.reload();
+        },
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -132,29 +147,7 @@ export class UserFormComponent {
         });
       }
     } else if (error.status < 400) {
-      alert(error.error?.message || 'Erro não tratado.');
-    } else if (error.status >= 500) {
-      alert('Erro interno.');
+      console.log('Erro inesperado');
     }
-  }
-  excluir() {
-    if (this.formGroup.valid) {
-      const user = this.formGroup.value;
-      if (user.id != null) {
-        this.userService.delete(user).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/usuarios');
-          },
-          error: (err) => {
-            console.log('Erro ao Excluir' + JSON.stringify(err));
-          },
-        });
-      }
-    }
-  }
-  loadPerfis() {
-    this.userService.findAllPerfis().subscribe((data) => {
-      this.perfis = data;
-    });
   }
 }

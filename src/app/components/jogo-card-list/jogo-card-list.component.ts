@@ -84,8 +84,8 @@ export class JogoCardListComponent implements OnInit {
   showSnackbarTopPosition(content: any, action: any) {
     this.snackBar.open(content, action, {
       duration: 2000,
-      verticalPosition: 'top', // Allowed values are  'top' | 'bottom'
-      horizontalPosition: 'center', // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
     });
   }
 }

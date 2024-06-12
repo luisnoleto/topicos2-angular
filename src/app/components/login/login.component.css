@@ -8,16 +8,10 @@
   background-color: rgba(66, 66, 66, 1);
   text-align: center;
 }
-  
   .login-card {
-  
     margin: 0 auto;
-    padding: 20px;
-    
-    
+    padding: 20px; 
   }
-
-  
   .login-icon mat-icon {
       font-size: 48px; /* Adjust this value to increase or decrease the icon size */
       width: auto; /* Adjust width automatically based on font size */
@@ -26,11 +20,7 @@
      display: block;
      color: #fff;
     }
-    
-  
-
-
-  
+      
   .login-title {
     font-size: 24px;
     margin: 10px 0;

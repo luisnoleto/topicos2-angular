@@ -14,6 +14,7 @@ import { SidebarComponent } from './components/template/sidebar/sidebar.componen
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPortuguesePaginatorIntl } from './services/portuguese-paginator-intl.service';
 import { CommonModule } from '@angular/common';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
@@ -42,9 +43,10 @@ import { CommonModule } from '@angular/common';
 //export class AppComponent {
 //title = 'angular-loja-games';
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private matIconReg: MatIconRegistry) {}
 
   ngOnInit() {
+    this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
     this.http
       .get('https://jsonplaceholder.typicode.com/todos/1')
       .subscribe((data) => {

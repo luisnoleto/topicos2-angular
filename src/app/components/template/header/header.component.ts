@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatBadge } from '@angular/material/badge';
-import { Usuario } from '../../../models/usuario.model';
+import { User } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { SidebarService } from '../../../services/sidebar.service';
@@ -26,12 +27,14 @@ import { Router } from '@angular/router';
     RouterModule,
     MatMenuModule,
     CommonModule,
+    NgIf,
+    MatIconModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  usuarioLogado: Usuario | null = null;
+  usuarioLogado: User | null = null;
   private subscription = new Subscription();
 
   qtdItensCarrinho: number = 0;
