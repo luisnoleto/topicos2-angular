@@ -1,41 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Pedido } from '../models/pedido.model';
-import { ItemPedido } from '../models/itempedido.model';
+import { PedidoDTO } from '../models/pedidoDTO.model';
+import { ItemPedidoDTO } from '../models/itempedidoDTO.model';
 import { JogoService } from './jogo.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
-  private baseUrl = 'http://your-api-url.com/pedidos';
+  private baseUrl = 'http://localhost:8080/pedidos';
 
   constructor(
     private httpClient: HttpClient,
     private jogoService: JogoService
   ) {}
 
-  createPedido(pedido: Pedido): Observable<Pedido> {
-    return this.httpClient.post<Pedido>(this.baseUrl, pedido);
+  getAll(): Observable<PedidoDTO[]> {
+    return this.httpClient.get<PedidoDTO[]>(this.baseUrl);
+  }
+  createPedido(pedidoDTO: PedidoDTO): Observable<PedidoDTO> {
+    return this.httpClient.post<PedidoDTO>(
+      `${this.baseUrl}/fazendopedido`,
+      pedidoDTO
+    );
   }
 
   addItemToPedido(
     pedidoId: number,
-    itemPedido: ItemPedido
-  ): Observable<Pedido> {
-    return this.httpClient.post<Pedido>(
+    ItemPedidoDTO: ItemPedidoDTO
+  ): Observable<PedidoDTO> {
+    return this.httpClient.post<PedidoDTO>(
       `${this.baseUrl}/${pedidoId}/items`,
-      itemPedido
+      ItemPedidoDTO
     );
   }
 
-  getPedidoById(pedidoId: number): Observable<Pedido> {
-    return this.httpClient.get<Pedido>(`${this.baseUrl}/${pedidoId}`);
+  getPedidoById(pedidoId: number): Observable<PedidoDTO> {
+    return this.httpClient.get<PedidoDTO>(`${this.baseUrl}/${pedidoId}`);
   }
 
-  updatePedido(pedido: Pedido): Observable<Pedido> {
-    return this.httpClient.put<Pedido>(`${this.baseUrl}/${pedido.id}`, pedido);
+  updatePedido(PedidoDTO: PedidoDTO): Observable<PedidoDTO> {
+    return this.httpClient.put<PedidoDTO>(
+      `${this.baseUrl}/${PedidoDTO}`,
+      PedidoDTO
+    );
   }
 
   deletePedido(pedidoId: number): Observable<void> {

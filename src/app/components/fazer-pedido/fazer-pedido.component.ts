@@ -11,6 +11,12 @@ import { MatCardActions } from '@angular/material/card';
 import { MatCardContent } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { PedidoService } from '../../services/pedido.service';
+import { PedidoDTO } from '../../models/pedidoDTO.model';
+import { ItemPedidoDTO } from '../../models/itempedidoDTO.model';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormsModule } from '@angular/forms';
+import { EnderecoService } from '../../services/endereco.service';
 
 @Component({
   selector: 'app-fazer-pedido',
@@ -22,6 +28,8 @@ import { Router } from '@angular/router';
     MatCardActions,
     MatCardContent,
     CommonModule,
+    MatRadioModule,
+    FormsModule,
   ],
   templateUrl: './fazer-pedido.component.html',
   styleUrls: ['./fazer-pedido.component.css'],
@@ -29,12 +37,17 @@ import { Router } from '@angular/router';
 export class FazerPedidoComponent implements OnInit {
   carrinhoItens: ItemCarrinho[] = [];
   updatedCarrinhoItens: any[] = [];
-  enderecos: string[] = ['Quadra 1204 sul alameda 16, 38 O 06']; // Example addresses
+  enderecos: { id: number; endereco: string }[] = [];
+  enderecoId!: number;
+  pagamento!: number;
+  mostrarOpcoesPagamento: boolean = false;
 
   constructor(
     private carrinhoService: CarrinhoService,
     private jogoService: JogoService,
-    private router: Router
+    private pedidoService: PedidoService,
+    private router: Router,
+    private enderecoService: EnderecoService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +55,7 @@ export class FazerPedidoComponent implements OnInit {
       this.carrinhoItens = itens;
       this.updateCartItemsWithImages(itens);
     });
+    this.buscaEnderecos();
   }
 
   updateCartItemsWithImages(itens: ItemCarrinho[]) {
@@ -72,7 +86,47 @@ export class FazerPedidoComponent implements OnInit {
     );
   }
 
+  buscaEnderecos(): void {
+    this.enderecoService.getEnderecos().subscribe((enderecos) => {
+      this.enderecos = enderecos;
+      if (this.enderecos.length > 0) {
+        this.enderecoId = this.enderecos[0].id;
+      }
+    });
+  }
+
   continuarPagamento(): void {
-    this.router.navigate(['/finalizar-pedido/pagamento']);
+    this.mostrarOpcoesPagamento = true;
+  }
+
+  metodoPag(value: number): void {
+    this.pagamento = value;
+  }
+
+  finalizarPedido(): void {
+    if (!this.enderecoId) {
+      console.error('Nenhum endereço selecionado');
+      return;
+    }
+
+    const pedido: PedidoDTO = {
+      endereco: this.enderecoId,
+      pagamento: this.pagamento,
+      itens: this.carrinhoItens.map((item) => ({
+        idProduto: item.id,
+        preco: item.preco,
+        quantidade: item.quantidade,
+      })),
+    };
+
+    this.pedidoService.createPedido(pedido).subscribe({
+      next: (response) => {
+        console.log('Pedido realizado com sucesso', response);
+        this.router.navigate(['/finalizar-pedido/confirmacao']);
+      },
+      error: (error) => {
+        console.error('Erro ao realizar pedido', error);
+      },
+    });
   }
 }

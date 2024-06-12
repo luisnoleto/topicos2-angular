@@ -8,17 +8,39 @@
       <h2>Endereço</h2>
       <p>Seus Endereços</p>
       <div class="endereco-lista">
-        <mat-card *ngFor="let endereco of enderecos" class="endereco-item">
-          {{ endereco }}
-        </mat-card>
+        <mat-radio-group [(ngModel)]="enderecoId">
+          <mat-radio-button
+            *ngFor="let endereco of enderecos"
+            [value]="endereco.id"
+            >{{ endereco.endereco }}
+          </mat-radio-button>
+        </mat-radio-group>
         <mat-card class="endereco-item add-endereco">
           ADICIONAR NOVO ENDEREÇO +
         </mat-card>
       </div>
     </div>
-    <button mat-raised-button color="primary" (click)="continuarPagamento()">
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="!mostrarOpcoesPagamento"
+      (click)="continuarPagamento()"
+    >
       Continuar para pagamento
     </button>
+    <div class="pagamento-opcoes" *ngIf="mostrarOpcoesPagamento">
+      <h2>Escolha o método de pagamento</h2>
+      <mat-radio-group
+        [(ngModel)]="pagamento"
+        (change)="metodoPag($event.value)"
+      >
+        <mat-radio-button value="1">Pix</mat-radio-button>
+        <mat-radio-button value="2">Boleto</mat-radio-button>
+      </mat-radio-group>
+      <button mat-raised-button color="primary" (click)="finalizarPedido()">
+        Finalizar Pedido
+      </button>
+    </div>
   </div>
   <div class="jogos-container">
     <ng-container *ngIf="updatedCarrinhoItens.length > 0; else carrinhoVazio">
