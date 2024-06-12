@@ -1,123 +1,139 @@
 .fazer-pedido {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .order-summary {
-    width: 35%;
-    background-color: rgba(66, 66, 66, 1);
-    color: #fff;
-    border-radius: 20px;
-    padding: 20px;
-  }
-  
-  .total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.5em;
-    margin-bottom: 0; 
-  }
-  
-  .jogos-container{
-    color: #fff;
-  }
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-  .endereco h2 {
-    margin-top: 0; 
-  }
-  
-  .endereco-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .endereco-item {
-    background-color: #424242;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-endereco {
-    background-color: #616161;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  .jogos-container {
-    width: 60%;
-  }
-  
-  .checkout-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-   
-  }
-  
-  .checkout-item {
-    flex: 0 0 calc(50% - 20px);
-    box-sizing: border-box;
-    display: flex;
-  }
-  
-  .card-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 16px;
-    width: 100%;
-    align-items: center;
-  }
-  
-  mat-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    margin-bottom: 16px;
-  }
-  
-  .centered-text {
-    text-align: center;
-  }
-  
-  .carrinho-vazio-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .carrinho-vazio-message {
-    background-color: rgba(66, 66, 66, 1);
-    border-radius: 20px;
-    padding: 20px 40px;
-    color: #fff;
-    text-align: center;
-    font-size: 1.2em;
-  }
-  
+.order-summary {
+  width: 35%;
+  background-color: rgba(66, 66, 66, 1);
+  color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+}
 
-  .endereco-item.add-endereco {
-    margin-bottom: 20px; 
-  }
-  
-  .order-summary > button {
-    display: block;
-    margin: 0 auto;
-  }
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
 
-  button{ width: 100%;
-    margin-top: 20px;
-    color: #fff;
-    transition: background 0.3s; }
-  
-    button:hover{ background: purple; }
+.jogos-container {
+  color: #fff;
+}
+
+.endereco h2 {
+  margin-top: 0;
+}
+
+.endereco-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.endereco-item {
+  background-color: #424242;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-endereco {
+  background-color: #616161;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.jogos-container {
+  width: 60%;
+}
+
+.checkout-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.checkout-item {
+  flex: 0 0 calc(50% - 20px);
+  box-sizing: border-box;
+  display: flex;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  width: 100%;
+  align-items: center;
+}
+
+mat-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.carrinho-vazio-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.carrinho-vazio-message {
+  background-color: rgba(66, 66, 66, 1);
+  border-radius: 20px;
+  padding: 20px 40px;
+  color: #fff;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.endereco-item.add-endereco {
+  margin-bottom: 20px;
+}
+
+.order-summary > button {
+  display: block;
+  margin: 0 auto;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  color: #fff;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: purple;
+}
+
+.pagamento-opcoes {
+  margin-top: 20px;
+}
+
+.pagamento-opcoes h2 {
+  margin-top: 0;
+}
+
+.mat-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
