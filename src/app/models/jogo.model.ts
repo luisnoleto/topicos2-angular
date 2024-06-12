@@ -3,7 +3,6 @@ import { Desenvolvedora } from './desenvolvedora.model';
 import { Fabricante } from './fabricante.model';
 import { Genero } from './genero.model';
 import { Plataforma } from './plataforma.model';
-import { Requisito } from './requisitos.model';
 
 export class Jogo {
   id!: number;
@@ -12,10 +11,15 @@ export class Jogo {
   preco!: number;
   estoque!: number;
   genero!: Genero;
+  processador!: string;
+  memoria!: string;
+  placaVideo!: string;
+  sistemaOperacional!: string;
+  armazenamento!: string;
   plataforma!: Plataforma;
-  requisitos!: Requisito;
   desenvolvedora!: Desenvolvedora;
   classificacao!: Classificacao;
   fabricante!: Fabricante;
   nomeImagem!: string;
+  ativo!: boolean;
 }

@@ -2,7 +2,7 @@
   <div class="gerenciar">
     <h1 class="tituloGerenciar">Gerenciar Jogos</h1>
     <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/jogos/new">
+      <button mat-raised-button color="primary" routerLink="/admin/jogos/new">
         Cadastrar Jogos
       </button>
     </div>
@@ -48,6 +48,9 @@
           routerLink="/jogos/edit/{{ element.id }}">
           <mat-icon>edit</mat-icon>
         </button>
+
+        <mat-slide-toggle [checked]="element.ativo" (click)="openDialog($event, element)"></mat-slide-toggle>
+
         <button mat-icon-button color="warn" (click)="excluir(element)">
           <mat-icon>delete</mat-icon>
         </button>

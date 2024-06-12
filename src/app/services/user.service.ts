@@ -46,6 +46,7 @@ export class UserService {
     const userToSend = { ...user, perfil: user.perfil ? user.perfil.id : null };
     return this.httpClient.post<User>(`${this.adminUrl}/cadastro`, userToSend);
   }
+  
   perfilNome(login: string): Observable<PerfilDTO> {
     return this.httpClient.get<PerfilDTO>(
       `${this.baseUrl}/perfilNome/${login}`

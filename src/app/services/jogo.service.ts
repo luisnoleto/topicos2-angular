@@ -88,4 +88,10 @@ export class JogoService {
   delete(jogo: Jogo): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${jogo.id}`);
   }
+
+  alterarSituacao(jogo: Jogo): Observable<Jogo> {
+    return this.httpClient.patch<Jogo>(`${this.baseUrl}/alterarSituacao/${jogo.id}`,
+      jogo
+    );
+  }
 }

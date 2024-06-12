@@ -1,4 +1,9 @@
-# AngularPsicologia
+# GL GAMES - ANGULAR
+
+Este repositório contém o front-end da aplicação desenvolvida em Angular, com back-end em padrão REST, como projeto na disciplina de Tópicos em Programação II, Na Universidade Estadual do Tocantins - UNITINS. A aplicação é o modelo de uma loja virtual vendedora de jogos em mídia fisica.
+
+
+# Info Angular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
 

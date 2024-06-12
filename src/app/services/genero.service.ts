@@ -45,4 +45,10 @@ export class GeneroService {
     return this.httpClient.delete<any>(`${this.baseUrl}/${Genero.id}`);
   }
 
+  alterarSituacao(genero: Genero): Observable<Genero> {
+    return this.httpClient.patch<Genero>(`${this.baseUrl}/alterarSituacao/${genero.id}`,
+      genero
+    );
+  }
+
 }

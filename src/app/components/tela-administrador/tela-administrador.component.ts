@@ -58,7 +58,4 @@ export class TelaAdministradorComponent {
     this.router.navigate(['admin/municipios']);
   }
 
-  navigateToRequisitoList() {
-    this.router.navigate(['admin/requisitos']);
-  }
 }

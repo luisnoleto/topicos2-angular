@@ -4,5 +4,6 @@ export class Plataforma {
     id!: number;
     nome!: string;
     fabricante!: Fabricante;
+    ativo!: boolean;
   }
   
