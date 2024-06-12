@@ -1,0 +1,125 @@
+.profile-container {
+  background: #151517;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 20px auto;
+  color: white;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  background: #424242;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.picture-placeholder {
+  font-size: 36px;
+  color: white;
+}
+
+.welcome-message {
+  font-size: 24px;
+}
+
+.profile-content {
+  margin-top: 20px;
+}
+
+.user-details, .saved-addresses {
+  background: #424242;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.user-form {
+  display: none;
+}
+
+.address {
+  background: #333;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.toggle-button {
+  background: #6200ea;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#buttonPedido{
+  margin-left: 15px;
+}
+#addTelefone{
+  margin-bottom: -80px;
+
+}
+
+.toggle-button:hover {
+  background: purple;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button[mat-raised-button] {
+  width: 120px;
+}
+
+button[mat-raised-button]:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.small-input {
+  width: 60px; 
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.telefone-fields {
+  grid-column: span 2; /* Span both columns */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adjust the gap as needed */
+  width: 50%;
+}

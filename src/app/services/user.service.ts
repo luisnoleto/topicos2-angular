@@ -37,7 +37,12 @@ export class UserService {
   findByNome(nome: string): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.baseUrl}/search/nome/${nome}`);
   }
-
+  alterarSenha(senhaAtual: String, novaSenha: String): Observable<User> {
+    return this.httpClient.patch<User>(`${this.adminUrl}/alterar/senha`, {
+      senhaAtual,
+      novaSenha,
+    });
+  }
   findAllPerfis(): Observable<PerfilDTO[]> {
     return this.httpClient.get<PerfilDTO[]>(`${this.adminUrl}/perfis`);
   }
@@ -46,7 +51,7 @@ export class UserService {
     const userToSend = { ...user, perfil: user.perfil ? user.perfil.id : null };
     return this.httpClient.post<User>(`${this.adminUrl}/cadastro`, userToSend);
   }
-  
+
   perfilNome(login: string): Observable<PerfilDTO> {
     return this.httpClient.get<PerfilDTO>(
       `${this.baseUrl}/perfilNome/${login}`

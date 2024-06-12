@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
 import {
   FormArray,
   FormArrayName,
@@ -14,8 +15,6 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { UserService } from '../../../services/user.service';
-import { User } from '../../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControlName } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -25,11 +24,15 @@ import {
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
-import { PerfilDTO } from '../../../models/perfildto.model';
 import { MatSelectModule } from '@angular/material/select';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-user-form',
+  selector: 'app-update-senha',
   standalone: true,
   providers: [
     provideNativeDateAdapter(),
@@ -49,53 +52,38 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerModule,
     MatSelectModule,
   ],
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css',
+  templateUrl: './update-senha.component.html',
+  styleUrl: './update-senha.component.css',
 })
-export class UserFormComponent {
+export class UpdateSenhaComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
-  perfis: PerfilDTO[] = [];
+  usuarioLogado: User | null = null;
+  private subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private localStorageService: LocalStorageService,
+    private snackbar: MatSnackBar
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
-    this.loadPerfis();
     this.formGroup = formBuilder.group({
       id: user && user.id ? user.id : null,
-      nome: [user && user.nome ? user.nome : '', Validators.required],
-      login: [user && user.login ? user.login : '', Validators.required],
-      email: [user && user.email ? user.email : '', Validators.required],
-      cpf: [user && user.cpf ? user.cpf : '', Validators.required],
-      dataNascimento: [
-        user && user.dataNascimento ? user.dataNascimento : '',
-        Validators.required,
+      senhaAtual: [
+        user && user.senha ? user.senha : '',
+        Validators.compose([Validators.required, Validators.minLength(8)]),
       ],
-      listaTelefone: this.formBuilder.array(
-        user && user.listaTelefone
-          ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
-          : []
-      ),
+      novaSenha: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
-
-  get listaTelefone() {
-    return this.formGroup.get('listaTelefone') as FormArray;
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
-
-  addTelefone() {
-    this.listaTelefone.push(
-      this.formBuilder.group({ codigoArea: '', numero: '' })
-    );
-  }
-
-  removeTelefone() {
-    if (this.listaTelefone.controls.length > 0) {
-      this.listaTelefone.removeAt(this.listaTelefone.controls.length - 1);
-    }
+  ngOnInit(): void {
+    this.obterUsuarioLogado();
   }
 
   salvar() {
@@ -152,9 +140,36 @@ export class UserFormComponent {
       }
     }
   }
-  loadPerfis() {
-    this.userService.findAllPerfis().subscribe((data) => {
-      this.perfis = data;
+
+  updateSenha() {
+    if (this.formGroup.get('senhaAtual')?.valid) {
+      const senhaAtual = this.formGroup.get('senhaAtual')!.value;
+      const novaSenha = this.formGroup.get('novaSenha')!.value;
+
+      this.userService.alterarSenha(senhaAtual, novaSenha).subscribe({
+        next: (response) => {
+          console.log('Password updated successfully', response);
+          this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
+        },
+        error: (error) => {
+          console.error('Error updating password', error);
+          this.showSnackbarTopPosition('Senha atual não confere', 'Fechar');
+        },
+      });
+    }
+  }
+  showSnackbarTopPosition(content: any, action: any) {
+    this.snackbar.open(content, action, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
     });
+  }
+  obterUsuarioLogado() {
+    this.subscription.add(
+      this.authService
+        .getUsuarioLogado()
+        .subscribe((usuario) => (this.usuarioLogado = usuario))
+    );
   }
 }

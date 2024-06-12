@@ -35,11 +35,6 @@
     >
   </button>
 
-  <!-- Botão para deslogar, aparece apenas quando usuário está logado -->
-  <button *ngIf="usuarioLogado" mat-icon-button (click)="deslogar()">
-    <mat-icon>logout</mat-icon>
-  </button>
-
   <!-- Botão para fazer login, aparece apenas quando usuário não está logado -->
   <button *ngIf="!usuarioLogado" mat-icon-button routerLink="/login">
     <mat-icon>login</mat-icon>
@@ -50,13 +45,16 @@
     <button mat-button [matMenuTriggerFor]="menu">
       <span class="usuarioNome">{{ usuarioLogado.nome }}</span>
       <mat-menu #menu="matMenu">
-        <button
-          mat-menu-item
-          [routerLink]="['/usuarios/edit/', usuarioLogado.id]"
-        >
+        <button mat-menu-item [routerLink]="['/usuarios/dados-usuario']">
+          <mat-icon>account_circle</mat-icon>
           Editar Perfil
         </button>
-        <button mat-menu-item (click)="pedidos()">Pedidos</button>
+        <button mat-menu-item (click)="pedidos()">
+          <span class="material-symbols-outlined"> package_2 </span>Pedidos
+        </button>
+        <button *ngIf="usuarioLogado" mat-menu-item (click)="deslogar()">
+          <mat-icon>logout</mat-icon> Sair da Conta
+        </button>
       </mat-menu>
     </button>
   </ng-container>

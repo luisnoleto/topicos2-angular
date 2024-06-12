@@ -38,7 +38,8 @@ import { AdminTemplateComponent } from './components/template/admin-template/adm
 import { authGuard } from './guard/auth.guard';
 import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
 import { PagamentoComponent } from './components/pagamento/pagamento.component';
-
+import { UpdateSenhaComponent } from './components/update-senha/update-senha.component';
+import { DadosUsuarioComponent } from './components/dados-usuario/dados-usuario.component';
 export const routes: Routes = [
   {
     path: '',
@@ -65,6 +66,13 @@ export const routes: Routes = [
         component: UserFormComponent,
         title: 'Cadastro de Usuário',
       },
+
+      {
+        path: 'usuarios/edit/:id/senha',
+        component: UpdateSenhaComponent,
+        resolve: { user: userResolver },
+        canActivate: [authGuard],
+      },
       {
         path: 'usuarios/edit/:id',
         component: UserFormComponent,
@@ -82,6 +90,12 @@ export const routes: Routes = [
         path: 'finalizar-pedido/pagamento',
         component: PagamentoComponent,
         title: 'Pagamento',
+        canActivate: [authGuard],
+      },
+      {
+        path: ':usuarios/dados-usuario',
+        component: DadosUsuarioComponent,
+        title: 'Minhas Informações',
         canActivate: [authGuard],
       },
     ],
