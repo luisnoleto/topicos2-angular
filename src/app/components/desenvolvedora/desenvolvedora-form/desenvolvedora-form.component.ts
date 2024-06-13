@@ -77,7 +77,7 @@ export class DesenvolvedoraFormComponent {
     });
   }
   ngOnInit(): void {
-    this.paisService.findAll().subscribe((data) => {
+    this.paisService.findByAtivo(true).subscribe((data) => {
       this.paises = data;
     });
   }

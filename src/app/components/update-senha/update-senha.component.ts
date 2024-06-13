@@ -74,7 +74,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       id: user && user.id ? user.id : null,
       senhaAtual: [
         user && user.senha ? user.senha : '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+        Validators.compose([Validators.required]),
       ],
       novaSenha: ['', [Validators.required, Validators.minLength(8)]],
     });
@@ -165,6 +165,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       horizontalPosition: 'center',
     });
   }
+  
   obterUsuarioLogado() {
     this.subscription.add(
       this.authService
