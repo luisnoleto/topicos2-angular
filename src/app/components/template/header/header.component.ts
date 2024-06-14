@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
   pedidos() {
-    this.router.navigateByUrl('/pedidos');
+    this.router.navigateByUrl('/meus-pedidos');
   }
 
   deslogar() {

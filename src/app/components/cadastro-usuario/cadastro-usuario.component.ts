@@ -1,9 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import {
   FormArray,
   FormArrayName,
@@ -19,21 +14,28 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControlName } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
-import { NgModule } from '@angular/core';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
+
+import { MatOption } from '@angular/material/core';
+
 @Component({
-  selector: 'app-dados-usuario',
+  selector: 'app-cadastro-usuario',
   standalone: true,
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+  ],
   imports: [
     NgIf,
     ReactiveFormsModule,
@@ -44,70 +46,38 @@ import { MatSelectModule } from '@angular/material/select';
     RouterModule,
     CommonModule,
     MatDatepickerModule,
+    MatOption,
     MatSelectModule,
-    MatNativeDateModule,
   ],
-  templateUrl: './dados-usuario.component.html',
-  styleUrl: './dados-usuario.component.css',
+  templateUrl: './cadastro-usuario.component.html',
+  styleUrl: './cadastro-usuario.component.css',
 })
-export class DadosUsuarioComponent implements OnInit {
+export class CadastroUsuarioComponent {
   formGroup: FormGroup;
-  showAddresses = false;
-  usuarioLogado: User | null = null;
-  private subscription = new Subscription();
-
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private localStorageService: LocalStorageService,
-    private router: Router,
     private userService: UserService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
+
     this.formGroup = formBuilder.group({
       id: user && user.id ? user.id : null,
       nome: [user && user.nome ? user.nome : '', Validators.required],
       login: [user && user.login ? user.login : '', Validators.required],
+      senha: [
+        user && user.senha ? user.senha : '',
+        Validators.compose([Validators.required, Validators.minLength(8)]),
+      ],
       email: [user && user.email ? user.email : '', Validators.required],
       cpf: [user && user.cpf ? user.cpf : '', Validators.required],
-      dataNascimento: [
-        user && user.dataNascimento ? user.dataNascimento : '',
-        Validators.required,
-      ],
-      senha: ['', Validators.required], // Initial empty password field
       listaTelefone: this.formBuilder.array(
         user && user.listaTelefone
           ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
           : []
       ),
     });
-  }
-
-  ngOnInit(): void {
-    this.obterUsuarioLogado();
-  }
-
-  obterUsuarioLogado() {
-    this.subscription.add(
-      this.authService.getUsuarioLogado().subscribe((usuario) => {
-        this.usuarioLogado = usuario;
-        this.formGroup.patchValue({
-          id: usuario?.id,
-          nome: usuario?.nome,
-          login: usuario?.login,
-          email: usuario?.email,
-          cpf: usuario?.cpf,
-          dataNascimento: usuario?.dataNascimento,
-          senha: usuario?.senha, // Set the current password
-          listaTelefone: usuario?.listaTelefone || [],
-        });
-      })
-    );
-  }
-
-  toggleAddresses() {
-    this.showAddresses = !this.showAddresses;
   }
 
   get listaTelefone() {
@@ -129,21 +99,14 @@ export class DadosUsuarioComponent implements OnInit {
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const user = this.formGroup.value;
+      const user = { ...this.formGroup.value };
 
-      if (!user.id && this.usuarioLogado?.id) {
-        user.id = this.usuarioLogado.id;
-      }
+      let operacao;
 
-      // Ensure the senha field is populated before making the update request
-      if (this.usuarioLogado?.senha) {
-        user.senha = this.usuarioLogado.senha;
-      }
+      operacao = this.userService.insert(user);
 
-      this.userService.update(user).subscribe({
-        next: () => {
-          this.router.navigateByUrl('/home');
-        },
+      operacao.subscribe({
+        next: () => this.router.navigateByUrl('/login'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -165,7 +128,24 @@ export class DadosUsuarioComponent implements OnInit {
         });
       }
     } else if (error.status < 400) {
-      console.log('Erro inesperado');
+      alert(error.error?.message || 'Erro não tratado.');
+    } else if (error.status >= 500) {
+      alert('Erro interno.');
+    }
+  }
+  excluir() {
+    if (this.formGroup.valid) {
+      const user = this.formGroup.value;
+      if (user.id != null) {
+        this.userService.delete(user).subscribe({
+          next: () => {
+            this.router.navigateByUrl('/usuarios');
+          },
+          error: (err) => {
+            console.log('Erro ao Excluir' + JSON.stringify(err));
+          },
+        });
+      }
     }
   }
 }

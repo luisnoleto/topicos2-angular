@@ -12,11 +12,11 @@ import { MatCardContent } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PedidoService } from '../../services/pedido.service';
-import { PedidoDTO } from '../../models/pedidoDTO.model';
 import { ItemPedidoDTO } from '../../models/itempedidoDTO.model';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { EnderecoService } from '../../services/endereco.service';
+import { criarPedidoDTO } from '../../models/criarPedidoDTO.model';
 
 @Component({
   selector: 'app-fazer-pedido',
@@ -91,6 +91,10 @@ export class FazerPedidoComponent implements OnInit {
     );
   }
 
+  insertEndereco(): void {
+    this.router.navigate(['/cadastro-enderecos']);
+  }
+
   buscaEnderecos(): void {
     this.enderecoService.getEnderecos().subscribe((enderecos) => {
       this.enderecos = enderecos;
@@ -114,7 +118,7 @@ export class FazerPedidoComponent implements OnInit {
       return;
     }
 
-    const pedido: PedidoDTO = {
+    const pedido: criarPedidoDTO = {
       endereco: this.enderecoId,
       pagamento: this.pagamento,
       itens: this.carrinhoItens.map((item) => ({
@@ -122,6 +126,7 @@ export class FazerPedidoComponent implements OnInit {
         preco: item.preco,
         quantidade: item.quantidade,
       })),
+      totalPedido: this.calcularTotal(),
     };
 
     this.pedidoService.createPedido(pedido).subscribe({
@@ -129,7 +134,7 @@ export class FazerPedidoComponent implements OnInit {
         console.log('Pedido realizado com sucesso', response);
         this.carrinhoService.removerTudo();
         this.checkCarrinhoStatus();
-        //this.router.navigate(['/meus-pedidos']);
+        this.router.navigate(['/meus-pedidos']);
       },
       error: (error) => {
         console.error('Erro ao realizar pedido', error);

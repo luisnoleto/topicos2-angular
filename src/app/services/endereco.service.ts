@@ -32,4 +32,21 @@ export class EnderecoService {
       )
     );
   }
+
+  getEnderecoById(id: number): Observable<EnderecoDTO> {
+    return this.http.get<EnderecoDTO>(`${this.apiUrl}/${id}`);
+  }
+
+  insertEndereco(endereco: EnderecoDTO): Observable<EnderecoDTO> {
+    return this.authService
+      .getUsuarioLogado()
+      .pipe(
+        switchMap((usuarioLogado) =>
+          this.http.post<EnderecoDTO>(
+            `${this.apiUrl}/insere-endereco`,
+            endereco
+          )
+        )
+      );
+  }
 }
