@@ -15,6 +15,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPortuguesePaginatorIntl } from './services/portuguese-paginator-intl.service';
 import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,7 @@ import { MatIconRegistry } from '@angular/material/icon';
     DialogModule,
     FooterComponent,
     SidebarComponent,
-    CommonModule,
+    CommonModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },

@@ -122,45 +122,41 @@
 
                 <mat-form-field appearance="fill">
                     <mat-label>Genero</mat-label>
-                    <mat-select formControlName="estado">
-                        @for (genero of generos; track genero.id) {
-                            <mat-option [value]="genero">
-                                {{genero.nome}}
-                            </mat-option>
-                        }
+                    <mat-select formControlName="genero">
+                      <mat-option *ngFor="let genero of generos" [value]="genero.id">
+                        {{genero.nome}}
+                      </mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
                     <mat-label>Plataforma</mat-label>
                     <mat-select formControlName="plataforma">
-                        @for (plataforma of plataformas; track plataforma.id) {
-                            <mat-option [value]="plataforma">
-                                {{plataforma.nome}}
-                            </mat-option>
-                        }
+                      <mat-option *ngFor="let plataforma of plataformas" [value]="plataforma.id">
+                        {{plataforma.nome}}
+                      </mat-option>
                     </mat-select>
                 </mat-form-field>
+
 
                 <mat-form-field appearance="fill">
                     <mat-label>Desenvolvedora</mat-label>
                     <mat-select formControlName="desenvolvedora">
-                        @for (desenvolvedora of desenvolvedoras; track desenvolvedora.id) {
-                            <mat-option [value]="desenvolvedora">
-                                {{desenvolvedora.nome}}
-                            </mat-option>
-                        }
+                      <mat-option *ngFor="let desenvolvedora of desenvolvedoras" [value]="desenvolvedora.id">
+                        {{desenvolvedora.nome}}
+                      </mat-option>
                     </mat-select>
                 </mat-form-field>
                 
                 <mat-form-field appearance="fill">
                     <mat-label>Classificação</mat-label>
                     <mat-select formControlName="classificacao">
-                        @for (classificacao of classificacoes; track classificacao) {
-                            <mat-option [value]="classificacao">
-                                {{classificacao}}
-                            </mat-option>
-                        }
+                      <mat-option [value]="1">Livre</mat-option>
+                      <mat-option [value]="2">10 anos</mat-option>
+                      <mat-option [value]="3">12 anos</mat-option>
+                      <mat-option [value]="4">14 anos</mat-option>
+                      <mat-option [value]="5">16 anos</mat-option>
+                      <mat-option [value]="6">18 anos</mat-option>
                     </mat-select>
                 </mat-form-field>
                

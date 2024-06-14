@@ -56,4 +56,8 @@ export class FabricanteService {
       fabricante
     );
   }
+
+  findByAtivo(ativo: boolean): Observable<Fabricante[]> {
+    return this.httpClient.get<Fabricante[]>(`${this.baseUrl}/search/ativo/${ativo}`);
+  }
 }

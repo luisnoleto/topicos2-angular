@@ -34,6 +34,7 @@ export class PlataformaService {
   }
 
   insert(plataforma: Plataforma): Observable<Plataforma> {
+  
     return this.httpClient.post<Plataforma>(
       `${this.baseUrl}/cadastro`,
       plataforma
@@ -55,5 +56,9 @@ export class PlataformaService {
     return this.httpClient.patch<Plataforma>(`${this.baseUrl}/alterarSituacao/${plataforma.id}`,
       plataforma
     );
+  }
+
+  findByAtivo(ativo: boolean): Observable<Plataforma[]> {
+    return this.httpClient.get<Plataforma[]>(`${this.baseUrl}/search/ativo/${ativo}`);
   }
 }

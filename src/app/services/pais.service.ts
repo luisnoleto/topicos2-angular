@@ -50,4 +50,8 @@ export class PaisService {
       pais
     );
   }
+
+  findByAtivo(ativo: boolean): Observable<Pais[]> {
+    return this.httpClient.get<Pais[]>(`${this.baseUrl}/search/ativo/${ativo}`);
+  }
 }

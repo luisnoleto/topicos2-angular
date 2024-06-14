@@ -36,7 +36,6 @@ export class AuthService {
     const params = {
       login: email,
       senha: senha,
-      perfil: 1,
     };
 
     return this.http
@@ -46,7 +45,7 @@ export class AuthService {
           const authToken = res.headers.get('Authorization') ?? '';
           if (authToken) {
             this.setToken(authToken);
-            const usuarioLogado = res.body as User;
+            const usuarioLogado = res.body;
             console.log(usuarioLogado);
             if (usuarioLogado) {
               this.setUsuarioLogado(usuarioLogado);

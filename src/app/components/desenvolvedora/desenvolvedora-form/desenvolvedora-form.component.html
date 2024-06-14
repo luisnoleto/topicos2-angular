@@ -35,7 +35,7 @@
               }
             </mat-error>
           </mat-form-field>
-          <mat-form-field id="paisForm">
+          <mat-form-field *ngFid="paisForm">
             <mat-label>País de Origem</mat-label>
             <mat-select formControlName="pais">
               <mat-option *ngFor="let pais of paises" [value]="pais.id">{{

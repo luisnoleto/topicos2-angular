@@ -39,6 +39,8 @@ import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { UpdateSenhaComponent } from './components/update-senha/update-senha.component';
 import { DadosUsuarioComponent } from './components/dados-usuario/dados-usuario.component';
 import { Error404Component } from './components/template/404/404.component';
+import { UpdateNomeComponent } from './components/update-nome/update-nome.component';
+import { UpdateEmailComponent } from './components/update-email/update-email.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +58,7 @@ export const routes: Routes = [
         component: JogoCardListComponent,
         title: 'Produtos à Venda',
       },
+      
       {
         path: 'carrinho',
         component: CarrinhoComponent,
@@ -71,32 +74,52 @@ export const routes: Routes = [
         path: 'usuarios/edit/:id/senha',
         component: UpdateSenhaComponent,
         resolve: { user: userResolver },
-        canActivate: [authGuard],
+        
       },
+      {
+        path: 'usuarios/edit/:id/nome',
+        component: UpdateNomeComponent,
+        resolve: { user: userResolver },
+        
+      },
+      {
+      path: 'usuarios/edit/:id/email',
+      component: UpdateEmailComponent,
+      resolve: { user: userResolver },
+      
+      },
+
+      // {
+      // path: 'usuarios/edit/:id/telefone',
+      // component: UpdateTelefoneComponent,
+      // resolve: { user: userResolver },
+      // canActivate: [authGuard],
+      // },
+
       {
         path: 'usuarios/edit/:id',
         component: UserFormComponent,
         resolve: { user: userResolver },
-        canActivate: [authGuard],
+        
       },
       {
         path: 'finalizar-pedido',
         component: FazerPedidoComponent,
         title: 'Finalizar Pedido',
-        canActivate: [authGuard],
+        
       },
 
       {
         path: 'finalizar-pedido/pagamento',
         component: PagamentoComponent,
         title: 'Pagamento',
-        canActivate: [authGuard],
+        
       },
       {
         path: ':usuarios/dados-usuario',
         component: DadosUsuarioComponent,
         title: 'Minhas Informações',
-        canActivate: [authGuard],
+        
       },
     ],
   },
@@ -104,7 +127,6 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminTemplateComponent,
     title: 'e-commerce',
-    canActivate: [authGuard],
     children: [
 
       {path: '', pathMatch: 'full', redirectTo: 'tela-administrador'},
@@ -120,7 +142,7 @@ export const routes: Routes = [
         path: 'usuarios',
         component: UserListComponent,
         title: 'Usuários',
-        canActivate: [authGuard],
+      
       },
       {
         path: 'usuarios/new',
