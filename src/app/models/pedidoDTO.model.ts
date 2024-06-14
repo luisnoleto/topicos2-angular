@@ -1,7 +1,10 @@
 import { ItemPedidoDTO } from './itempedidoDTO.model';
-
+import { EnderecoDTO } from './enderecoDTO.model';
 export interface PedidoDTO {
-  endereco: number; // ID of the selected address
-  pagamento: number; // Payment method
+  id?: number;
+  endereco?: EnderecoDTO;
+  enderecoId: number;
+  pagamento: number;
   itens: ItemPedidoDTO[];
+  totalPedido: number;
 }

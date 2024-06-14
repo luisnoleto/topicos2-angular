@@ -1,0 +1,83 @@
+.pedidos-container {
+  padding: 20px;
+  color: white;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.pedido-card {
+  background: #424242;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.pedido-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.games {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.game-card {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: 150px; /* Ensure the width is consistent */
+}
+
+.game-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.game-card .game-info {
+  background-color: rgba(64, 64, 64, 0.8); /* Dark gray background with some transparency */
+  color: white;
+  width: 100%; /* Same width as the image */
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-top: 5px; /* Space between image and text */
+}
+
+.pedido-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.pedido-summary p {
+  margin: 0;
+}
+
+.pedido-summary button {
+  margin-top: 10px;
+}
+
+.endereco-details {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.endereco-details p {
+  width: 100%;
+  margin: 5px 0; /* Adds space between address lines */
+}
+
+#listaFim {
+  margin-bottom: 1px;
+  text-align: center;
+  color: white;
+}

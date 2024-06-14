@@ -1,0 +1,37 @@
+<div class="pedidos-container">
+  <h2>Meus Pedidos</h2>
+  <div *ngFor="let pedido of pedidos$ | async" class="pedido-card">
+    <div class="pedido-info">
+      <div class="games">
+        <div *ngFor="let item of pedido.itens" class="game-card">
+          <img
+            [src]="jogoDetailsMap[item.idProduto]?.urlImagem"
+            alt="{{ jogoDetailsMap[item.idProduto]?.nome }}"
+          />
+          <div class="game-info">
+            <p>{{ jogoDetailsMap[item.idProduto]?.nome }}</p>
+            <p>
+              {{ jogoDetailsMap[item.idProduto]?.preco | number : "1.2-2" }}
+            </p>
+            <p>Quantidade: {{ item.quantidade }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="pedido-summary">
+        <p>Total: R$ {{ pedido.totalPedido }}</p>
+        <button mat-button (click)="toggleDetalhes(pedido.id)">
+          Expandir para detalhes
+        </button>
+      </div>
+    </div>
+    <div *ngIf="isDetalhesVisible(pedido.id)" class="endereco-details">
+      <h3>Endereço para Entrega:</h3>
+      <p>Rua: {{ pedido.endereco?.logradouro }}</p>
+      <p>Numero: {{ pedido.endereco?.numero }}</p>
+      <p>Complemento: {{ pedido.endereco?.complemento }}</p>
+      <p>Bairro: {{ pedido.endereco?.bairro }}</p>
+      <p>CEP: {{ pedido.endereco?.cep }}</p>
+    </div>
+  </div>
+  <p id="listaFim">Fim do seus pedidos</p>
+</div>

@@ -4,12 +4,19 @@ import { Observable } from 'rxjs';
 import { PedidoDTO } from '../models/pedidoDTO.model';
 import { ItemPedidoDTO } from '../models/itempedidoDTO.model';
 import { JogoService } from './jogo.service';
+import { Jogo } from '../models/jogo.model';
+import { EnderecoDTO } from '../models/enderecoDTO.model';
+import { criarPedidoDTO } from '../models/criarPedidoDTO.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
   private baseUrl = 'http://localhost:8080/pedidos';
+
+  private jogosUrl = 'http://localhost:8080/jogos';
+
+  private enderecosUrl = 'http://localhost:8080/endereco';
 
   constructor(
     private httpClient: HttpClient,
@@ -19,7 +26,22 @@ export class PedidoService {
   getAll(): Observable<PedidoDTO[]> {
     return this.httpClient.get<PedidoDTO[]>(this.baseUrl);
   }
-  createPedido(pedidoDTO: PedidoDTO): Observable<PedidoDTO> {
+
+  getJogoById(id: number): Observable<Jogo> {
+    return this.httpClient.get<Jogo>(`${this.jogosUrl}/${id}`);
+  }
+
+  getEnderecoById(id: number): Observable<EnderecoDTO> {
+    return this.httpClient.get<EnderecoDTO>(`${this.enderecosUrl}/${id}`);
+  }
+
+  getByUsuarioId(usuarioId: number): Observable<PedidoDTO[]> {
+    return this.httpClient.get<PedidoDTO[]>(
+      `${this.baseUrl}/usuario/${usuarioId}`
+    );
+  }
+
+  createPedido(pedidoDTO: criarPedidoDTO): Observable<PedidoDTO> {
     return this.httpClient.post<PedidoDTO>(
       `${this.baseUrl}/fazendopedido`,
       pedidoDTO

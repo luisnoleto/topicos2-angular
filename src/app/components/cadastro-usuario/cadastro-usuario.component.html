@@ -1,11 +1,7 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Usuários - Cadastro e Edição</h1>
-    <div class="cadastroDiv">
-      <button mat-raised-button color="primary" routerLink="/admin/usuarios">
-        Lista de Usuários
-      </button>
-    </div>
+    <h1 class="tituloGerenciar">Bem-Vindo! Faça seu cadastro</h1>
+    <div class="cadastroDiv"></div>
   </div>
   <div class="form-container">
     <mat-card>
@@ -43,6 +39,28 @@
               <span>O login deve ser informado.</span>
               } @if (formGroup.get('login')?.hasError('apiError')) {
               <span>{{ formGroup.get("login")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            id="senhaform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="senha" />
+            <mat-error
+              *ngIf="
+                formGroup.get('senha')?.errors &&
+                formGroup.get('senha')?.touched
+              "
+            >
+              @if (formGroup.get('senha')?.errors?.['required']) {
+              <span>A senha deve ser informada.</span>
+              @if(formGroup.get('senha')?.errors?.['minlength']) {
+              <span>A senha deve ter no mínimo 8 caracteres.</span>
+              } } @if (formGroup.get('senha')?.hasError('apiError')) {
+              <span>{{ formGroup.get("senha")?.getError("apiError") }}</span>
               }
             </mat-error>
           </mat-form-field>
@@ -119,14 +137,6 @@
               }
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" id="perfilId">
-            <mat-label>Perfil</mat-label>
-            <mat-select formControlName="perfil">
-              <mat-option *ngFor="let perfil of perfis" [value]="perfil.id">{{
-                perfil.label
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
           <div formArrayName="listaTelefone">
             <div
               *ngFor="let telefone of listaTelefone.controls; let i = index"
@@ -170,16 +180,7 @@
         <button mat-raised-button color="primary" (click)="salvar()">
           Salvar
         </button>
-        <button
-          mat-raised-button
-          *ngIf="formGroup?.get('id')?.value"
-          color="warn"
-          (click)="excluir()"
-          [disabled]="formGroup.invalid"
-        >
-          Excluir
-        </button>
-        <button mat-raised-button routerLink="/admin/usuarios">Cancelar</button>
+        <button mat-raised-button routerLink="/login">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </div>

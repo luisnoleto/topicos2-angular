@@ -1,0 +1,109 @@
+.fundoGerenciar{
+    width: 1197px;
+    height: 1000px;
+    flex-shrink: 0;
+    background: #151517;
+    align-self: center;
+    display: table;
+    margin-top: 60px;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px; /* Added line for rounded corners */
+}
+.gerenciar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tituloGerenciar {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 200px;
+    color: #FFFFFF;
+    margin-top: 20px;
+    margin-left: 60px;
+    
+  }
+
+.cadastroDiv{
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    margin-right: 60px;
+
+}
+
+.table {
+    width: 90%;
+    margin-left: 60px;
+    margin-bottom: 60px;
+}
+
+
+.mat-elevation-z8 th, td {
+    color: #FFFFFF;
+}
+
+.full-width-input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+mat-card {
+    max-width: 1000px;
+    margin: auto;
+    background-color: #424242;
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-container {
+    padding: 2rem; 
+}
+
+button[mat-raised-button] {
+    width: 120px;
+}
+
+button[mat-raised-button]:not(:last-child) {
+    margin-right: 1rem;
+}
+
+#loginform{
+    width: 40%;
+}
+#senhaform{
+    width: 40%;
+    margin-left: 193px;
+}
+
+#emailform{
+    display: inline;
+    width: 30%;
+}
+
+#cpfform{
+    width: 40%;
+}
+
+#dataform{
+    width: 40%;
+    margin-left: 192px;
+}
+
+#numeroform{
+    margin-left: 50px;
+    display: inline-flex;
+    
+}
+
+#perfilForm{
+    margin-left: 368px;
+}

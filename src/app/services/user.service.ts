@@ -53,7 +53,7 @@ export class UserService {
 
   cadastrarUsuario(user: User): Observable<User> {
     const userToSend = { ...user, perfil: user.perfil ? user.perfil.id : null };
-    return this.httpClient.post<User>(`${this.adminUrl}/cadastro`, userToSend);
+    return this.httpClient.post<User>(`${this.adminUrl}/cadastro`, user);
   }
 
   perfilNome(login: string): Observable<PerfilDTO> {

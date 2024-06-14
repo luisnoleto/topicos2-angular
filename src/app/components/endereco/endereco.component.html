@@ -1,0 +1,115 @@
+<div class="fundoGerenciar">
+  <div class="gerenciar">
+    <h1 class="tituloGerenciar">Gerenciar Endereços - Cadastro</h1>
+  </div>
+</div>
+<div class="form-container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>CEP</mat-label>
+          <input matInput type="text" formControlName="cep" />
+          <mat-error
+            *ngIf="
+              formGroup.get('cep')?.errors && formGroup.get('cep')?.touched
+            "
+          >
+            <span *ngIf="formGroup.get('cep')?.errors?.['required']"
+              >O CEP deve ser informado.</span
+            >
+            <span *ngIf="formGroup.get('cep')?.hasError('apiError')">{{
+              formGroup.get("cep")?.getError("apiError")
+            }}</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Logradouro</mat-label>
+          <input matInput type="text" formControlName="logradouro" />
+          <mat-error
+            *ngIf="
+              formGroup.get('logradouro')?.errors &&
+              formGroup.get('logradouro')?.touched
+            "
+          >
+            <span *ngIf="formGroup.get('logradouro')?.errors?.['required']"
+              >O logradouro deve ser informado.</span
+            >
+            <span *ngIf="formGroup.get('logradouro')?.hasError('apiError')">{{
+              formGroup.get("logradouro")?.getError("apiError")
+            }}</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Número</mat-label>
+          <input matInput type="text" formControlName="numero" />
+          <mat-error
+            *ngIf="
+              formGroup.get('numero')?.errors &&
+              formGroup.get('numero')?.touched
+            "
+          >
+            <span *ngIf="formGroup.get('numero')?.errors?.['required']"
+              >O número deve ser informado.</span
+            >
+            <span *ngIf="formGroup.get('numero')?.hasError('apiError')">{{
+              formGroup.get("numero")?.getError("apiError")
+            }}</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Complemento</mat-label>
+          <input matInput type="text" formControlName="complemento" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Bairro</mat-label>
+          <input matInput type="text" formControlName="bairro" />
+          <mat-error
+            *ngIf="
+              formGroup.get('bairro')?.errors &&
+              formGroup.get('bairro')?.touched
+            "
+          >
+            <span *ngIf="formGroup.get('bairro')?.errors?.['required']"
+              >O bairro deve ser informado.</span
+            >
+            <span *ngIf="formGroup.get('bairro')?.hasError('apiError')">{{
+              formGroup.get("bairro")?.getError("apiError")
+            }}</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Cidade</mat-label>
+          <input matInput type="number" formControlName="idCidade" />
+          <mat-error
+            *ngIf="
+              formGroup.get('idCidade')?.errors &&
+              formGroup.get('idCidade')?.touched
+            "
+          >
+            <span *ngIf="formGroup.get('idCidade')?.errors?.['required']"
+              >A cidade deve ser informada.</span
+            >
+            <span *ngIf="formGroup.get('idCidade')?.hasError('apiError')">{{
+              formGroup.get("idCidade")?.getError("apiError")
+            }}</span>
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="salvar()">
+        Salvar
+      </button>
+      <button
+        mat-raised-button
+        *ngIf="formGroup?.get('id')?.value"
+        color="warn"
+        [disabled]="formGroup.invalid"
+      >
+        Excluir
+      </button>
+      <button mat-raised-button routerLink="/home">Cancelar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

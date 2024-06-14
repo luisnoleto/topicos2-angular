@@ -40,6 +40,9 @@ import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.com
 import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { UpdateSenhaComponent } from './components/update-senha/update-senha.component';
 import { DadosUsuarioComponent } from './components/dados-usuario/dados-usuario.component';
+import { MeusPedidosComponent } from './components/meus-pedidos/meus-pedidos.component';
+import { CadastroUsuarioComponent } from './components/cadastro-usuario/cadastro-usuario.component';
+import { CadastroEnderecoFormComponent } from './components/endereco/endereco.component';
 export const routes: Routes = [
   {
     path: '',
@@ -63,8 +66,15 @@ export const routes: Routes = [
       },
       {
         path: 'usuarios/new',
-        component: UserFormComponent,
+        component: CadastroUsuarioComponent,
         title: 'Cadastro de Usuário',
+      },
+
+      {
+        path: 'cadastro-enderecos',
+        component: CadastroEnderecoFormComponent,
+        title: 'Endereços',
+        canActivate: [authGuard],
       },
 
       {
@@ -98,6 +108,12 @@ export const routes: Routes = [
         title: 'Minhas Informações',
         canActivate: [authGuard],
       },
+      {
+        path: 'meus-pedidos',
+        component: MeusPedidosComponent,
+        title: 'Meus Pedidos',
+        canActivate: [authGuard],
+      },
     ],
   },
   {
@@ -105,12 +121,17 @@ export const routes: Routes = [
     component: AdminTemplateComponent,
     title: 'e-commerce',
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'tela-administrador' },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'tela-administrador',
+      },
 
       {
         path: 'tela-administrador',
         component: TelaAdministradorComponent,
         title: 'Tela Administrador',
+        canActivate: [authGuard],
       },
 
       {
