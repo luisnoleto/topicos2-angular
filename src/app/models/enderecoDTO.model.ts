@@ -1,4 +1,5 @@
 export interface EnderecoDTO {
+  id: number;
   cep: string;
   logradouro: string;
   numero: number;

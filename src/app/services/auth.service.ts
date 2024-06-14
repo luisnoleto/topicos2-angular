@@ -39,7 +39,6 @@ export class AuthService {
       perfil: 1,
     };
 
-    //{ observe: 'response' } para garantir que a resposta completa seja retornada (incluindo o cabeçalho)
     return this.http
       .post(`${this.baseURL}`, params, { observe: 'response' })
       .pipe(
@@ -47,7 +46,7 @@ export class AuthService {
           const authToken = res.headers.get('Authorization') ?? '';
           if (authToken) {
             this.setToken(authToken);
-            const usuarioLogado = res.body;
+            const usuarioLogado = res.body as User;
             console.log(usuarioLogado);
             if (usuarioLogado) {
               this.setUsuarioLogado(usuarioLogado);
@@ -82,13 +81,6 @@ export class AuthService {
     this.localStorageService.removeItem(this.usuarioLogadoKey);
     this.usuarioLogadoSubject.next(null);
   }
-
-  // isTokenExpired(): boolean {
-  //   const token = this.getToken();
-  //   // Verifica se o token é nulo ou está expirado
-  //   return !token || this.jwtHelper.isTokenExpired(token);
-  //   // npm install @auth0/angular-jwt
-  // }
 
   isTokenExpired(): boolean {
     const token = this.getToken();

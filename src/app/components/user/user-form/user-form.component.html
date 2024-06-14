@@ -47,6 +47,28 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field
+            id="senhaform"
+            appearance="fill"
+            class="full-width -input"
+          >
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="senha" />
+            <mat-error
+              *ngIf="
+                formGroup.get('senha')?.errors &&
+                formGroup.get('senha')?.touched
+              "
+            >
+              @if (formGroup.get('senha')?.errors?.['required']) {
+              <span>A senha deve ser informada.</span>
+              @if(formGroup.get('senha')?.errors?.['minlength']) {
+              <span>A senha deve ter no mínimo 8 caracteres.</span>
+              } } @if (formGroup.get('senha')?.hasError('apiError')) {
+              <span>{{ formGroup.get("senha")?.getError("apiError") }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
             id="emailform"
             appearance="fill"
             class="full-width -input"

@@ -68,6 +68,10 @@ export class UserFormComponent {
       id: user && user.id ? user.id : null,
       nome: [user && user.nome ? user.nome : '', Validators.required],
       login: [user && user.login ? user.login : '', Validators.required],
+      senha: [
+        user && user.senha ? user.senha : '',
+        Validators.compose([Validators.required, Validators.minLength(3)]),
+      ],
       email: [user && user.email ? user.email : '', Validators.required],
       cpf: [user && user.cpf ? user.cpf : '', Validators.required],
       dataNascimento: [
