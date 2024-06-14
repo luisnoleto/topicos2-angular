@@ -101,35 +101,23 @@ export class JogoFormComponent {
   ngOnInit(): void {
     this.generoService.findByAtivo(true).subscribe(data => {
       this.generos = data;
-      this.initializeForm();
+      
     });
 
     this.plataformaService.findByAtivo(true).subscribe(data => {
       this.plataformas = data;
-      this.initializeForm();
+      
     });
 
     this.desenvolvedoraService.findByAtivo(true).subscribe(data => {
       this.desenvolvedoras = data;
-      this.initializeForm();
+      
     });
 
+    
   }
 
-  initializeForm() {
-    const jogo: Jogo = this.activatedRoute.snapshot.data['jogo'];
-
-    // selecionando o estado
-    const genero = this.generos
-      .find(genero => genero.id === (jogo?.genero?.id || null));
-
-    const plataforma = this.plataformas
-      .find(plataforma => plataforma.id === (jogo?.plataforma?.id || null));
-
-    const desenvolvedora = this.desenvolvedoras
-      .find(desenvolvedora => desenvolvedora.id === (jogo?.desenvolvedora?.id || null));
-
-  };
+  
 
 
 
@@ -143,7 +131,7 @@ export class JogoFormComponent {
         : this.jogoService.update(jogo);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/jogos'),
+        next: () => this.router.navigateByUrl('/admin/jogos'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);

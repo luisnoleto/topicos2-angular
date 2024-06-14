@@ -107,7 +107,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
 
-
+      {path: '', pathMatch: 'full', redirectTo: 'tela-administrador'},
       
       {
         path: 'tela-administrador',
