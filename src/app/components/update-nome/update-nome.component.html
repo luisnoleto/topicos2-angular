@@ -1,0 +1,37 @@
+<div class="fundoGerenciar">
+  <div class="gerenciar">
+    <h1 class="tituloGerenciar">Alteração de senha</h1>
+  </div>
+  <div class="form-container">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="formGroup">
+          <div class="velha">
+            <mat-form-field appearance="fill" id="velha">
+              <mat-label>Senha Atual</mat-label>
+              <input matInput type="password" formControlName="senhaAtual" />
+              <mat-error *ngIf="formGroup.get('senhaAtual')?.invalid">
+                Senha atual é obrigatória.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="fill" id="nova">
+            <mat-label>Novo Nome</mat-label>
+            <input matInput type="text" formControlName="novoNome" />
+            <mat-error *ngIf="formGroup.get('novoNome')?.invalid">
+              Novo nome é obrigatório e deve ter no mínimo 8 caracteres.
+            </mat-error>
+          </mat-form-field>
+        </form>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="updateNome()">
+            Salvar
+          </button>
+          <button mat-raised-button routerLink="/usuarios/dados-usuario">
+            Voltar
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
