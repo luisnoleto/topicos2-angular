@@ -34,8 +34,8 @@ export class JogoService {
 
   getUrlImagem(nomeImagem: string): string {
     if (!nomeImagem) {
-     
-      return './assets/padraosemImagem.jpg'; 
+      // Return a default image or handle the absence of an image name appropriately
+      return './assets/padraosemImagem.jpg'; // Adjust this path to your default image
     }
     return `${this.baseUrl}/image/download/${nomeImagem}`;
   }

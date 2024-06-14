@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { FooterComponent } from '../template/footer/footer.component';
 
 @Component({
-  selector: 'app-tela-administrador',
+  selector: 'app-tela-administrador.',
   standalone: true,
   templateUrl: './tela-administrador.component.html',
   styleUrl: './tela-administrador.component.css',

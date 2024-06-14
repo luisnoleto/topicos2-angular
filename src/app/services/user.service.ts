@@ -22,6 +22,10 @@ export class UserService {
     return this.httpClient.get<User>(`${this.baseUrl}/${id}`);
   }
 
+  meusDados(): Observable<User> {
+    return this.httpClient.get<User>(`${this.adminUrl}/meusdados`);
+  }
+
   insert(user: User): Observable<User> {
     return this.httpClient.post<User>(`${this.baseUrl}/cadastro`, user);
   }

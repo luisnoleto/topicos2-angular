@@ -99,12 +99,12 @@ export class JogoFormComponent {
   }
 
   ngOnInit(): void {
-    this.generoService.findByAtivo(true).subscribe(data => {
+    this.generoService.findAll().subscribe(data => {
       this.generos = data;
       
     });
 
-    this.plataformaService.findByAtivo(true).subscribe(data => {
+    this.plataformaService.findAll().subscribe(data => {
       this.plataformas = data;
       
     });
