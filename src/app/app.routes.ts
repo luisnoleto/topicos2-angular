@@ -28,8 +28,6 @@ import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/des
 import { PlataformaListComponent } from './components/plataforma/plataforma-list/plataforma-list.component';
 import { PlataformaFormComponent } from './components/plataforma/plataforma-form/plataforma-form.component';
 import { plataformaResolver } from './components/plataforma/resolver/plataforma-resolver';
-import { cadastroResolver } from './components/cadastro-admin/cadastro-admin-form/resolver/cadastro-admin-resolver';
-import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro-admin-form/cadastro-admin-form.component';
 import { TelaAdministradorComponent } from './components/tela-administrador/tela-administrador.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { JogoCardListComponent } from './components/jogo-card-list/jogo-card-list.component';
@@ -40,6 +38,8 @@ import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.com
 import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { UpdateSenhaComponent } from './components/update-senha/update-senha.component';
 import { DadosUsuarioComponent } from './components/dados-usuario/dados-usuario.component';
+import { Error404Component } from './components/template/404/404.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -104,13 +104,16 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminTemplateComponent,
     title: 'e-commerce',
+    canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'tela-administrador' },
 
+
+      
       {
         path: 'tela-administrador',
         component: TelaAdministradorComponent,
         title: 'Tela Administrador',
+        canActivate: [authGuard],
       },
 
       {
@@ -285,4 +288,5 @@ export const routes: Routes = [
       },
     ],
   },
+  {path: '**', component: Error404Component, title: 'Error 404'},
 ];
