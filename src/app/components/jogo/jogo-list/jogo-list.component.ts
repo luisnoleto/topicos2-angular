@@ -40,7 +40,7 @@ import { SituacaoDialogBoxComponent } from '../../situacao-dialog-box/situacao-d
   ]
 })
 export class JogoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'genero','plataforma','desenvolvedora','acao'];
+  displayedColumns: string[] = ['id', 'nome', 'plataforma', 'acao'];
   jogos: Jogo[] = [];
 
   totalRecords = 0;

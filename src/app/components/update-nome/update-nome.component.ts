@@ -33,7 +33,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-update-senha',
+  selector: 'app-update-nome',
   standalone: true,
   providers: [
     provideNativeDateAdapter(),
@@ -53,10 +53,10 @@ import { Location } from '@angular/common';
     MatDatepickerModule,
     MatSelectModule,
   ],
-  templateUrl: './update-senha.component.html',
-  styleUrl: './update-senha.component.css',
+  templateUrl: './update-nome.component.html',
+  styleUrl: './update-nome.component.css',
 })
-export class UpdateSenhaComponent implements OnInit, OnDestroy {
+export class UpdateNomeComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   usuarioLogado: User | null = null;
   private subscription = new Subscription();
@@ -78,7 +78,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
         user && user.senha ? user.senha : '',
         Validators.compose([Validators.required, Validators.minLength(8)]),
       ],
-      novaSenha: ['', [Validators.required, Validators.minLength(8)]],
+      novoNome: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
   ngOnDestroy(): void {
@@ -100,7 +100,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
           : this.userService.update(user);
 
       operacao.subscribe({
-        next: () => this.voltarPagina(),
+        next: () => this.router.navigateByUrl('/admin/usuarios'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
           this.tratarErros(error);
@@ -127,6 +127,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       alert('Erro interno.');
     }
   }
+
   excluir() {
     if (this.formGroup.valid) {
       const user = this.formGroup.value;
@@ -143,19 +144,19 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateSenha() {
+  updateNome() {
     if (this.formGroup.get('senhaAtual')?.valid) {
       const senhaAtual = this.formGroup.get('senhaAtual')!.value;
-      const novaSenha = this.formGroup.get('novaSenha')!.value;
+      const novoNome = this.formGroup.get('novoNome')!.value;
 
-      this.userService.alterarSenha(senhaAtual, novaSenha).subscribe({
+      this.userService.alterarNome(senhaAtual, novoNome).subscribe({
         next: (response) => {
-          console.log('Password updated successfully', response);
+          console.log('Nome updated successfully', response);
           this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
           this.voltarPagina();
         },
         error: (error) => {
-          console.error('Error updating password', error);
+          console.error('Error updating Nome', error);
           this.showSnackbarTopPosition('Senha atual não confere', 'Fechar');
         },
       });
@@ -168,6 +169,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       horizontalPosition: 'center',
     });
   }
+
   obterUsuarioLogado() {
     this.subscription.add(
       this.authService

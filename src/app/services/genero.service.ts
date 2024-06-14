@@ -51,4 +51,8 @@ export class GeneroService {
     );
   }
 
+  findByAtivo(ativo: boolean): Observable<Genero[]> {
+    return this.httpClient.get<Genero[]>(`${this.baseUrl}/search/ativo/${ativo}`);
+  }
+
 }

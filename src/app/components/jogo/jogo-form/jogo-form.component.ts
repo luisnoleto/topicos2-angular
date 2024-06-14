@@ -6,12 +6,13 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { JogoService } from '../../../services/jogo.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Jogo } from '../../../models/jogo.model';
@@ -23,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { GeneroService } from '../../../services/genero.service';
 import { DesenvolvedoraService } from '../../../services/desenvolvedora.service';
 import { PlataformaService } from '../../../services/plataforma.service';
+import { Classificacao } from '../../../models/classificacao.model';
 
 
 
@@ -38,7 +40,8 @@ import { PlataformaService } from '../../../services/plataforma.service';
     MatCardModule,
     MatToolbarModule,
     RouterModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonModule
   ],
   templateUrl: './jogo-form.component.html',
   styleUrl: './jogo-form.component.css',
@@ -48,7 +51,7 @@ export class JogoFormComponent {
   generos: Genero[] = [];
   plataformas: Plataforma[] = [];
   desenvolvedoras: Desenvolvedora[] = [];
-  classificacoes: string[] = ['Livre', '10 anos', '12 anos', '14 anos', '16 anos', '18 anos'];
+  classificacoes: Classificacao[] = [];
 
 
 
@@ -59,14 +62,14 @@ export class JogoFormComponent {
     private generoService: GeneroService,
     private plataformaService: PlataformaService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
 
     const jogo: Jogo =
       activatedRoute.snapshot.data['jogo'];
 
-    this.formGroup = this.formBuilder.group({
-      id: [jogo && jogo.id ? jogo.id : null],
+    this.formGroup = formBuilder.group({
+      id: [(jogo && jogo.id) ? jogo.id : null],
       nome: [jogo && jogo.nome ? jogo.nome : '',
       Validators.compose([Validators.required, Validators.minLength(4)])],
       descricao: [jogo && jogo.descricao ? jogo.descricao : '',
@@ -85,51 +88,41 @@ export class JogoFormComponent {
       Validators.required],
       armazenamento: [jogo && jogo.armazenamento ? jogo.armazenamento : '',
       Validators.required],
-      genero: [jogo && jogo.genero ? jogo.genero : '',
+      genero: [jogo && jogo.genero ? jogo.genero.id : '',
       Validators.required],
-      plataforma: [jogo && jogo.plataforma ? jogo.plataforma : '',
-      Validators.required],
-      desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora : '',
-      Validators.required],
-      classificacao: [jogo && jogo.classificacao ? jogo.classificacao : '',
-      Validators.required],
+      plataforma: [jogo && jogo.plataforma ? jogo.plataforma.id : null,
+        Validators.compose([Validators.required])],
+      desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora.id : null,
+        Validators.compose([Validators.required])],
+      classificacao: [jogo && jogo.classificacao ? jogo.classificacao : null,
+        Validators.compose([Validators.required])],
       nomeImagem: [jogo && jogo.nomeImagem ? jogo.nomeImagem : ''],
-
+      
     });
   }
 
   ngOnInit(): void {
-    this.generoService.findAll().subscribe(data => {
+    this.generoService.findByAtivo(true).subscribe(data => {
       this.generos = data;
-      this.initializeForm();
+      
     });
 
-    this.plataformaService.findAll().subscribe(data => {
+    this.plataformaService.findByAtivo(true).subscribe(data => {
       this.plataformas = data;
-      this.initializeForm();
+      
     });
 
     this.desenvolvedoraService.findByAtivo(true).subscribe(data => {
       this.desenvolvedoras = data;
-      this.initializeForm();
+      
     });
 
+ 
+
+    
   }
 
-  initializeForm() {
-    const jogo: Jogo = this.activatedRoute.snapshot.data['jogo'];
-
-    // selecionando o estado
-    const genero = this.generos
-      .find(genero => genero.id === (jogo?.genero?.id || null));
-
-    const plataforma = this.plataformas
-      .find(plataforma => plataforma.id === (jogo?.plataforma?.id || null));
-
-    const desenvolvedora = this.desenvolvedoras
-      .find(desenvolvedora => desenvolvedora.id === (jogo?.desenvolvedora?.id || null));
-
-  };
+  
 
 
 
@@ -139,11 +132,11 @@ export class JogoFormComponent {
       const jogo = this.formGroup.value;
 
       const operacao = jogo.id == null
-        ? this.jogoService.insert(jogo)
+        ? this.jogoService.save(jogo)
         : this.jogoService.update(jogo);
 
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/jogos'),
+        next: () => this.router.navigateByUrl('/admin/jogos'),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar' + JSON.stringify(error));
           this.tratarErros(error);

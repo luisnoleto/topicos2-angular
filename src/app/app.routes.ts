@@ -28,8 +28,6 @@ import { desenvolvedoraResolver } from './components/desenvolvedora/resolver/des
 import { PlataformaListComponent } from './components/plataforma/plataforma-list/plataforma-list.component';
 import { PlataformaFormComponent } from './components/plataforma/plataforma-form/plataforma-form.component';
 import { plataformaResolver } from './components/plataforma/resolver/plataforma-resolver';
-import { cadastroResolver } from './components/cadastro-admin/cadastro-admin-form/resolver/cadastro-admin-resolver';
-import { CadastroAdminFormComponent } from './components/cadastro-admin/cadastro-admin-form/cadastro-admin-form.component';
 import { TelaAdministradorComponent } from './components/tela-administrador/tela-administrador.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { JogoCardListComponent } from './components/jogo-card-list/jogo-card-list.component';
@@ -40,9 +38,14 @@ import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.com
 import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { UpdateSenhaComponent } from './components/update-senha/update-senha.component';
 import { DadosUsuarioComponent } from './components/dados-usuario/dados-usuario.component';
+
+import { Error404Component } from './components/template/404/404.component';
+import { UpdateNomeComponent } from './components/update-nome/update-nome.component';
+import { UpdateEmailComponent } from './components/update-email/update-email.component';
 import { MeusPedidosComponent } from './components/meus-pedidos/meus-pedidos.component';
 import { CadastroUsuarioComponent } from './components/cadastro-usuario/cadastro-usuario.component';
 import { CadastroEnderecoFormComponent } from './components/endereco/endereco.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -59,6 +62,7 @@ export const routes: Routes = [
         component: JogoCardListComponent,
         title: 'Produtos à Venda',
       },
+      
       {
         path: 'carrinho',
         component: CarrinhoComponent,
@@ -81,32 +85,52 @@ export const routes: Routes = [
         path: 'usuarios/edit/:id/senha',
         component: UpdateSenhaComponent,
         resolve: { user: userResolver },
-        canActivate: [authGuard],
+        
       },
+      {
+        path: 'usuarios/edit/:id/nome',
+        component: UpdateNomeComponent,
+        resolve: { user: userResolver },
+        
+      },
+      {
+      path: 'usuarios/edit/:id/email',
+      component: UpdateEmailComponent,
+      resolve: { user: userResolver },
+      
+      },
+
+      // {
+      // path: 'usuarios/edit/:id/telefone',
+      // component: UpdateTelefoneComponent,
+      // resolve: { user: userResolver },
+      // canActivate: [authGuard],
+      // },
+
       {
         path: 'usuarios/edit/:id',
         component: UserFormComponent,
         resolve: { user: userResolver },
-        canActivate: [authGuard],
+        
       },
       {
         path: 'finalizar-pedido',
         component: FazerPedidoComponent,
         title: 'Finalizar Pedido',
-        canActivate: [authGuard],
+        
       },
 
       {
         path: 'finalizar-pedido/pagamento',
         component: PagamentoComponent,
         title: 'Pagamento',
-        canActivate: [authGuard],
+        
       },
       {
         path: ':usuarios/dados-usuario',
         component: DadosUsuarioComponent,
         title: 'Minhas Informações',
-        canActivate: [authGuard],
+        
       },
       {
         path: 'meus-pedidos',
@@ -121,12 +145,11 @@ export const routes: Routes = [
     component: AdminTemplateComponent,
     title: 'e-commerce',
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'tela-administrador',
-      },
 
+  
+
+      {path: '', pathMatch: 'full', redirectTo: 'tela-administrador'},
+      
       {
         path: 'tela-administrador',
         component: TelaAdministradorComponent,
@@ -138,7 +161,7 @@ export const routes: Routes = [
         path: 'usuarios',
         component: UserListComponent,
         title: 'Usuários',
-        canActivate: [authGuard],
+      
       },
       {
         path: 'usuarios/new',
@@ -306,4 +329,5 @@ export const routes: Routes = [
       },
     ],
   },
+  {path: '**', component: Error404Component, title: 'Error 404'},
 ];

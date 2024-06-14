@@ -61,4 +61,19 @@ export class UserService {
       `${this.baseUrl}/perfilNome/${login}`
     );
   }
+  alterarNome(senhaAtual: String, nome: String): Observable<User> {
+    return this.httpClient.patch<User>(`${this.adminUrl}/alterar/nome`, {
+      senhaAtual,
+      nome,
+    });
+  }
+
+  alterarEmail(senhaAtual: String, email: String): Observable<User> {
+    return this.httpClient.patch<User>(`${this.adminUrl}/alterar/email`, {
+      senhaAtual,
+      email,
+    });
+  }
+
+  //alterarTelefone()
 }

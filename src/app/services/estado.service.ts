@@ -45,4 +45,8 @@ export class EstadoService {
     return this.httpClient.delete<any>(`${this.baseUrl}/${estado.id}`);
   }
 
+  findByAtivo(ativo: boolean): Observable<Estado[]> {
+    return this.httpClient.get<Estado[]>(`${this.baseUrl}/search/ativo/${ativo}`);
+  }
+
 }
