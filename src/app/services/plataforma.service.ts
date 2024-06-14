@@ -56,8 +56,4 @@ export class PlataformaService {
       plataforma
     );
   }
-
-  findByAtivo(ativo: boolean): Observable<Plataforma[]> {
-    return this.httpClient.get<Plataforma[]>(`${this.baseUrl}/search/ativo/${ativo}`);
-  }
 }

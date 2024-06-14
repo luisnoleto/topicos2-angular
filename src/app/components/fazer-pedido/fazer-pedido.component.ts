@@ -57,6 +57,11 @@ export class FazerPedidoComponent implements OnInit {
     });
     this.buscaEnderecos();
   }
+  checkCarrinhoStatus() {
+    if (this.updatedCarrinhoItens.length === 0) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   updateCartItemsWithImages(itens: ItemCarrinho[]) {
     const observables = itens.map((item) =>
@@ -122,7 +127,9 @@ export class FazerPedidoComponent implements OnInit {
     this.pedidoService.createPedido(pedido).subscribe({
       next: (response) => {
         console.log('Pedido realizado com sucesso', response);
-        this.router.navigate(['/finalizar-pedido/confirmacao']);
+        this.carrinhoService.removerTudo();
+        this.checkCarrinhoStatus();
+        //this.router.navigate(['/meus-pedidos']);
       },
       error: (error) => {
         console.error('Erro ao realizar pedido', error);

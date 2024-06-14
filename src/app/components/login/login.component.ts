@@ -72,15 +72,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onRegister() {
-    // criar usuário
-  }
-
-  showSnackbarTopPosition(content: any, action: any, duration: any) {
-    this.snackBar.open(content, action, {
-      duration: 2000,
-      verticalPosition: 'top', // Allowed values are  'top' | 'bottom'
-      horizontalPosition: 'center', // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+  showSnackbarTopPosition(message: string, action: string, duration: number) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      verticalPosition: 'top',
     });
   }
 }

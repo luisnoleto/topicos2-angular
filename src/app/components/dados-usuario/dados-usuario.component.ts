@@ -75,6 +75,7 @@ export class DadosUsuarioComponent implements OnInit {
         user && user.dataNascimento ? user.dataNascimento : '',
         Validators.required,
       ],
+      senha: [user && user.senha ? user.senha : '', Validators.required],
       listaTelefone: this.formBuilder.array(
         user && user.listaTelefone
           ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
@@ -87,11 +88,22 @@ export class DadosUsuarioComponent implements OnInit {
   }
   obterUsuarioLogado() {
     this.subscription.add(
-      this.authService
-        .getUsuarioLogado()
-        .subscribe((usuario) => (this.usuarioLogado = usuario))
+      this.authService.getUsuarioLogado().subscribe((usuario) => {
+        this.usuarioLogado = usuario;
+        this.formGroup.patchValue({
+          id: usuario?.id,
+          nome: usuario?.nome,
+          login: usuario?.login,
+          email: usuario?.email,
+          cpf: usuario?.cpf,
+          dataNascimento: usuario?.dataNascimento,
+          senha: usuario?.senha,
+          listaTelefone: usuario?.listaTelefone || [],
+        });
+      })
     );
   }
+
   toggleAddresses() {
     this.showAddresses = !this.showAddresses;
   }
@@ -115,16 +127,26 @@ export class DadosUsuarioComponent implements OnInit {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const user = this.formGroup.value;
-      console.log(user.lista);
 
-      const operacao =
-        user.id == null
-          ? this.userService.insert(user)
-          : this.userService.update(user);
+      if (!user.id && this.usuarioLogado?.id) {
+        user.id = this.usuarioLogado.id;
+      }
 
-      operacao.subscribe({
-        next: () => {
-          location.reload();
+      this.userService.meusDados().subscribe({
+        next: (usuarioLogado) => {
+          user.senha = usuarioLogado.senha;
+
+          const operacao = this.userService.update(user);
+
+          operacao.subscribe({
+            next: () => {
+              location.reload();
+            },
+            error: (error: HttpErrorResponse) => {
+              console.log('Erro ao salvar' + JSON.stringify(error));
+              this.tratarErros(error);
+            },
+          });
         },
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));

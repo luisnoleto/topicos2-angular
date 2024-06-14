@@ -19,9 +19,13 @@ export class EnderecoService {
           .get<EnderecoDTO[]>(`${this.apiUrl}/usuario/${usuarioLogado?.id}`)
           .pipe(
             map((enderecos) =>
-              enderecos.map((endereco, index) => ({
-                id: index,
-                endereco: `${endereco.logradouro}, ${endereco.numero}, ${endereco.bairro}, Cidade: ${endereco.idCidade}, CEP: ${endereco.cep}`,
+              enderecos.map((endereco) => ({
+                id: endereco.id,
+                endereco: `${endereco.logradouro}, ${endereco.numero}, ${
+                  endereco.bairro
+                }, Cidade: ${(endereco.idCidade as any).nomeCidade}, CEP: ${
+                  endereco.cep
+                }`,
               }))
             )
           )
