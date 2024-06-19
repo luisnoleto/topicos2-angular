@@ -1,3 +1,5 @@
+import { Municipio } from './municipio.model';
+
 export interface EnderecoDTO {
   id: number;
   cep: string;
@@ -6,4 +8,5 @@ export interface EnderecoDTO {
   complemento: string;
   bairro: string;
   idCidade: number;
+  cidade: Municipio;
 }
