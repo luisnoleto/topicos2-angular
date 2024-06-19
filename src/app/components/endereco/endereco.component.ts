@@ -16,6 +16,9 @@ import { MatCardModule } from '@angular/material/card';
 import { EnderecoService } from '../../services/endereco.service';
 import { EnderecoDTO } from '../../models/enderecoDTO.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MunicipioService } from '../../services/municipio.service';
+import { Municipio } from '../../models/municipio.model';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-cadastro-endereco-form',
@@ -29,12 +32,14 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatCardModule,
     RouterModule,
     CommonModule,
+    MatSelectModule
   ],
   templateUrl: './endereco.component.html',
   styleUrls: ['./endereco.component.css'],
 })
 export class CadastroEnderecoFormComponent {
   formGroup: FormGroup;
+  municipios: Municipio[] = []; 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,7 +68,7 @@ export class CadastroEnderecoFormComponent {
         Validators.required,
       ],
       idCidade: [
-        endereco && endereco.idCidade ? endereco.idCidade : '',
+        endereco && endereco.idCidade ? endereco.idCidade : null,
         Validators.required,
       ],
     });

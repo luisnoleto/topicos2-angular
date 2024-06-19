@@ -53,10 +53,10 @@ import { Location } from '@angular/common';
     MatDatepickerModule,
     MatSelectModule,
   ],
-  templateUrl: './update-email.component.html',
-  styleUrl: './update-email.component.css',
+  templateUrl: './update-cpf.component.html',
+  styleUrl: './update-cpf.component.css',
 })
-export class UpdateEmailComponent implements OnInit, OnDestroy {
+export class UpdateCpfComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   usuarioLogado: User | null = null;
   private subscription = new Subscription();
@@ -78,7 +78,7 @@ export class UpdateEmailComponent implements OnInit, OnDestroy {
         user && user.senha ? user.senha : '',
         Validators.compose([Validators.required, Validators.minLength(2)]),
       ],
-      novoEmail: ['', [Validators.required, Validators.minLength(4)]],
+      novoCpf: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
   ngOnDestroy(): void {
@@ -144,19 +144,19 @@ export class UpdateEmailComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateEmail() {
+  updateCpf() {
     if (this.formGroup.get('senhaAtual')?.valid) {
       const senhaAtual = this.formGroup.get('senhaAtual')!.value;
-      const novoEmail = this.formGroup.get('novoEmail')!.value;
+      const novoCpf = this.formGroup.get('novoCpf')!.value;
 
-      this.userService.alterarEmail(senhaAtual, novoEmail).subscribe({
+      this.userService.alterarCpf(senhaAtual, novoCpf).subscribe({
         next: (response) => {
-          console.log('Email updated successfully', response);
-          this.showSnackbarTopPosition('Email Alterada com Sucesso', 'Fechar');
+          console.log('Nome updated successfully', response);
+          this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
           this.voltarPagina();
         },
         error: (error) => {
-          console.error('Error updating Email', error);
+          console.error('Error updating Nome', error);
           this.showSnackbarTopPosition('Senha atual não confere', 'Fechar');
         },
       });
