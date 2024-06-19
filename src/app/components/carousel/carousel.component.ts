@@ -1,29 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { Router } from '@angular/router';
+import { CarouselService } from '../../services/carousel.service';
+import { Slide, Jogo } from '../../models/SlideDTO.model';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
   imports: [CommonModule, SlickCarouselModule],
   templateUrl: './carousel.component.html',
-  styleUrl: './carousel.component.css',
+  styleUrls: ['./carousel.component.css'],
 })
-export class CarouselComponent {
-  constructor(private router: Router) {}
-
-  navigateToJogo(jogoId: string) {
-    this.router.navigate(['/jogo', jogoId]);
-  }
-  slides = [
-    { img: '../assets/carousel1.png', id: 'jogo1' },
-    { img: '../assets/carousel2.png', id: 'jogo2' },
-    { img: '../assets/carousel3.png', id: 'jogo3' },
-    { img: '../assets/carousel4.png', id: 'jogo4' },
-    { img: '../assets/carousel5.png', id: 'jogo5' },
-  ];
-
+export class CarouselComponent implements OnInit {
+  slides: Slide[] = [];
   slideConfig = {
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -31,6 +21,54 @@ export class CarouselComponent {
     autoplaySpeed: 3000,
     pauseOnHover: true,
     infinite: true,
-    arrow: true,
+    arrows: true,
   };
+
+  constructor(
+    private router: Router,
+    private carouselService: CarouselService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadSlides();
+  }
+
+  loadSlides(): void {
+    this.carouselService.getSlides().subscribe((slides) => {
+      this.slides = slides;
+      // Log para confirmar que os objetos 'jogo' estão presentes
+      this.slides.forEach((slide) => {
+        console.log(`Slide ${slide.id} jogo:`, slide.jogo);
+        if (!slide.jogo) {
+          console.error(`Slide ${slide.id} não possui um jogo associado.`);
+        }
+      });
+      console.log('Slides carregados:', this.slides); // Log slides para depurar
+    });
+  }
+
+  navigateToJogo(jogo: Jogo): void {
+    if (!jogo || !jogo.id) {
+      console.error(
+        'Erro: jogo ou jogoId está indefinido, não é possível navegar.'
+      );
+      return;
+    }
+    this.router.navigate([`/jogo/${jogo.id}`]);
+  }
+
+  addSlide(slide: string): void {
+    const formData = new FormData();
+    formData.append('slide', slide);
+    this.carouselService.addSlide(formData).subscribe((newSlide) => {
+      this.slides.push(newSlide);
+    });
+  }
+
+  removeSlide(index: number): void {
+    const slideId = this.slides[index].id;
+    this.carouselService.removeSlide(slideId).subscribe(() => {
+      this.slides.splice(index, 1);
+    });
+  }
 }

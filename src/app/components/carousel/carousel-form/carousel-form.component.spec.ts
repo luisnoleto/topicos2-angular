@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PagamentoComponent } from './pagamento.component';
+import { CarouselFormComponent } from './carousel-form.component';
 
-describe('PagamentoComponent', () => {
-  let component: PagamentoComponent;
-  let fixture: ComponentFixture<PagamentoComponent>;
+describe('CarouselFormComponent', () => {
+  let component: CarouselFormComponent;
+  let fixture: ComponentFixture<CarouselFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PagamentoComponent]
+      imports: [CarouselFormComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PagamentoComponent);
+    fixture = TestBed.createComponent(CarouselFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

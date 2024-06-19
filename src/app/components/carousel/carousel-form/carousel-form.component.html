@@ -1,0 +1,58 @@
+<h2>Veja como está o carrossel</h2>
+<app-carousel></app-carousel>
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+        <div class="form-group">
+          <h3>Adicionar Imagem</h3>
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Jogo</mat-label>
+            <mat-select formControlName="jogoId">
+              <mat-option *ngFor="let jogo of jogos" [value]="jogo.id">
+                {{ jogo.nome }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="fileInput.click()"
+          >
+            Selecione o Arquivo
+          </button>
+          <input
+            hidden
+            (change)="onFileSelected($event)"
+            #fileInput
+            type="file"
+          />
+          <span class="file-name">{{ selectedFile?.name }}</span>
+          <button mat-raised-button color="primary" type="submit">
+            Enviar
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="form-card" id="remover">
+    <mat-card-content>
+      <form (ngSubmit)="onDelete()" [formGroup]="deleteFormGroup">
+        <div class="form-group">
+          <h3>Remover Imagem</h3>
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Jogo</mat-label>
+            <mat-select formControlName="jogoId">
+              <mat-option *ngFor="let jogo of jogos" [value]="jogo.id">
+                {{ jogo.nome }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button color="warn" type="submit">Remover</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

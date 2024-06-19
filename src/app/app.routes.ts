@@ -35,16 +35,16 @@ import { UserTemplateComponent } from './components/template/user-template/user-
 import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 import { authGuard } from './guard/auth.guard';
 import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
-import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { UpdateSenhaComponent } from './components/update-senha/update-senha.component';
 import { DadosUsuarioComponent } from './components/dados-usuario/dados-usuario.component';
-
 import { Error404Component } from './components/template/404/404.component';
 import { UpdateNomeComponent } from './components/update-nome/update-nome.component';
 import { UpdateEmailComponent } from './components/update-email/update-email.component';
 import { MeusPedidosComponent } from './components/meus-pedidos/meus-pedidos.component';
 import { CadastroUsuarioComponent } from './components/cadastro-usuario/cadastro-usuario.component';
 import { CadastroEnderecoFormComponent } from './components/endereco/endereco.component';
+import { CarouselFormComponent } from './components/carousel/carousel-form/carousel-form.component';
+import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produto.component';
 
 export const routes: Routes = [
   {
@@ -62,11 +62,16 @@ export const routes: Routes = [
         component: JogoCardListComponent,
         title: 'Produtos à Venda',
       },
-      
+
       {
         path: 'carrinho',
         component: CarrinhoComponent,
         title: 'Carrinho de pedidos',
+      },
+      {
+        path: 'jogo/:id',
+        component: PaginaProdutoComponent,
+        title: 'Página do Produto',
       },
       {
         path: 'usuarios/new',
@@ -85,19 +90,16 @@ export const routes: Routes = [
         path: 'usuarios/edit/:id/senha',
         component: UpdateSenhaComponent,
         resolve: { user: userResolver },
-        
       },
       {
         path: 'usuarios/edit/:id/nome',
         component: UpdateNomeComponent,
         resolve: { user: userResolver },
-        
       },
       {
-      path: 'usuarios/edit/:id/email',
-      component: UpdateEmailComponent,
-      resolve: { user: userResolver },
-      
+        path: 'usuarios/edit/:id/email',
+        component: UpdateEmailComponent,
+        resolve: { user: userResolver },
       },
 
       // {
@@ -111,26 +113,18 @@ export const routes: Routes = [
         path: 'usuarios/edit/:id',
         component: UserFormComponent,
         resolve: { user: userResolver },
-        
       },
       {
         path: 'finalizar-pedido',
         component: FazerPedidoComponent,
         title: 'Finalizar Pedido',
-        
+        canActivate: [authGuard],
       },
 
-      {
-        path: 'finalizar-pedido/pagamento',
-        component: PagamentoComponent,
-        title: 'Pagamento',
-        
-      },
       {
         path: ':usuarios/dados-usuario',
         component: DadosUsuarioComponent,
         title: 'Minhas Informações',
-        
       },
       {
         path: 'meus-pedidos',
@@ -145,11 +139,8 @@ export const routes: Routes = [
     component: AdminTemplateComponent,
     title: 'e-commerce',
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'tela-administrador' },
 
-  
-
-      {path: '', pathMatch: 'full', redirectTo: 'tela-administrador'},
-      
       {
         path: 'tela-administrador',
         component: TelaAdministradorComponent,
@@ -161,7 +152,6 @@ export const routes: Routes = [
         path: 'usuarios',
         component: UserListComponent,
         title: 'Usuários',
-      
       },
       {
         path: 'usuarios/new',
@@ -327,7 +317,13 @@ export const routes: Routes = [
         resolve: { jogo: jogoResolver },
         canActivate: [authGuard],
       },
+      {
+        path: 'carousel',
+        component: CarouselFormComponent,
+        title: 'Carousel',
+        canActivate: [authGuard],
+      },
     ],
   },
-  {path: '**', component: Error404Component, title: 'Error 404'},
+  { path: '**', component: Error404Component, title: 'Error 404' },
 ];
