@@ -1,0 +1,52 @@
+.jogo-detail-container {
+    padding: 20px;
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .jogo-main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  .jogo-card {
+    width: 300px;
+    background-color: #1e1e1e;
+  }
+  
+  .jogo-card img {
+    width: 100%;
+  }
+  
+  .jogo-card mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .jogo-card h1 {
+    font-size: 2rem;
+    margin: 10px 0;
+  }
+  
+  .jogo-price {
+    font-size: 1.5rem;
+    color: #ffd700;
+    margin: 10px 0;
+  }
+  
+  .buy-button {
+    margin-top: 20px;
+  }
+  
+  .similar-jogos {
+    text-align: center;
+  }
+  
+  .similar-jogos h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  

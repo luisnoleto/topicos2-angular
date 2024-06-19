@@ -12,6 +12,7 @@ import { NgFor } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { Jogo } from '../../models/jogo.model';
 import { JogoService } from '../../services/jogo.service';
+import { Router } from '@angular/router';
 
 // tipo personalizado de dados, como classes e interfaces, porém mais simples.
 type Card = {
@@ -43,7 +44,8 @@ export class JogoCardListComponent implements OnInit {
   constructor(
     private jogoService: JogoService,
     private carrinhoService: CarrinhoService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -87,5 +89,9 @@ export class JogoCardListComponent implements OnInit {
       verticalPosition: 'top',
       horizontalPosition: 'center',
     });
+  }
+
+  paginaJogo(id: number) {
+    this.router.navigate(['/jogo', id]);
   }
 }

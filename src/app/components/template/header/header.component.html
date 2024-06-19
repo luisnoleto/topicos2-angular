@@ -1,5 +1,6 @@
 <mat-toolbar color="padraoHeader">
   <button
+    *ngIf="isAdminRoute"
     (click)="clickMenu()"
     mat-icon-button
     class="example-icon"

@@ -11,7 +11,9 @@
       </mat-card-content>
 
       <mat-card-actions class="centered-text" id="mais">
-        <button mat-button color="primary">Ver mais</button>
+        <button mat-button color="primary" (click)="paginaJogo(card.idJogo)">
+          Ver mais
+        </button>
       </mat-card-actions>
 
       <mat-card-footer>

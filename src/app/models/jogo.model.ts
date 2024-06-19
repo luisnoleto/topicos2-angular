@@ -21,5 +21,6 @@ export class Jogo {
   classificacao!: Classificacao;
   fabricante!: Fabricante;
   nomeImagem!: string;
+  nomeImagemCarousel!: string;
   ativo!: boolean;
 }

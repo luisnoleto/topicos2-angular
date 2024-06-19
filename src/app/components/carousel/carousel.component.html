@@ -1,15 +1,10 @@
 <div class="carousel-container">
-  <ngx-slick-carousel
-    class="carousel"
-    #slickModal="slick-carousel"
-    [config]="slideConfig"
-  >
+  <ngx-slick-carousel class="carousel" [config]="slideConfig">
     <div ngxSlickItem *ngFor="let slide of slides" class="slide">
       <img
-        src="{{ slide.img }}"
-        alt=""
+        [src]="slide.nomeImagem"
+        (click)="slide.jogo && navigateToJogo(slide.jogo)"
         class="img-style"
-        (click)="navigateToJogo(slide.id)"
       />
     </div>
   </ngx-slick-carousel>

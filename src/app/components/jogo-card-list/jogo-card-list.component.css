@@ -45,3 +45,13 @@ mat-card-actions {
     justify-content: center; /* Center children horizontally */
     align-items: center; /* Center children vertically, if needed */
 }
+button {
+    width: 100%;
+    margin-top: 20px;
+    color: #fff;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background: purple;
+  }

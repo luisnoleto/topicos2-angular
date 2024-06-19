@@ -1,0 +1,30 @@
+<div *ngIf="jogo; else loading" class="jogo-detail-container">
+  <div class="jogo-main">
+    <mat-card class="jogo-card">
+      <img mat-card-image [src]="jogo?.nomeImagem" alt="{{ jogo?.nome }}" />
+      <mat-card-content>
+        <h1 mat-card-title>{{ jogo?.nome }}</h1>
+        <p class="jogo-price">R$ {{ jogo?.preco }}</p>
+        <p>{{ jogo?.descricao }}</p>
+        <p><strong>Classificação:</strong> {{ jogo?.classificacao }}</p>
+        <p><strong>Gênero:</strong> {{ jogo?.genero }}</p>
+        <button
+          mat-raised-button
+          color="primary"
+          class="buy-button"
+          (click)="adicionarAoCarrinho(jogo)"
+        >
+          Comprar agora
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="similar-jogos">
+    <h2>Descubra mais</h2>
+    <app-jogo-card-list></app-jogo-card-list>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Carregando...</p>
+</ng-template>

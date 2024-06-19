@@ -23,7 +23,7 @@ export class EnderecoService {
                 id: endereco.id,
                 endereco: `${endereco.logradouro}, ${endereco.numero}, ${
                   endereco.bairro
-                }, Cidade: ${(endereco.idCidade as any).nomeCidade}, CEP: ${
+                }, Cidade: ${(endereco.idCidade as any).municipio}, CEP: ${
                   endereco.cep
                 }`,
               }))
