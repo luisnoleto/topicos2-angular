@@ -82,4 +82,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.removeUsuarioLogado();
     this.carrinhoService.removerTudo();
   }
+
+  get isAdminRoute(): boolean {
+    return this.router.url.includes('admin/');
+  }
 }
