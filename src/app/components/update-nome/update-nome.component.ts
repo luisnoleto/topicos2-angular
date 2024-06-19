@@ -76,7 +76,7 @@ export class UpdateNomeComponent implements OnInit, OnDestroy {
       id: user && user.id ? user.id : null,
       senhaAtual: [
         user && user.senha ? user.senha : '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+        Validators.compose([Validators.required, Validators.minLength(2)]),
       ],
       novoNome: ['', [Validators.required, Validators.minLength(4)]],
     });
@@ -152,7 +152,7 @@ export class UpdateNomeComponent implements OnInit, OnDestroy {
       this.userService.alterarNome(senhaAtual, novoNome).subscribe({
         next: (response) => {
           console.log('Nome updated successfully', response);
-          this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
+          this.showSnackbarTopPosition('Nome Alterado com Sucesso', 'Fechar');
           this.voltarPagina();
         },
         error: (error) => {

@@ -142,7 +142,7 @@ export class DadosUsuarioComponent implements OnInit {
 
       this.userService.update(user).subscribe({
         next: () => {
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/usuarios/dados-usuario');
         },
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao salvar' + JSON.stringify(error));
@@ -168,4 +168,6 @@ export class DadosUsuarioComponent implements OnInit {
       console.log('Erro inesperado');
     }
   }
+
+
 }

@@ -1,6 +1,6 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Gerenciar Endereços - Cadastro</h1>
+    <h1 class="tituloGerenciar">Adicionar Endereço</h1>
   </div>
 </div>
 <div class="form-container">
@@ -78,23 +78,16 @@
             }}</span>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width-input">
+
+        <mat-form-field appearance="fill">
           <mat-label>Cidade</mat-label>
-          <input matInput type="number" formControlName="idCidade" />
-          <mat-error
-            *ngIf="
-              formGroup.get('idCidade')?.errors &&
-              formGroup.get('idCidade')?.touched
-            "
-          >
-            <span *ngIf="formGroup.get('idCidade')?.errors?.['required']"
-              >A cidade deve ser informada.</span
-            >
-            <span *ngIf="formGroup.get('idCidade')?.hasError('apiError')">{{
-              formGroup.get("idCidade")?.getError("apiError")
-            }}</span>
-          </mat-error>
-        </mat-form-field>
+          <mat-select formControlName="desenvolvedora">
+            <mat-option *ngFor="let municipio of municipios" [value]="municipio.id">
+              {{municipio.nome}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+
       </form>
     </mat-card-content>
     <mat-card-actions>

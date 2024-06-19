@@ -76,7 +76,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       id: user && user.id ? user.id : null,
       senhaAtual: [
         user && user.senha ? user.senha : '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+        Validators.compose([Validators.required, Validators.minLength(2)]),
       ],
       novaSenha: ['', [Validators.required, Validators.minLength(8)]],
     });
@@ -93,6 +93,8 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
     if (this.formGroup.valid) {
       const user = this.formGroup.value;
       console.log(user.lista);
+
+
 
       const operacao =
         user.id == null

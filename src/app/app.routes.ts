@@ -45,6 +45,8 @@ import { CadastroUsuarioComponent } from './components/cadastro-usuario/cadastro
 import { CadastroEnderecoFormComponent } from './components/endereco/endereco.component';
 import { CarouselFormComponent } from './components/carousel/carousel-form/carousel-form.component';
 import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produto.component';
+import { UpdateCpfComponent } from './components/update-cpf/update-cpf.component';
+
 
 export const routes: Routes = [
   {
@@ -96,6 +98,14 @@ export const routes: Routes = [
         component: UpdateNomeComponent,
         resolve: { user: userResolver },
       },
+
+      {
+        path: 'usuarios/edit/:id/cpf',
+        component: UpdateCpfComponent,
+        resolve: { user: userResolver },
+        
+      },
+
       {
         path: 'usuarios/edit/:id/email',
         component: UpdateEmailComponent,
