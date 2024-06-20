@@ -1,36 +1,23 @@
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
-import {
-  FormArray,
-  FormArrayName,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NgIf } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormControlName } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import {
-  DateAdapter,
-  MAT_DATE_LOCALE,
-  MAT_DATE_FORMATS,
-} from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
+import { UserStateService } from '../../services/userState.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { User } from '../../models/user.model';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { provideNativeDateAdapter, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-update-nome',
@@ -39,22 +26,20 @@ import { Location } from '@angular/common';
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
   ],
-  // ...
-
   imports: [
-    NgIf,
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     RouterModule,
-    CommonModule,
     MatDatepickerModule,
     MatSelectModule,
+    MatNativeDateModule,
   ],
   templateUrl: './update-nome.component.html',
-  styleUrl: './update-nome.component.css',
+  styleUrls: ['./update-nome.component.css'],
 })
 export class UpdateNomeComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
@@ -69,79 +54,31 @@ export class UpdateNomeComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private localStorageService: LocalStorageService,
     private snackbar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private userStateService: UserStateService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
-    this.formGroup = formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       id: user && user.id ? user.id : null,
-      senhaAtual: [
-        user && user.senha ? user.senha : '',
-        Validators.compose([Validators.required, Validators.minLength(2)]),
-      ],
+      senhaAtual: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
       novoNome: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+
   ngOnInit(): void {
     this.obterUsuarioLogado();
   }
 
-  salvar() {
-    this.formGroup.markAllAsTouched();
-    if (this.formGroup.valid) {
-      const user = this.formGroup.value;
-      console.log(user.lista);
-
-      const operacao =
-        user.id == null
-          ? this.userService.insert(user)
-          : this.userService.update(user);
-
-      operacao.subscribe({
-        next: () => this.router.navigateByUrl('/admin/usuarios'),
-        error: (error: HttpErrorResponse) => {
-          console.log('Erro ao salvar' + JSON.stringify(error));
-          this.tratarErros(error);
-        },
-      });
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  tratarErros(error: HttpErrorResponse) {
-    if (error.status === 400) {
-      if (error.error?.errors) {
-        error.error.errors.forEach((validationError: any) => {
-          const formControl = this.formGroup.get(validationError.fieldName);
-          console.log(validationError);
-          if (formControl) {
-            console.log(formControl);
-            formControl.setErrors({ apiError: validationError.message });
-          }
-        });
-      }
-    } else if (error.status < 400) {
-      alert(error.error?.message || 'Erro não tratado.');
-    } else if (error.status >= 500) {
-      alert('Erro interno.');
-    }
-  }
-
-  excluir() {
-    if (this.formGroup.valid) {
-      const user = this.formGroup.value;
-      if (user.id != null) {
-        this.userService.delete(user).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/usuarios');
-          },
-          error: (err) => {
-            console.log('Erro ao Excluir' + JSON.stringify(err));
-          },
-        });
-      }
-    }
+  obterUsuarioLogado() {
+    this.subscription.add(
+      this.authService.getUsuarioLogado().subscribe((usuario) => {
+        this.usuarioLogado = usuario;
+      })
+    );
   }
 
   updateNome() {
@@ -151,8 +88,8 @@ export class UpdateNomeComponent implements OnInit, OnDestroy {
 
       this.userService.alterarNome(senhaAtual, novoNome).subscribe({
         next: (response) => {
-          console.log('Nome updated successfully', response);
           this.showSnackbarTopPosition('Nome Alterado com Sucesso', 'Fechar');
+          this.userStateService.updateUser(response);
           this.voltarPagina();
         },
         error: (error) => {
@@ -162,6 +99,7 @@ export class UpdateNomeComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   showSnackbarTopPosition(content: any, action: any) {
     this.snackbar.open(content, action, {
       duration: 2000,
@@ -170,15 +108,8 @@ export class UpdateNomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  obterUsuarioLogado() {
-    this.subscription.add(
-      this.authService
-        .getUsuarioLogado()
-        .subscribe((usuario) => (this.usuarioLogado = usuario))
-    );
-  }
-
   voltarPagina() {
+    
     this.location.back();
   }
 }

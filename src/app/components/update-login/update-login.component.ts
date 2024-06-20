@@ -33,7 +33,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { UserStateService } from '../../services/userState.service';
 
-
 @Component({
   selector: 'app-update-nome',
   standalone: true,
@@ -55,10 +54,10 @@ import { UserStateService } from '../../services/userState.service';
     MatDatepickerModule,
     MatSelectModule,
   ],
-  templateUrl: './update-cpf.component.html',
-  styleUrl: './update-cpf.component.css',
+  templateUrl: './update-login.component.html',
+  styleUrl: './update-login.component.css',
 })
-export class UpdateCpfComponent implements OnInit, OnDestroy {
+export class UpdateLoginComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   usuarioLogado: User | null = null;
   private subscription = new Subscription();
@@ -75,10 +74,10 @@ export class UpdateCpfComponent implements OnInit, OnDestroy {
     private userStateService: UserStateService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
-    this.formGroup = formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       id: user && user.id ? user.id : null,
       senhaAtual: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-      novoCpf: ['', [Validators.required, Validators.pattern("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")]],
+      novoLogin: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
   ngOnDestroy(): void {
@@ -88,13 +87,12 @@ export class UpdateCpfComponent implements OnInit, OnDestroy {
     this.obterUsuarioLogado();
   }
 
-
-  updateCpf() {
+  updateLogin() {
     if (this.formGroup.get('senhaAtual')?.valid) {
       const senhaAtual = this.formGroup.get('senhaAtual')!.value;
-      const novoCPF = this.formGroup.get('novoCPF')!.value;
+      const novoLogin = this.formGroup.get('novoLogin')!.value;
 
-      this.userService.alterarCpf(senhaAtual, novoCPF).subscribe({
+      this.userService.alterarLogin(senhaAtual, novoLogin).subscribe({
         next: (response) => {
           console.log('Nome updated successfully', response);
           this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
@@ -119,9 +117,9 @@ export class UpdateCpfComponent implements OnInit, OnDestroy {
 
   obterUsuarioLogado() {
     this.subscription.add(
-      this.authService
-        .getUsuarioLogado()
-        .subscribe((usuario) => (this.usuarioLogado = usuario))
+      this.authService.getUsuarioLogado().subscribe((usuario) => {
+        this.usuarioLogado = usuario;
+      })
     );
   }
 

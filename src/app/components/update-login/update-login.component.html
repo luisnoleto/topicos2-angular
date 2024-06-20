@@ -1,6 +1,6 @@
 <div class="fundoGerenciar">
   <div class="gerenciar">
-    <h1 class="tituloGerenciar">Alteração de CPF</h1>
+    <h1 class="tituloGerenciar">Alteração de Login</h1>
   </div>
   <div class="form-container">
     <mat-card>
@@ -8,14 +8,14 @@
         <form [formGroup]="formGroup">
         
             <mat-form-field appearance="fill" id="nova">
-              <mat-label>Novo CPF</mat-label>
-              <input matInput type="text" formControlName="novoCPF" />
-              <mat-error *ngIf="formGroup.get('novoCPF')?.invalid">
+              <mat-label>Novo Login</mat-label>
+              <input matInput type="text" formControlName="novoLogin" />
+              <mat-error *ngIf="formGroup.get('novoLogin')?.invalid">
                 Novo nome é obrigatório e deve ter no mínimo 8 caracteres.
               </mat-error>
             </mat-form-field>
-
-          <div class="velha">
+            
+            <div class="velha">
             <mat-form-field appearance="fill" id="velha">
               <mat-label>Senha Atual</mat-label>
               <input matInput type="password" formControlName="senhaAtual" />
@@ -27,7 +27,7 @@
           
         </form>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="updateCpf()">
+          <button mat-raised-button color="primary" (click)="updateLogin()">
             Salvar
           </button>
           <button mat-raised-button routerLink="/usuarios/dados-usuario">
