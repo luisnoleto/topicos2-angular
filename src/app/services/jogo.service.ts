@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Jogo } from '../models/jogo.model';
+import { Classificacao } from '../models/classificacao.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,8 +35,7 @@ export class JogoService {
 
   getUrlImagem(nomeImagem: string): string {
     if (!nomeImagem) {
-      // Return a default image or handle the absence of an image name appropriately
-      return './assets/padraosemImagem.jpg'; // Adjust this path to your default image
+      return './assets/padraosemImagem.jpg';
     }
     return `${this.baseUrl}/image/download/${nomeImagem}`;
   }
@@ -67,13 +67,19 @@ export class JogoService {
       sistemaOperacional: jogo.sistemaOperacional,
       armazenamento: jogo.armazenamento,
       estoque: jogo.estoque,
-
     };
     return this.httpClient.post<Jogo>(`${this.baseUrl}`, obj);
   }
-  
+
   findById(id: number): Observable<Jogo> {
-    return this.httpClient.get<Jogo>(`${this.baseUrl}/${id}`);
+    return this.httpClient.get<Jogo>(`${this.baseUrl}/${id}`).pipe(
+      map((jogo: any) => {
+        return {
+          ...jogo,
+          classificacao: this.mapClassificacao(jogo.classificacao),
+        };
+      })
+    );
   }
 
   findByNome(
@@ -103,8 +109,28 @@ export class JogoService {
   }
 
   alterarSituacao(jogo: Jogo): Observable<Jogo> {
-    return this.httpClient.patch<Jogo>(`${this.baseUrl}/alterarSituacao/${jogo.id}`,
+    return this.httpClient.patch<Jogo>(
+      `${this.baseUrl}/alterarSituacao/${jogo.id}`,
       jogo
     );
+  }
+
+  mapClassificacao(classificacao: any): Classificacao {
+    switch (classificacao.label) {
+      case 'Livre':
+        return Classificacao.LIVRE;
+      case '10 anos':
+        return Classificacao.DEZ_ANOS;
+      case '12 anos':
+        return Classificacao.DOZE_ANOS;
+      case '14 anos':
+        return Classificacao.QUATORZE_ANOS;
+      case '16 anos':
+        return Classificacao.DEZESSEIS_ANOS;
+      case '18 anos':
+        return Classificacao.DEZOITO_ANOS;
+      default:
+        return Classificacao.LIVRE;
+    }
   }
 }

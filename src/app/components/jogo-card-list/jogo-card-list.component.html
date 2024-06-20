@@ -3,14 +3,13 @@
     <mat-card *ngFor="let card of cards()" class="card-item">
       <img mat-card-image [src]="card.urlImagem" />
 
-      <mat-card-title class="centered-text"> {{ card.titulo }} </mat-card-title>
+      <mat-card-title class="centered-text">{{ card.titulo }}</mat-card-title>
 
-      <br />
       <mat-card-content class="centered-text">
-        {{ card.preco }}
+        <p class="game-price">R$ {{ card.preco }}</p>
       </mat-card-content>
 
-      <mat-card-actions class="centered-text" id="mais">
+      <mat-card-actions class="centered-text">
         <button mat-button color="primary" (click)="paginaJogo(card.idJogo)">
           Ver mais
         </button>

@@ -47,7 +47,6 @@ import { CarouselFormComponent } from './components/carousel/carousel-form/carou
 import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produto.component';
 import { UpdateCpfComponent } from './components/update-cpf/update-cpf.component';
 
-
 export const routes: Routes = [
   {
     path: '',
@@ -103,7 +102,6 @@ export const routes: Routes = [
         path: 'usuarios/edit/:id/cpf',
         component: UpdateCpfComponent,
         resolve: { user: userResolver },
-        
       },
 
       {
@@ -135,6 +133,7 @@ export const routes: Routes = [
         path: ':usuarios/dados-usuario',
         component: DadosUsuarioComponent,
         title: 'Minhas Informações',
+        canActivate: [authGuard],
       },
       {
         path: 'meus-pedidos',

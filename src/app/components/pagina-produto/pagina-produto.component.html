@@ -1,13 +1,17 @@
 <div *ngIf="jogo; else loading" class="jogo-detail-container">
-  <div class="jogo-main">
-    <mat-card class="jogo-card">
-      <img mat-card-image [src]="jogo?.nomeImagem" alt="{{ jogo?.nome }}" />
-      <mat-card-content>
+  <mat-card class="jogo-card">
+    <div class="jogo-card-content">
+      <div class="jogo-image">
+        <img mat-card-image [src]="urlImagem" alt="{{ jogo?.nome }}" />
+      </div>
+      <div class="jogo-info">
         <h1 mat-card-title>{{ jogo?.nome }}</h1>
         <p class="jogo-price">R$ {{ jogo?.preco }}</p>
         <p>{{ jogo?.descricao }}</p>
-        <p><strong>Classificação:</strong> {{ jogo?.classificacao }}</p>
-        <p><strong>Gênero:</strong> {{ jogo?.genero }}</p>
+        <p><strong>Classificação:</strong> {{ jogo.classificacao }}</p>
+        <p><strong>Gênero:</strong> {{ jogo?.genero?.nome }}</p>
+        <p><strong>Plataforma:</strong> {{ jogo?.plataforma?.nome }}</p>
+        <p><strong>Desenvolvedora:</strong> {{ jogo?.desenvolvedora?.nome }}</p>
         <button
           mat-raised-button
           color="primary"
@@ -16,9 +20,16 @@
         >
           Comprar agora
         </button>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </div>
+    </div>
+    <div class="jogo-thumbnails">
+      <img
+        *ngFor="let thumbnail of jogo?.nomeImagem"
+        [src]="thumbnail"
+        alt="thumbnail"
+      />
+    </div>
+  </mat-card>
   <div class="similar-jogos">
     <h2>Descubra mais</h2>
     <app-jogo-card-list></app-jogo-card-list>
