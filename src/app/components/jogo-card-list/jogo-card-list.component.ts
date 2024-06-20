@@ -54,7 +54,7 @@ export class JogoCardListComponent implements OnInit {
 
   carregarJogos() {
     // buscando todos as jogos
-    this.jogoService.findAll(0, 10).subscribe((data) => {
+    this.jogoService.findAll().subscribe((data) => {
       this.jogos = data;
       this.carregarCards();
     });

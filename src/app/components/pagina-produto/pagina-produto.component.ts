@@ -9,16 +9,27 @@ import { CommonModule } from '@angular/common';
 import { NgIf } from '@angular/common';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButton } from '@angular/material/button';
+import { Classificacao } from '../../models/classificacao.model';
 
 @Component({
   selector: 'app-pagina-produto',
   standalone: true,
-  imports: [JogoCardListComponent, MatCard, MatCardContent, CommonModule, NgIf],
+  imports: [
+    JogoCardListComponent,
+    MatCard,
+    MatCardContent,
+    CommonModule,
+    NgIf,
+    MatButton,
+  ],
   templateUrl: './pagina-produto.component.html',
   styleUrls: ['./pagina-produto.component.css'],
 })
 export class PaginaProdutoComponent implements OnInit {
-  jogo: Jogo | undefined;
+  jogo!: Jogo;
+  urlImagem!: string;
+  genero!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,20 +39,28 @@ export class PaginaProdutoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const jogoId = Number(this.route.snapshot.paramMap.get('id'));
-    if (jogoId) {
-      this.jogoService.findById(jogoId).subscribe(
-        (jogo: Jogo) => {
-          this.jogo = jogo;
-          console.log('Jogo carregado:', jogo);
-        },
-        (error) => {
-          console.error('Erro ao carregar jogo:', error);
-        }
-      );
-    } else {
-      console.warn('JogoId inválido:', jogoId);
-    }
+    this.route.params.subscribe((params) => {
+      const jogoId = +params['id'];
+      if (jogoId) {
+        this.loadJogo(jogoId);
+      } else {
+        console.warn('JogoId inválido:', jogoId);
+      }
+    });
+  }
+
+  loadJogo(jogoId: number): void {
+    this.jogoService.findById(jogoId).subscribe(
+      (jogo: Jogo) => {
+        this.jogo = jogo;
+        this.jogoImagem();
+        console.log('Jogo carregado:', jogo);
+        this.topoPagina();
+      },
+      (error) => {
+        console.error('Erro ao carregar jogo:', error);
+      }
+    );
   }
 
   adicionarAoCarrinho(jogo: Jogo) {
@@ -56,11 +75,19 @@ export class PaginaProdutoComponent implements OnInit {
     }
   }
 
+  jogoImagem() {
+    this.urlImagem = this.jogoService.getUrlImagem(this.jogo?.nomeImagem);
+  }
+
   showSnackbarTopPosition(content: any, action: any) {
     this.snackBar.open(content, action, {
       duration: 2000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
     });
+  }
+
+  topoPagina() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

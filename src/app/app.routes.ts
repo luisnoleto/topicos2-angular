@@ -48,7 +48,6 @@ import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produ
 import { UpdateCpfComponent } from './components/update-cpf/update-cpf.component';
 import { UpdateLoginComponent } from './components/update-login/update-login.component';
 
-
 export const routes: Routes = [
   {
     path: '',
@@ -105,8 +104,9 @@ export const routes: Routes = [
       {
         path: 'usuarios/edit/:id/cpf',
         component: UpdateCpfComponent,
+
         canActivate: [authGuard]
-        
+   
       },
 
       {
@@ -146,6 +146,7 @@ export const routes: Routes = [
         path: ':usuarios/dados-usuario',
         component: DadosUsuarioComponent,
         title: 'Minhas Informações',
+        canActivate: [authGuard],
       },
       {
         path: 'meus-pedidos',
