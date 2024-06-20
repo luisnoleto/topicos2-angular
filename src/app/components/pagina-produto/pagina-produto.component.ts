@@ -30,6 +30,7 @@ export class PaginaProdutoComponent implements OnInit {
   jogo!: Jogo;
   urlImagem!: string;
   genero!: string;
+  isDetalhesVisible: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -89,5 +90,9 @@ export class PaginaProdutoComponent implements OnInit {
 
   topoPagina() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  toggleDetalhesVisibility(): void {
+    this.isDetalhesVisible = !this.isDetalhesVisible;
   }
 }
