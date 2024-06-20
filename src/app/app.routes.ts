@@ -46,6 +46,7 @@ import { CadastroEnderecoFormComponent } from './components/endereco/endereco.co
 import { CarouselFormComponent } from './components/carousel/carousel-form/carousel-form.component';
 import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produto.component';
 import { UpdateCpfComponent } from './components/update-cpf/update-cpf.component';
+import { UpdateLoginComponent } from './components/update-login/update-login.component';
 
 export const routes: Routes = [
   {
@@ -90,24 +91,35 @@ export const routes: Routes = [
       {
         path: 'usuarios/edit/:id/senha',
         component: UpdateSenhaComponent,
-        resolve: { user: userResolver },
+    
+        canActivate: [authGuard]
       },
       {
         path: 'usuarios/edit/:id/nome',
         component: UpdateNomeComponent,
-        resolve: { user: userResolver },
+        
+        canActivate: [authGuard]
       },
 
       {
         path: 'usuarios/edit/:id/cpf',
         component: UpdateCpfComponent,
-        resolve: { user: userResolver },
+
+        canActivate: [authGuard]
+   
       },
 
       {
         path: 'usuarios/edit/:id/email',
         component: UpdateEmailComponent,
-        resolve: { user: userResolver },
+        
+        canActivate: [authGuard]
+      },
+
+      {
+        path: 'usuarios/edit/:id/login',
+        component: UpdateLoginComponent,
+        canActivate: [authGuard],
       },
 
       // {
@@ -121,6 +133,7 @@ export const routes: Routes = [
         path: 'usuarios/edit/:id',
         component: UserFormComponent,
         resolve: { user: userResolver },
+        canActivate: [authGuard]
       },
       {
         path: 'finalizar-pedido',

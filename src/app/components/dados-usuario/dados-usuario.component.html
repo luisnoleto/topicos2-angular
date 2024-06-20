@@ -13,159 +13,78 @@
           <mat-card-content>
             <form [formGroup]="formGroup" class="form-grid">
               <div class="form-field">
-                <mat-form-field appearance="fill">
-                  <mat-label>Nome</mat-label>
-                  <input matInput type="text" formControlName="nome" />
-                  <mat-error
-                    *ngIf="
-                      formGroup.get('nome')?.errors &&
-                      formGroup.get('nome')?.touched
-                    "
-                  >
-                    <span *ngIf="formGroup.get('nome')?.errors?.['required']"
-                      >O nome deve ser informado.</span
-                    >
-                    <span *ngIf="formGroup.get('nome')?.hasError('apiError')">{{
-                      formGroup.get("nome")?.getError("apiError")
-                    }}</span>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="form-field">
-                <mat-form-field appearance="fill">
-                  <mat-label>Login</mat-label>
-                  <input matInput type="text" formControlName="login" />
-                  <mat-error
-                    *ngIf="
-                      formGroup.get('login')?.errors &&
-                      formGroup.get('login')?.touched
-                    "
-                  >
-                    <span *ngIf="formGroup.get('login')?.errors?.['required']"
-                      >O login deve ser informado.</span
-                    >
-                    <span
-                      *ngIf="formGroup.get('login')?.hasError('apiError')"
-                      >{{ formGroup.get("login")?.getError("apiError") }}</span
-                    >
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="form-field">
-                <mat-form-field appearance="fill">
-                  <mat-label>Email</mat-label>
-                  <input matInput type="email" formControlName="email" />
-                  <mat-error
-                    *ngIf="
-                      formGroup.get('email')?.errors &&
-                      formGroup.get('email')?.touched
-                    "
-                  >
-                    <span *ngIf="formGroup.get('email')?.errors?.['required']"
-                      >O email deve ser informado.</span
-                    >
-                    <span *ngIf="formGroup.get('email')?.errors?.['email']"
-                      >O email deve ser válido.</span
-                    >
-                    <span
-                      *ngIf="formGroup.get('email')?.hasError('apiError')"
-                      >{{ formGroup.get("email")?.getError("apiError") }}</span
-                    >
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="form-field">
-                <mat-form-field appearance="fill">
-                  <mat-label>CPF</mat-label>
-                  <input matInput type="text" formControlName="cpf" />
-                  <mat-error
-                    *ngIf="
-                      formGroup.get('cpf')?.errors &&
-                      formGroup.get('cpf')?.touched
-                    "
-                  >
-                    <span *ngIf="formGroup.get('cpf')?.errors?.['required']"
-                      >O cpf deve ser informado.</span
-                    >
-                    <span *ngIf="formGroup.get('cpf')?.hasError('apiError')">{{
-                      formGroup.get("cpf")?.getError("apiError")
-                    }}</span>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="form-field">
-                <mat-form-field appearance="fill">
-                  <mat-label>Data de Nascimento</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="picker"
-                    formControlName="dataNascimento"
-                  />
-                  <mat-hint>DD/MM/AAAA</mat-hint>
-                  <mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="picker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                  <mat-error
-                    *ngIf="
-                      formGroup.get('dataNascimento')?.errors &&
-                      formGroup.get('dataNascimento')?.touched
-                    "
-                  >
-                    <span
-                      *ngIf="formGroup.get('dataNascimento')?.errors?.['required']"
-                      >A data de nascimento deve ser informada.</span
-                    >
-                    <span
-                      *ngIf="
-                        formGroup.get('dataNascimento')?.hasError('apiError')
-                      "
-                      >{{
-                        formGroup.get("dataNascimento")?.getError("apiError")
-                      }}</span
-                    >
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div formArrayName="listaTelefone" class="telefone-fields">
-                <div
-                  *ngFor="let telefone of listaTelefone.controls; let i = index"
-                  [formGroupName]="i"
-                >
-                  <div class="form-field">
-                    <mat-form-field appearance="fill" class="equal-width-input">
-                      <mat-label>DDD</mat-label>
-                      <input matInput formControlName="codigoArea" />
-                    </mat-form-field>
-                  </div>
-                  <div class="form-field">
-                    <mat-form-field appearance="fill" class="equal-width-input">
-                      <mat-label>Número</mat-label>
-                      <input matInput formControlName="numero" />
-                    </mat-form-field>
+
+                <div class="dados-usuario">
+                  <div class="item-dado">
+                    <label for="nome">Nome: &nbsp;</label>
+                    <input type="text" id="nome" value="{{ usuarioLogado?.nome }}" disabled>
+                    <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'nome']">Editar</button>
                   </div>
                 </div>
+
               </div>
-              <button
-                mat-raised-button
-                color="primary"
-                id="addTelefone"
-                (click)="addTelefone()"
-              >
-                Adicionar Telefone
-              </button>
-              <button
-                mat-raised-button
-                color="warn"
-                *ngIf="listaTelefone.controls.length > 0"
-                (click)="removeTelefone()"
-              >
-                Excluir Telefone
-              </button>
+              <div class="form-field">
+
+                <div class="item-dado">
+                  <label for="login">Login: &nbsp;</label>
+                  <input type="text" id="login" value="{{ usuarioLogado?.login }}" disabled>
+                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'login']" >Editar</button>
+                </div>
+
+              </div>
+              <div class="form-field">
+
+                <div class="item-dado">
+                  <label for="senha">Senha: &nbsp;</label>
+                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'senha']">Editar</button>
+                </div>
+
+              </div>
+              <div class="form-field">
+
+                <div class="item-dado">
+                  <label for="email">Email: &nbsp;</label>
+                  <input type="email" id="email" value="{{ usuarioLogado?.email }}" disabled>
+                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'email']">Editar</button>
+                </div>
+
+              </div>
+              <div class="form-field">
+
+                <div class="item-dado">
+                  <label for="cpf">CPF: &nbsp;</label>
+                  <input type="text" id="cpf" value="{{ usuarioLogado?.cpf }}" disabled>
+                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'cpf']">Editar</button>
+                </div>
+
+              </div>
+              <div fclass="form-field">
+
+                <div class="item-dado">
+                  <label for="dataNascimento">Data de Nascimento: &nbsp;</label>
+                  <input type="date" id="dataNascimento" value="{{ usuarioLogado?.dataNascimento | date:'dd/MM/yyyy' }}" disabled>
+                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'nome']">Editar</button>
+                </div>
+
+              </div>
+
+              <div class="form-field">
+
+                <div class="item-dado">
+                  <label>Telefones: &nbsp;</label>
+                  <ul>
+                    <li *ngFor="let telefone of usuarioLogado?.listaTelefone">
+                      {{ telefone.codigoArea }}: {{ telefone.numero }}
+                      
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
             </form>
           </mat-card-content>
           <mat-card-actions>
+
             <button
               mat-raised-button
               color="primary"
@@ -173,9 +92,7 @@
             >
               Alterar Senha
             </button>
-            <button mat-raised-button color="primary" (click)="salvar()">
-              Salvar
-            </button>
+            
           </mat-card-actions>
         </mat-card>
       </div>

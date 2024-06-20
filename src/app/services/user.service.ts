@@ -61,24 +61,31 @@ export class UserService {
       `${this.baseUrl}/perfilNome/${login}`
     );
   }
-  alterarNome(senhaAtual: String, novoNome: String): Observable<User> {
+  alterarNome(senhaAtual: String, nome: String): Observable<User> {
     return this.httpClient.patch<User>(`${this.adminUrl}/alterar/nome`, {
       senhaAtual,
-      novoNome,
+      nome,
     });
   }
 
-  alterarEmail(senhaAtual: String, novoEmail: String): Observable<User> {
+  alterarEmail(senhaAtual: String, email: String): Observable<User> {
     return this.httpClient.patch<User>(`${this.adminUrl}/alterar/email`, {
       senhaAtual,
-      novoEmail,
+      email,
     });
   }
 
-  alterarCpf(senhaAtual: String, novoCpf: String): Observable<User> {
+  alterarCpf(senhaAtual: String, cpf: String): Observable<User> {
     return this.httpClient.patch<User>(`${this.adminUrl}/alterar/cpf`, {
       senhaAtual,
-      novoCpf,
+      cpf,
+    });
+  }
+
+  alterarLogin(senhaAtual: String, loginNovo: String): Observable<User> {
+    return this.httpClient.patch<User>(`${this.adminUrl}/alterar/login`, {
+      senhaAtual,
+      loginNovo,
     });
   }
 }

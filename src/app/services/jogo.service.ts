@@ -101,7 +101,23 @@ export class JogoService {
   }
 
   update(jogo: Jogo): Observable<Jogo> {
-    return this.httpClient.put<Jogo>(`${this.baseUrl}/${jogo.id}`, jogo);
+    const obj = {
+      nome: jogo.nome,
+      preco: jogo.preco,
+      descricao: jogo.descricao,
+      idDesenvolvedora: jogo.desenvolvedora,
+      listaIdGeneros: [jogo.genero],
+      idPlataforma: jogo.plataforma,
+      classificacao: jogo.classificacao,
+      processador: jogo.processador,
+      memoria: jogo.memoria,
+      placaVideo: jogo.placaVideo,
+      sistemaOperacional: jogo.sistemaOperacional,
+      armazenamento: jogo.armazenamento,
+      estoque: jogo.estoque,
+
+    };
+    return this.httpClient.put<Jogo>(`${this.baseUrl}/${jogo.id}`, obj);
   }
 
   delete(jogo: Jogo): Observable<any> {

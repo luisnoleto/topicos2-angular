@@ -1,41 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { Subscription } from 'rxjs';
-import {
-  FormArray,
-  FormArrayName,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { UserStateService } from '../../services/userState.service';
+import { User } from '../../models/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormControlName } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import {
-  DateAdapter,
-  MAT_DATE_LOCALE,
-  MAT_DATE_FORMATS,
-} from '@angular/material/core';
-import { NgModule } from '@angular/core';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @Component({
   selector: 'app-dados-usuario',
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -48,9 +33,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatNativeDateModule,
   ],
   templateUrl: './dados-usuario.component.html',
-  styleUrl: './dados-usuario.component.css',
+  styleUrls: ['./dados-usuario.component.css'],
 })
-export class DadosUsuarioComponent implements OnInit {
+export class DadosUsuarioComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   showAddresses = false;
   usuarioLogado: User | null = null;
@@ -62,30 +47,39 @@ export class DadosUsuarioComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private router: Router,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userStateService: UserStateService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
-    this.formGroup = formBuilder.group({
-      id: user && user.id ? user.id : null,
-      nome: [user && user.nome ? user.nome : '', Validators.required],
-      login: [user && user.login ? user.login : '', Validators.required],
-      email: [user && user.email ? user.email : '', Validators.required],
-      cpf: [user && user.cpf ? user.cpf : '', Validators.required],
-      dataNascimento: [
-        user && user.dataNascimento ? user.dataNascimento : '',
-        Validators.required,
-      ],
-      senha: ['', Validators.required], // Initial empty password field
+    this.formGroup = this.formBuilder.group({
+      id: [user?.id || null],
+      nome: [user?.nome || '', Validators.required],
+      login: [user?.login || '', Validators.required],
+      email: [user?.email || '', Validators.required],
+      cpf: [user?.cpf || '', Validators.required],
+      dataNascimento: [user?.dataNascimento || '', Validators.required],
+      senha: ['', Validators.required],
       listaTelefone: this.formBuilder.array(
-        user && user.listaTelefone
-          ? user.listaTelefone.map((tel) => this.formBuilder.group(tel))
-          : []
+        user?.listaTelefone ? user.listaTelefone.map((tel) => this.formBuilder.group(tel)) : []
       ),
     });
   }
 
   ngOnInit(): void {
     this.obterUsuarioLogado();
+
+    this.subscription.add(
+      this.userStateService.user$.subscribe((user) => {
+        if (user) {
+          this.formGroup.patchValue(user);
+          this.usuarioLogado = user;
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   obterUsuarioLogado() {
@@ -99,7 +93,7 @@ export class DadosUsuarioComponent implements OnInit {
           email: usuario?.email,
           cpf: usuario?.cpf,
           dataNascimento: usuario?.dataNascimento,
-          senha: usuario?.senha, // Set the current password
+          senha: usuario?.senha,
           listaTelefone: usuario?.listaTelefone || [],
         });
       })
@@ -115,9 +109,7 @@ export class DadosUsuarioComponent implements OnInit {
   }
 
   addTelefone() {
-    this.listaTelefone.push(
-      this.formBuilder.group({ codigoArea: '', numero: '' })
-    );
+    this.listaTelefone.push(this.formBuilder.group({ codigoArea: '', numero: '' }));
   }
 
   removeTelefone() {
@@ -135,7 +127,6 @@ export class DadosUsuarioComponent implements OnInit {
         user.id = this.usuarioLogado.id;
       }
 
-      // Ensure the senha field is populated before making the update request
       if (this.usuarioLogado?.senha) {
         user.senha = this.usuarioLogado.senha;
       }
@@ -157,17 +148,13 @@ export class DadosUsuarioComponent implements OnInit {
       if (error.error?.errors) {
         error.error.errors.forEach((validationError: any) => {
           const formControl = this.formGroup.get(validationError.fieldName);
-          console.log(validationError);
           if (formControl) {
-            console.log(formControl);
             formControl.setErrors({ apiError: validationError.message });
           }
         });
       }
-    } else if (error.status < 400) {
-      console.log('Erro inesperado');
+    } else {
+      console.log('Erro inesperado', error);
     }
   }
-
-
 }

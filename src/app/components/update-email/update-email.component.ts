@@ -31,6 +31,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
+import { UserStateService } from '../../services/userState.service';
 
 @Component({
   selector: 'app-update-nome',
@@ -69,7 +70,8 @@ export class UpdateEmailComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private localStorageService: LocalStorageService,
     private snackbar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private userStateService: UserStateService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
     this.formGroup = formBuilder.group({
@@ -78,7 +80,7 @@ export class UpdateEmailComponent implements OnInit, OnDestroy {
         user && user.senha ? user.senha : '',
         Validators.compose([Validators.required, Validators.minLength(2)]),
       ],
-      novoEmail: ['', [Validators.required, Validators.minLength(4)]],
+      novoEmail: ['', [Validators.required, Validators.minLength(4), Validators.email]],
     });
   }
   ngOnDestroy(): void {
@@ -86,27 +88,6 @@ export class UpdateEmailComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.obterUsuarioLogado();
-  }
-
-  salvar() {
-    this.formGroup.markAllAsTouched();
-    if (this.formGroup.valid) {
-      const user = this.formGroup.value;
-      console.log(user.lista);
-
-      const operacao =
-        user.id == null
-          ? this.userService.insert(user)
-          : this.userService.update(user);
-
-      operacao.subscribe({
-        next: () => this.router.navigateByUrl('/admin/usuarios'),
-        error: (error: HttpErrorResponse) => {
-          console.log('Erro ao salvar' + JSON.stringify(error));
-          this.tratarErros(error);
-        },
-      });
-    }
   }
 
   tratarErros(error: HttpErrorResponse) {
@@ -153,6 +134,7 @@ export class UpdateEmailComponent implements OnInit, OnDestroy {
         next: (response) => {
           console.log('Email updated successfully', response);
           this.showSnackbarTopPosition('Email Alterada com Sucesso', 'Fechar');
+          this.userStateService.updateUser(response);
           this.voltarPagina();
         },
         error: (error) => {
