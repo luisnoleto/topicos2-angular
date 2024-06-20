@@ -67,6 +67,7 @@ export class JogoService {
       sistemaOperacional: jogo.sistemaOperacional,
       armazenamento: jogo.armazenamento,
       estoque: jogo.estoque,
+      nomeImagem: jogo.nomeImagem,
     };
     return this.httpClient.post<Jogo>(`${this.baseUrl}`, obj);
   }
@@ -115,7 +116,7 @@ export class JogoService {
       sistemaOperacional: jogo.sistemaOperacional,
       armazenamento: jogo.armazenamento,
       estoque: jogo.estoque,
-
+      nomeImagem: jogo.nomeImagem,
     };
     return this.httpClient.put<Jogo>(`${this.baseUrl}/${jogo.id}`, obj);
   }
