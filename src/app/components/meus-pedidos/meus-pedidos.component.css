@@ -10,8 +10,9 @@ h2 {
 .pedido-card {
   background: #424242;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px; /* Increased margin to ensure separation */
   border-radius: 8px;
+  border: 1px solid #555; /* Adds a border to visually separate the cards */
 }
 
 .pedido-info {
@@ -40,7 +41,7 @@ h2 {
 }
 
 .game-card .game-info {
-  background-color: rgba(64, 64, 64, 0.8); /* Dark gray background with some transparency */
+  background-color: rgba(54, 53, 53, 0.8); /* Dark gray background with some transparency */
   color: white;
   width: 100%; /* Same width as the image */
   text-align: center;
@@ -50,11 +51,30 @@ h2 {
   margin-top: 5px; /* Space between image and text */
 }
 
-.pedido-summary {
+.details-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-end;
+  margin-left: 20px; /* Adds space between games and details */
+  margin-right: 500px;
+}
+
+.endereco-details,
+.pagamento-details {
+  margin-bottom: 10px;
+}
+
+.endereco-details p,
+.pagamento-details p {
+  margin: 5px 0; /* Adds space between address lines */
+}
+
+.pedido-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: flex-end; /* Align to the right */
+  margin-top: 190px;
 }
 
 .pedido-summary p {
@@ -65,19 +85,9 @@ h2 {
   margin-top: 10px;
 }
 
-.endereco-details {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.endereco-details p {
-  width: 100%;
-  margin: 5px 0; /* Adds space between address lines */
-}
-
 #listaFim {
   margin-bottom: 1px;
   text-align: center;
   color: white;
 }
+

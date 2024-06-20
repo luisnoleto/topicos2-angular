@@ -1,42 +1,68 @@
 <div class="pedidos-container">
   <h2>Meus Pedidos</h2>
-  <mat-card>
-    <div *ngFor="let pedido of pedidos$ | async" class="pedido-card">
+  <div *ngFor="let pedido of pedidos$ | async" class="pedido-wrapper">
+    <mat-card class="pedido-card">
       <div class="pedido-info">
         <div class="games">
           <div *ngFor="let item of pedido.itens" class="game-card">
+            <h3
+              style="text-align: center"
+              title="{{ jogoDetailsMap[item.idProduto]?.nome }}"
+            >
+              {{ jogoDetailsMap[item.idProduto]?.nome }}
+            </h3>
             <img
               [src]="jogoDetailsMap[item.idProduto]?.urlImagem"
               alt="{{ jogoDetailsMap[item.idProduto]?.nome }}"
             />
             <div class="game-info">
-              <p>{{ jogoDetailsMap[item.idProduto]?.nome }}</p>
               <p>
                 {{ jogoDetailsMap[item.idProduto]?.preco | number : "1.2-2" }}
               </p>
+              <p>
+                {{ jogoDetailsMap[item.idProduto]?.plataforma?.nome }}
+              </p>
               <p>Quantidade: {{ item.quantidade }}</p>
+              <div *ngIf="isDetalhesVisible(pedido.id)" class="game-details">
+                <p>
+                  Classificação:
+                  {{ jogoDetailsMap[item.idProduto].classificacao }}
+                </p>
+                <p>Gênero: {{ jogoDetailsMap[item.idProduto]?.genero?.id }}</p>
+                <p>
+                  Desenvolvedora:
+                  {{ jogoDetailsMap[item.idProduto].desenvolvedora.nome }},
+                  {{ jogoDetailsMap[item.idProduto].desenvolvedora.pais.sigla }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
+        <div
+          class="details-container"
+          *ngIf="isDetalhesVisible(pedido.id)"
+          [style.margin-right.px]="calculateMarginRight(pedido.itens)"
+        >
+          <div class="endereco-details">
+            <h3>Endereço para Entrega:</h3>
+            <p [innerHTML]="getEnderecoCompleto(pedido)"></p>
+          </div>
+
+          <div class="pagamento-details">
+            <h3>Detalhes do Pagamento:</h3>
+            <p>Forma de Pagamento: {{ pedido.pagamento }}</p>
+          </div>
+        </div>
+
         <div class="pedido-summary">
-          <p>Total: R$ {{ pedido.totalPedido }}</p>
+          <p>Total: R$ {{ pedido.totalPedido | number : "1.2-2" }}</p>
           <button mat-button (click)="toggleDetalhes(pedido.id)">
             Expandir para detalhes
           </button>
         </div>
       </div>
-
-      <div *ngIf="isDetalhesVisible(pedido.id)" class="endereco-details">
-        <h3>Endereço para Entrega:</h3>
-        <p>Rua: {{ pedido.endereco?.logradouro }}</p>
-        <p>Numero: {{ pedido.endereco?.numero }}</p>
-        <p>Complemento: {{ pedido.endereco?.complemento }}</p>
-        <p>Bairro: {{ pedido.endereco?.bairro }}</p>
-        <p>CEP: {{ pedido.endereco?.cep }}</p>
-        <p></p>
-      </div>
-    </div>
-  </mat-card>
+    </mat-card>
+  </div>
   <p id="listaFim">Fim do seus pedidos</p>
 </div>

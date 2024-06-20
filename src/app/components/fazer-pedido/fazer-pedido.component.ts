@@ -57,6 +57,7 @@ export class FazerPedidoComponent implements OnInit {
     });
     this.buscaEnderecos();
   }
+
   checkCarrinhoStatus() {
     if (this.updatedCarrinhoItens.length === 0) {
       this.router.navigate(['/home']);
@@ -97,7 +98,10 @@ export class FazerPedidoComponent implements OnInit {
 
   buscaEnderecos(): void {
     this.enderecoService.getEnderecos().subscribe((enderecos) => {
-      this.enderecos = enderecos;
+      this.enderecos = enderecos.map((endereco) => ({
+        id: endereco.id,
+        endereco: `${endereco.logradouro}, ${endereco.numero}, ${endereco.bairro}, Cidade: ${endereco.nomeCidade}, CEP: ${endereco.cep}, Estado: ${endereco.nomeEstado}`,
+      }));
       if (this.enderecos.length > 0) {
         this.enderecoId = this.enderecos[0].id;
       }
