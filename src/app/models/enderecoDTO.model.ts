@@ -8,5 +8,17 @@ export interface EnderecoDTO {
   complemento: string;
   bairro: string;
   idCidade: number;
-  cidade: Municipio;
+}
+
+export interface EnderecoResponseDTO {
+  id: number;
+  cep: string;
+  logradouro: string;
+  numero: number;
+  complemento: string;
+  bairro: string;
+  idCidade: number;
+  nomeCidade: string;
+  idEstado: number;
+  nomeEstado: string;
 }

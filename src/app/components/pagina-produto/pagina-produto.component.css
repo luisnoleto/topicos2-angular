@@ -85,6 +85,7 @@
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
+
 button {
   width: 100%;
   margin-top: 20px;
@@ -94,4 +95,53 @@ button {
 
 button:hover {
   background: purple;
+}
+
+.price-estoque-container {
+  display: flex;
+  justify-content: flex-start; /* Align items to the start */
+  align-items: center;
+}
+
+.price-estoque-container .jogo-estoque {
+  margin-left: 20px; /* Adjust this value as needed to control spacing */
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itensEsquerda, .itensDireita {
+  flex: 1;
+}
+
+.itensDireita {
+  text-align: right;
+}
+
+/* New CSS for the toggle-details-button */
+.toggle-details-button {
+  width: 100px; /* Set a fixed width */
+  padding: 2px 5px;
+  font-size: 0.7rem;
+  color: #fff;
+  background-color: #6200ea;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-details-button:hover {
+  background-color: purple; /* Darker shade for hover */
+}
+
+.toggle-details-button.active {
+  opacity: 0.5; /* Make the button transparent */
+  transform: scale(0.9);
+  
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
 }

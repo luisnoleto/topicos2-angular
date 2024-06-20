@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { PedidoDTO } from '../models/pedidoDTO.model';
 import { ItemPedidoDTO } from '../models/itempedidoDTO.model';
 import { JogoService } from './jogo.service';
 import { Jogo } from '../models/jogo.model';
 import { EnderecoDTO } from '../models/enderecoDTO.model';
 import { criarPedidoDTO } from '../models/criarPedidoDTO.model';
+import { FormaPagamento } from '../models/formaPagamento.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,9 +37,16 @@ export class PedidoService {
   }
 
   getByUsuarioId(usuarioId: number): Observable<PedidoDTO[]> {
-    return this.httpClient.get<PedidoDTO[]>(
-      `${this.baseUrl}/usuario/${usuarioId}`
-    );
+    return this.httpClient
+      .get<PedidoDTO[]>(`${this.baseUrl}/usuario/${usuarioId}`)
+      .pipe(
+        map((pedidos) => {
+          return pedidos.map((pedido) => ({
+            ...pedido,
+            pagamento: this.mapPagamento(pedido.pagamento),
+          }));
+        })
+      );
   }
 
   createPedido(pedidoDTO: criarPedidoDTO): Observable<PedidoDTO> {
@@ -71,5 +79,16 @@ export class PedidoService {
 
   deletePedido(pedidoId: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.baseUrl}/${pedidoId}`);
+  }
+
+  mapPagamento(pagamento: any): FormaPagamento {
+    switch (pagamento.lable) {
+      case 'Pix':
+        return FormaPagamento.PIX;
+      case 'Boleto':
+        return FormaPagamento.BOLETO;
+      default:
+        return FormaPagamento.BOLETO;
+    }
   }
 }

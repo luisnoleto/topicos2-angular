@@ -6,12 +6,44 @@
       </div>
       <div class="jogo-info">
         <h1 mat-card-title>{{ jogo?.nome }}</h1>
-        <p class="jogo-price">R$ {{ jogo?.preco }}</p>
-        <p>{{ jogo?.descricao }}</p>
-        <p><strong>Classificação:</strong> {{ jogo.classificacao }}</p>
-        <p><strong>Gênero:</strong> {{ jogo?.genero?.nome }}</p>
-        <p><strong>Plataforma:</strong> {{ jogo?.plataforma?.nome }}</p>
-        <p><strong>Desenvolvedora:</strong> {{ jogo?.desenvolvedora?.nome }}</p>
+        <div class="price-estoque-container">
+          <p class="jogo-price">R$ {{ jogo?.preco }}</p>
+          <p class="jogo-estoque">Estoque: {{ jogo?.estoque }}</p>
+        </div>
+        <div>
+          <p>{{ jogo?.descricao }}</p>
+        </div>
+        <div class="info-container">
+          <div class="itensEsquerda">
+            <p><strong>Classificação:</strong> {{ jogo.classificacao }}</p>
+            <p><strong>Gênero:</strong> {{ jogo?.genero?.nome }}</p>
+            <p><strong>Plataforma:</strong> {{ jogo?.plataforma?.nome }}</p>
+            <p>
+              <strong>Desenvolvedora:</strong> {{ jogo?.desenvolvedora?.nome }}
+            </p>
+          </div>
+
+          <div *ngIf="isDetalhesVisible" class="itensDireita">
+            <p><strong>Espaço Necessário:</strong> {{ jogo?.armazenamento }}</p>
+            <p><strong>GPU Recomendada:</strong> {{ jogo?.placaVideo }}</p>
+            <p><strong>Processador Minímo:</strong> {{ jogo?.processador }}</p>
+            <p>
+              <strong>País de Origem:</strong>
+              {{ jogo?.desenvolvedora?.pais?.nome }}
+            </p>
+          </div>
+        </div>
+        <div class="button-container">
+          <button
+            mat-button
+            id="botaoDetalhes"
+            class="toggle-details-button"
+            [ngClass]="{ active: isDetalhesVisible }"
+            (click)="toggleDetalhesVisibility()"
+          >
+            {{ isDetalhesVisible ? "Esconder Detalhes" : "Mais Detalhes" }}
+          </button>
+        </div>
         <button
           mat-raised-button
           color="primary"
@@ -21,13 +53,6 @@
           Comprar agora
         </button>
       </div>
-    </div>
-    <div class="jogo-thumbnails">
-      <img
-        *ngFor="let thumbnail of jogo?.nomeImagem"
-        [src]="thumbnail"
-        alt="thumbnail"
-      />
     </div>
   </mat-card>
   <div class="similar-jogos">

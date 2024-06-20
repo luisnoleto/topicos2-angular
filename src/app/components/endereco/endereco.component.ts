@@ -19,6 +19,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MunicipioService } from '../../services/municipio.service';
 import { Municipio } from '../../models/municipio.model';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cadastro-endereco-form',
@@ -32,84 +33,59 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
     MatCardModule,
     RouterModule,
     CommonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSelect,
   ],
   templateUrl: './endereco.component.html',
   styleUrls: ['./endereco.component.css'],
 })
-export class CadastroEnderecoFormComponent {
+export class CadastroEnderecoFormComponent implements OnInit {
   formGroup: FormGroup;
-  municipios: Municipio[] = []; 
+  municipios: Municipio[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private enderecoService: EnderecoService,
+    private municipioService: MunicipioService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     const endereco: EnderecoDTO = activatedRoute.snapshot.data['endereco'];
 
-    this.formGroup = formBuilder.group({
-      id: endereco && endereco.id ? endereco.id : null,
-      cep: [endereco && endereco.cep ? endereco.cep : '', Validators.required],
-      logradouro: [
-        endereco && endereco.logradouro ? endereco.logradouro : '',
-        Validators.required,
-      ],
-      numero: [
-        endereco && endereco.numero ? endereco.numero : '',
-        Validators.required,
-      ],
-      complemento: [
-        endereco && endereco.complemento ? endereco.complemento : '',
-      ],
-      bairro: [
-        endereco && endereco.bairro ? endereco.bairro : '',
-        Validators.required,
-      ],
-      idCidade: [
-        endereco && endereco.idCidade ? endereco.idCidade : null,
-        Validators.required,
-      ],
+    this.formGroup = this.formBuilder.group({
+      id: [endereco ? endereco.id : null],
+      cep: [endereco ? endereco.cep : '', Validators.required],
+      logradouro: [endereco ? endereco.logradouro : '', Validators.required],
+      numero: [endereco ? endereco.numero : '', Validators.required],
+      complemento: [endereco ? endereco.complemento : ''],
+      bairro: [endereco ? endereco.bairro : '', Validators.required],
+      idCidade: [endereco ? endereco.idCidade : null, Validators.required],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.municipioService.findAll().subscribe((municipios) => {
+      this.municipios = municipios;
+    });
+  }
 
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const endereco = { ...this.formGroup.value };
+      const endereco = this.formGroup.value;
 
       let operacao;
-      if (endereco.id) {
-        operacao = this.enderecoService.insertEndereco(endereco);
-      }
 
-      operacao?.subscribe({
-        next: () => this.router.navigateByUrl('/finalizar-pedido'),
+      operacao = this.enderecoService.insertEndereco(endereco);
+
+      operacao.subscribe({
+        next: (data) => {
+          this.router.navigate(['/']);
+        },
         error: (error: HttpErrorResponse) => {
-          console.log('Erro ao salvar' + JSON.stringify(error));
-          this.tratarErros(error);
+          console.error('Erro ao salvar endereço:', error);
         },
       });
-    }
-  }
-
-  tratarErros(error: HttpErrorResponse) {
-    if (error.status === 400) {
-      if (error.error?.errors) {
-        error.error.errors.forEach((validationError: any) => {
-          const formControl = this.formGroup.get(validationError.fieldName);
-          if (formControl) {
-            formControl.setErrors({ apiError: validationError.message });
-          }
-        });
-      }
-    } else if (error.status < 400) {
-      alert(error.error?.message || 'Erro não tratado.');
-    } else if (error.status >= 500) {
-      alert('Erro interno.');
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
-import { EnderecoDTO } from '../models/enderecoDTO.model';
+import { EnderecoDTO, EnderecoResponseDTO } from '../models/enderecoDTO.model';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -12,20 +12,26 @@ export class EnderecoService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getEnderecos(): Observable<{ id: number; endereco: string }[]> {
+  getEnderecos(): Observable<EnderecoResponseDTO[]> {
     return this.authService.getUsuarioLogado().pipe(
       switchMap((usuarioLogado) =>
         this.http
-          .get<EnderecoDTO[]>(`${this.apiUrl}/usuario/${usuarioLogado?.id}`)
+          .get<EnderecoResponseDTO[]>(
+            `${this.apiUrl}/usuario/${usuarioLogado?.id}`
+          )
           .pipe(
             map((enderecos) =>
               enderecos.map((endereco) => ({
                 id: endereco.id,
-                endereco: `${endereco.logradouro}, ${endereco.numero}, ${
-                  endereco.bairro
-                }, Cidade: ${(endereco.idCidade as any).municipio}, CEP: ${
-                  endereco.cep
-                }`,
+                logradouro: endereco.logradouro,
+                numero: endereco.numero,
+                bairro: endereco.bairro,
+                cep: endereco.cep,
+                complemento: endereco.complemento,
+                idCidade: endereco.idCidade,
+                idEstado: endereco.idEstado,
+                nomeEstado: endereco.nomeEstado,
+                nomeCidade: endereco.nomeCidade,
               }))
             )
           )

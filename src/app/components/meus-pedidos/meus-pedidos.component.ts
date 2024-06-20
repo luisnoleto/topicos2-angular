@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PedidoService } from '../../services/pedido.service';
 import { EnderecoService } from '../../services/endereco.service';
 import { PedidoDTO } from '../../models/pedidoDTO.model';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, OperatorFunction, forkJoin, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
@@ -10,7 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { JogoComImagem } from '../../models/jogocomimagem.model';
-import { EnderecoDTO } from '../../models/enderecoDTO.model';
+import {
+  EnderecoDTO,
+  EnderecoResponseDTO,
+} from '../../models/enderecoDTO.model';
 import { JogoService } from '../../services/jogo.service';
 import { MunicipioService } from '../../services/municipio.service';
 import { Router } from '@angular/router';
@@ -25,7 +28,7 @@ import { Router } from '@angular/router';
 export class MeusPedidosComponent implements OnInit {
   pedidos$!: Observable<PedidoDTO[]>;
   jogoDetailsMap: { [key: number]: JogoComImagem } = {}; // Use the extended interface
-  enderecoDetailsMap: { [key: number]: EnderecoDTO } = {};
+  enderecoDetailsMap: { [key: number]: EnderecoResponseDTO } = {};
   detalhesVisibility: { [key: number]: boolean } = {};
 
   constructor(
@@ -45,18 +48,24 @@ export class MeusPedidosComponent implements OnInit {
             const jogoIds = pedidos.flatMap((pedido) =>
               pedido.itens.map((item) => item.idProduto)
             );
+            const enderecoIds = pedidos
+              .map((pedido) => pedido.endereco?.id)
+              .filter((id): id is number => id !== undefined);
+
             const uniqueJogoIds = [...new Set(jogoIds)];
-            return forkJoin(
-              uniqueJogoIds.map((id) => this.fetchJogoDetails(id))
-            ).pipe(
-              map((jogos) => {
-                jogos.forEach((jogo) => (this.jogoDetailsMap[jogo.id] = jogo));
+            const uniqueEnderecoIds = [...new Set(enderecoIds)];
+
+            return forkJoin([
+              ...uniqueJogoIds.map((id) => this.fetchJogoDetails(id)),
+              ...uniqueEnderecoIds.map((id) => this.fetchEnderecoDetails(id)),
+            ]).pipe(
+              map(() => {
                 return pedidos;
               })
             );
           }),
           catchError((error) => {
-            console.error('Error fetching pedidos or jogos', error);
+            console.error('Error fetching pedidos, jogos, or enderecos', error);
             return of([]);
           })
         );
@@ -67,12 +76,24 @@ export class MeusPedidosComponent implements OnInit {
   }
 
   fetchJogoDetails(id: number): Observable<JogoComImagem> {
-    // Update return type
     return this.jogoService.findById(id).pipe(
-      map((jogo) => ({
-        ...jogo,
-        urlImagem: this.getUrlImagem(jogo.nomeImagem),
-      }))
+      map((jogo) => {
+        const jogoComImagem = {
+          ...jogo,
+          urlImagem: this.getUrlImagem(jogo.nomeImagem),
+        };
+        this.jogoDetailsMap[jogo.id] = jogoComImagem;
+        return jogoComImagem;
+      })
+    );
+  }
+
+  fetchEnderecoDetails(id: number): Observable<EnderecoResponseDTO> {
+    return this.enderecoService.getEnderecoById(id).pipe(
+      map((endereco: EnderecoResponseDTO) => {
+        this.enderecoDetailsMap[endereco.id] = endereco;
+        return endereco;
+      }) as OperatorFunction<EnderecoDTO, EnderecoResponseDTO>
     );
   }
 
@@ -92,5 +113,25 @@ export class MeusPedidosComponent implements OnInit {
       return false;
     }
     return !!this.detalhesVisibility[pedidoId];
+  }
+
+  getEnderecoCompleto(pedido: PedidoDTO): string {
+    const endereco = pedido.endereco
+      ? this.enderecoDetailsMap[pedido.endereco.id]
+      : null;
+    if (endereco) {
+      return `Rua: ${endereco.logradouro}<br>Nº: ${endereco.numero}<br>Bairro: ${endereco.bairro}<br>Cidade: ${endereco.nomeCidade}<br>CEP: ${endereco.cep}<br>Estado: ${endereco.nomeEstado}`;
+    } else {
+      return '';
+    }
+  }
+
+  calculateMarginRight(itens: any[]): number {
+    // Example calculation: 100px base margin + 50px for each item
+    if (itens.length === 1) {
+      return 800;
+    }
+    // Apply dynamic calculation for more than one item
+    return 800 - itens.length * 101;
   }
 }
