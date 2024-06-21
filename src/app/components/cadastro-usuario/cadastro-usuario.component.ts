@@ -104,7 +104,7 @@ export class CadastroUsuarioComponent {
       let operacao;
 
       operacao = this.userService.insert(user);
-
+      console.log('Dados do usuário antes de salvar:', user);
       operacao.subscribe({
         next: () => this.router.navigateByUrl('/login'),
         error: (error: HttpErrorResponse) => {

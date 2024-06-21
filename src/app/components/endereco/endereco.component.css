@@ -1,46 +1,44 @@
-.pagamento {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .order-summary {
-    width: 35%;
-    background-color: rgba(66, 66, 66, 1);
-    color: #fff;
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.5em;
-    margin-bottom: 20px; 
-  }
-  
-  .pix-option {
-    margin: 20px 0;
-  }
-  
-  .qr-code-container {
-    display: flex;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .qr-code-container img {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 20px;
-  }
+.fundoGerenciar {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.gerenciar {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.tituloGerenciar {
+  color: white;
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+
+}
+
+mat-card {
+  max-width: 1200px;
+  width: 100%; /* Limit card width */
+  margin: 0 auto; /* Center the card */
+  border-radius: 18px; /* Add round edges to the card */
+}
+
+.full-width-input {
+  margin-bottom: 20px; /* Add space between fields */
+  margin-left: 20px;
+}
+
+mat-card-actions button {
+  width: auto; /* Change button size */
+  margin: 10px; /* Create space between buttons */
+}
 
   button{ width: 100%;
     margin-top: 20px;

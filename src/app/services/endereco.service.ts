@@ -11,7 +11,10 @@ import { Endereco } from '../models/endereco.model';
 export class EnderecoService {
   private apiUrl = 'http://localhost:8080/endereco';
 
-  constructor(private httpClient: HttpClient, private authService: AuthService) {}
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getEnderecos(): Observable<EnderecoResponseDTO[]> {
     return this.authService.getUsuarioLogado().pipe(
@@ -53,10 +56,13 @@ export class EnderecoService {
       bairro: endereco.bairro,
       idCidade: endereco.municipio,
     };
-    return this.httpClient.post<Endereco>(`${this.apiUrl}/insere-endereco`, obj);
+    return this.httpClient.post<Endereco>(
+      `${this.apiUrl}/insere-endereco`,
+      obj
+    );
   }
 
-  update(endereco: Endereco): Observable<Endereco> {
+  update(endereco: EnderecoDTO): Observable<Endereco> {
     const obj = {
       id: endereco.id,
       cep: endereco.cep,
@@ -66,7 +72,15 @@ export class EnderecoService {
       bairro: endereco.bairro,
       idCidade: endereco.municipio,
     };
-    return this.httpClient.put<Endereco>(`${this.apiUrl}/endereco/atualiza-endereco/${this.authService.getUsuarioLogado}/${endereco.id}`, obj);
+    return this.httpClient.put<Endereco>(
+      `${this.apiUrl}/endereco/atualiza-endereco/${this.authService.getUsuarioLogado}/${endereco.id}`,
+      obj
+    );
   }
-  
+
+  deletar(idEndereco: number): Observable<void> {
+    return this.httpClient.delete<void>(
+      `${this.apiUrl}/deleta-endereco/${this.authService.getUsuarioLogado}/${idEndereco}`
+    );
+  }
 }
