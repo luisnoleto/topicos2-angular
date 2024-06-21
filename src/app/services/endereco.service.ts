@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
 import { EnderecoDTO, EnderecoResponseDTO } from '../models/enderecoDTO.model';
 import { AuthService } from '../services/auth.service';
+import { Endereco } from '../models/endereco.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,12 @@ import { AuthService } from '../services/auth.service';
 export class EnderecoService {
   private apiUrl = 'http://localhost:8080/endereco';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
   getEnderecos(): Observable<EnderecoResponseDTO[]> {
     return this.authService.getUsuarioLogado().pipe(
       switchMap((usuarioLogado) =>
-        this.http
+        this.httpClient
           .get<EnderecoResponseDTO[]>(
             `${this.apiUrl}/usuario/${usuarioLogado?.id}`
           )
@@ -40,19 +41,32 @@ export class EnderecoService {
   }
 
   getEnderecoById(id: number): Observable<EnderecoDTO> {
-    return this.http.get<EnderecoDTO>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<EnderecoDTO>(`${this.apiUrl}/${id}`);
   }
 
-  insertEndereco(endereco: EnderecoDTO): Observable<EnderecoDTO> {
-    return this.authService
-      .getUsuarioLogado()
-      .pipe(
-        switchMap((usuarioLogado) =>
-          this.http.post<EnderecoDTO>(
-            `${this.apiUrl}/insere-endereco`,
-            endereco
-          )
-        )
-      );
+  save(endereco: Endereco): Observable<Endereco> {
+    const obj = {
+      cep: endereco.cep,
+      logradouro: endereco.logradouro,
+      numero: endereco.numero,
+      complemento: endereco.complemento,
+      bairro: endereco.bairro,
+      idCidade: endereco.cidade,
+    };
+    return this.httpClient.post<Endereco>(`${this.apiUrl}/insert-endereco`, obj);
   }
+
+  update(endereco: Endereco): Observable<Endereco> {
+    const obj = {
+      id: endereco.id,
+      cep: endereco.cep,
+      logradouro: endereco.logradouro,
+      numero: endereco.numero,
+      complemento: endereco.complemento,
+      bairro: endereco.bairro,
+      idCidade: endereco.cidade,
+    };
+    return this.httpClient.put<Endereco>(`${this.apiUrl}/endereco/atualiza-endereco/${this.authService.getUsuarioLogado}/${endereco.id}`, obj);
+  }
+  
 }
