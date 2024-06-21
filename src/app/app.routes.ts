@@ -122,12 +122,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
 
-      // {
-      // path: 'usuarios/edit/:id/telefone',
-      // component: UpdateTelefoneComponent,
-      // resolve: { user: userResolver },
-      // canActivate: [authGuard],
-      // },
+  
 
       {
         path: 'usuarios/edit/:id',

@@ -109,40 +109,48 @@
                   </button>
                 </div>
               </div>
-              <div fclass="form-field">
-                <div class="item-dado">
-                  <label for="dataNascimento">Data de Nascimento: &nbsp;</label>
-                  <input
-                    type="date"
-                    id="dataNascimento"
-                    value="{{
-                      usuarioLogado?.dataNascimento | date : 'dd/MM/yyyy'
-                    }}"
-                    disabled
-                  />
-                  <button
-                    mat-button
-                    [routerLink]="[
-                      '/usuarios/edit/',
-                      usuarioLogado?.id,
-                      'nome'
-                    ]"
+              <div formArrayName="listaTelefone">
+                <div
+                  *ngFor="let telefone of listaTelefone.controls; let i = index"
+                  [formGroupName]="i"
+                >
+                  <mat-form-field
+                    id="dddform"
+                    appearance="fill"
+                    class="full-width -input"
+                    style="width: 10%"
                   >
-                    Editar
-                  </button>
-                </div>
-              </div>
+                    <mat-label>DDD</mat-label>
+                    <input matInput formControlName="codigoArea" />
+                  </mat-form-field>
+                  <mat-form-field
+                    id="numeroform"
+                    appearance="fill"
+                    class="full-width-input"
+                    style="width: 25%"
+                  >
+                    <mat-label>Número</mat-label>
+                    <input matInput formControlName="numero" />
+                  </mat-form-field>
 
-              <div class="form-field">
-                <div class="item-dado">
-                  <label>Telefones: &nbsp;</label>
-                  <ul>
-                    <li *ngFor="let telefone of usuarioLogado?.listaTelefone">
-                      {{ telefone.codigoArea }}: {{ telefone.numero }}
-                    </li>
-                  </ul>
                 </div>
               </div>
+              <button
+              mat-raised-button
+              color="primary"
+              id="addTelefone"
+              (click)="addTelefone()"
+            >
+              Adicionar Telefone
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              *ngIf="listaTelefone.controls.length > 0"
+              (click)="removeTelefone()"
+            >
+              Excluir Telefone
+            </button>
             </form>
           </mat-card-content>
           <mat-card-actions>

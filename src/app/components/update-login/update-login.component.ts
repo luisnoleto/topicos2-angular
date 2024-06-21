@@ -94,8 +94,8 @@ export class UpdateLoginComponent implements OnInit, OnDestroy {
 
       this.userService.alterarLogin(senhaAtual, novoLogin).subscribe({
         next: (response) => {
-          console.log('Nome updated successfully', response);
-          this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
+          console.log('Login updated successfully', response);
+          this.showSnackbarTopPosition('Login Alterada com Sucesso', 'Fechar');
           this.userStateService.updateUser(response);
           this.voltarPagina();
         },
