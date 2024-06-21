@@ -105,38 +105,7 @@
               }
             </mat-error>
           </mat-form-field>
-          <mat-form-field
-            id="dataform"
-            appearance="fill"
-            class="full-width -input"
-          >
-            <mat-label>Data de Nascimento</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="dataNascimento"
-            />
-            <mat-hint>DD/MM/AAAA</mat-hint>
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error
-              *ngIf="
-                formGroup.get('dataNascimento')?.errors &&
-                formGroup.get('dataNascimento')?.touched
-              "
-            >
-              @if (formGroup.get('dataNascimento')?.errors?.['required']) {
-              <span>A data de nascimento deve ser informada.</span>
-              } @if (formGroup.get('dataNascimento')?.hasError('apiError')) {
-              <span>{{
-                formGroup.get("dataNascimento")?.getError("apiError")
-              }}</span>
-              }
-            </mat-error>
-          </mat-form-field>
+
           <div formArrayName="listaTelefone">
             <div
               *ngFor="let telefone of listaTelefone.controls; let i = index"
