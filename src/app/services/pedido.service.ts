@@ -8,6 +8,7 @@ import { Jogo } from '../models/jogo.model';
 import { EnderecoDTO } from '../models/enderecoDTO.model';
 import { criarPedidoDTO } from '../models/criarPedidoDTO.model';
 import { FormaPagamento } from '../models/formaPagamento.model';
+import { StatusPedido } from '../models/statusPedido.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,7 @@ export class PedidoService {
           return pedidos.map((pedido) => ({
             ...pedido,
             pagamento: this.mapPagamento(pedido.pagamento),
+            statusPedido: this.mapStatusPedido(pedido.statusPedido),
           }));
         })
       );
@@ -82,13 +84,29 @@ export class PedidoService {
   }
 
   mapPagamento(pagamento: any): FormaPagamento {
-    switch (pagamento.lable) {
+    switch (pagamento.label) {
       case 'Pix':
         return FormaPagamento.PIX;
       case 'Boleto':
         return FormaPagamento.BOLETO;
       default:
         return FormaPagamento.BOLETO;
+    }
+  }
+  mapStatusPedido(statusPedido: any): StatusPedido {
+    switch (statusPedido.label) {
+      case 'Processando':
+        return StatusPedido.PROCESSANDO;
+      case 'Pago':
+        return StatusPedido.PAGO;
+      case 'Enviada':
+        return StatusPedido.ENVIADA;
+      case 'Cancelada':
+        return StatusPedido.CANCELADA;
+      case 'Finalizada':
+        return StatusPedido.FINALIZADA;
+      default:
+        return StatusPedido.PROCESSANDO;
     }
   }
 }

@@ -134,4 +134,8 @@ export class MeusPedidosComponent implements OnInit {
     // Apply dynamic calculation for more than one item
     return 800 - itens.length * 101;
   }
+
+  verProduto(id: number): void {
+    this.router.navigate(['/jogo', id]);
+  }
 }
