@@ -94,6 +94,14 @@ button[mat-raised-button] {
 button[mat-raised-button]:not(:last-child) {
   margin-right: 1rem;
 }
+button {
+  color: #fff;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: purple;
+}
 
 .form-grid {
   display: grid;
