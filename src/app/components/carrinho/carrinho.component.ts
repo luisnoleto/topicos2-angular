@@ -12,6 +12,7 @@ import { MatCardTitle } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DecimalPipe } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-carrinho',
@@ -37,7 +38,8 @@ export class CarrinhoComponent implements OnInit {
   constructor(
     private carrinhoService: CarrinhoService,
     private jogoService: JogoService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +67,9 @@ export class CarrinhoComponent implements OnInit {
 
   removerItem(item: ItemCarrinho): void {
     this.carrinhoService.remover(item);
+    
     this.updateCartItemsWithImages(this.carrinhoService.obter());
+    location.reload();
   }
 
   finalizarCompra(): void {

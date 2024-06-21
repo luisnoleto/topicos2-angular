@@ -163,6 +163,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       });
     }
   }
+  
   showSnackbarTopPosition(content: any, action: any) {
     this.snackbar.open(content, action, {
       duration: 2000,
