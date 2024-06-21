@@ -31,6 +31,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
+import { UserStateService } from '../../services/userState.service';
 
 @Component({
   selector: 'app-update-senha',
@@ -69,7 +70,8 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private localStorageService: LocalStorageService,
     private snackbar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private userStateService: UserStateService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
     this.formGroup = formBuilder.group({
@@ -153,6 +155,7 @@ export class UpdateSenhaComponent implements OnInit, OnDestroy {
       this.userService.alterarSenha(senhaAtual, novaSenha).subscribe({
         next: (response) => {
           console.log('Password updated successfully', response);
+          this.userStateService.updateUser(response);
           this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
           this.voltarPagina();
         },
