@@ -6,6 +6,8 @@
         <div class="games">
           <div *ngFor="let item of pedido.itens" class="game-card">
             <h3
+              (click)="verProduto(jogoDetailsMap[item.idProduto].id)"
+              class="game-title"
               style="text-align: center"
               title="{{ jogoDetailsMap[item.idProduto]?.nome }}"
             >
@@ -52,6 +54,14 @@
           <div class="pagamento-details">
             <h3>Detalhes do Pagamento:</h3>
             <p>Forma de Pagamento: {{ pedido.pagamento }}</p>
+          </div>
+          <div class="pagamento-details">
+            <h3>Status do Pedido</h3>
+            <p>{{ pedido.statusPedido }}</p>
+          </div>
+          <div class="pagamento-details">
+            <h3>Data e Hora do Pedido</h3>
+            <p>{{ pedido.dataCompra | date : "dd/MM/yyyy, HH:mm" }}</p>
           </div>
         </div>
 

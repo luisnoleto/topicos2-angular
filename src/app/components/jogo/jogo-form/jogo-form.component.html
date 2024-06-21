@@ -1,185 +1,274 @@
-<mat-toolbar color="primary" class="toolbar-title">Cadastro de Jogo</mat-toolbar>
+<mat-toolbar color="primary" class="toolbar-title"
+  >Cadastro de Jogo</mat-toolbar
+>
 <div class="form-container">
-    <mat-card>
-        <mat-card-content>
-            <form [formGroup]="formGroup">
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Nome</mat-label>
-                    <input matInput type="text" formControlName="nome">
-                    <mat-error *ngIf="formGroup.get('nome')?.errors && 
-                                        formGroup.get('nome')?.touched">
-                    {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Nome</mat-label>
+          <input matInput type="text" formControlName="nome" />
+          <mat-error
+            *ngIf="
+              formGroup.get('nome')?.errors && formGroup.get('nome')?.touched
+            "
+          >
+            {{ getErrorMessage("nome", formGroup.get("nome")?.errors) }}
 
-                    @if(formGroup.get('nome')?.hasError('apiError')){
-                        <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+            @if(formGroup.get('nome')?.hasError('apiError')){
+            <span>{{ formGroup.get("nome")?.getError("apiError") }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Descrição</mat-label>
-                    <input matInput type="text" formControlName="descricao">
-                    <mat-error *ngIf="formGroup.get('descricao')?.errors && 
-                                        formGroup.get('descricao')?.touched">
-                    {{getErrorMessage('descricao', formGroup.get('descricao')?.errors)}}
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Descrição</mat-label>
+          <input matInput type="text" formControlName="descricao" />
+          <mat-error
+            *ngIf="
+              formGroup.get('descricao')?.errors &&
+              formGroup.get('descricao')?.touched
+            "
+          >
+            {{
+              getErrorMessage("descricao", formGroup.get("descricao")?.errors)
+            }}
 
-                    @if(formGroup.get('descricao')?.hasError('apiError')){
-                        <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
-               
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Preço</mat-label>
-                    <input matInput type="number" formControlName="preco">
-                    <mat-error *ngIf="formGroup.get('preco')?.errors && 
-                                        formGroup.get('preco')?.touched">
-                    {{getErrorMessage('preco', formGroup.get('preco')?.errors)}}
+            @if(formGroup.get('descricao')?.hasError('apiError')){
+            <span>{{ formGroup.get("descricao")?.getError("apiError") }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('preco')?.hasError('apiError')){
-                        <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Preço</mat-label>
+          <input matInput type="number" formControlName="preco" />
+          <mat-error
+            *ngIf="
+              formGroup.get('preco')?.errors && formGroup.get('preco')?.touched
+            "
+          >
+            {{ getErrorMessage("preco", formGroup.get("preco")?.errors) }}
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Estoque</mat-label>
-                    <input matInput type="number" formControlName="estoque">
-                    <mat-error *ngIf="formGroup.get('estoque')?.errors && 
-                                        formGroup.get('estoque')?.touched">
-                    {{getErrorMessage('estoque', formGroup.get('estoque')?.errors)}}
+            @if(formGroup.get('preco')?.hasError('apiError')){
+            <span>{{ formGroup.get("preco")?.getError("apiError") }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('estoque')?.hasError('apiError')){
-                        <span>{{formGroup.get('estoque')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Estoque</mat-label>
+          <input matInput type="number" formControlName="estoque" />
+          <mat-error
+            *ngIf="
+              formGroup.get('estoque')?.errors &&
+              formGroup.get('estoque')?.touched
+            "
+          >
+            {{ getErrorMessage("estoque", formGroup.get("estoque")?.errors) }}
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Processador</mat-label>
-                    <input matInput type="text" formControlName="processador">
-                    <mat-error *ngIf="formGroup.get('processador')?.errors && 
-                                        formGroup.get('processador')?.touched">
-                    {{getErrorMessage('processador', formGroup.get('processador')?.errors)}}
+            @if(formGroup.get('estoque')?.hasError('apiError')){
+            <span>{{ formGroup.get("estoque")?.getError("apiError") }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('processador')?.hasError('apiError')){
-                        <span>{{formGroup.get('processador')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Processador</mat-label>
+          <input matInput type="text" formControlName="processador" />
+          <mat-error
+            *ngIf="
+              formGroup.get('processador')?.errors &&
+              formGroup.get('processador')?.touched
+            "
+          >
+            {{
+              getErrorMessage(
+                "processador",
+                formGroup.get("processador")?.errors
+              )
+            }}
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Memoria</mat-label>
-                    <input matInput type="text" formControlName="memoria">
-                    <mat-error *ngIf="formGroup.get('memoria')?.errors && 
-                                        formGroup.get('memoria')?.touched">
-                    {{getErrorMessage('memoria', formGroup.get('memoria')?.errors)}}
+            @if(formGroup.get('processador')?.hasError('apiError')){
+            <span>{{
+              formGroup.get("processador")?.getError("apiError")
+            }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('memoria')?.hasError('apiError')){
-                        <span>{{formGroup.get('memoria')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Memoria</mat-label>
+          <input matInput type="text" formControlName="memoria" />
+          <mat-error
+            *ngIf="
+              formGroup.get('memoria')?.errors &&
+              formGroup.get('memoria')?.touched
+            "
+          >
+            {{ getErrorMessage("memoria", formGroup.get("memoria")?.errors) }}
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Placa de Video</mat-label>
-                    <input matInput type="text" formControlName="placaVideo">
-                    <mat-error *ngIf="formGroup.get('placaVideo')?.errors && 
-                                        formGroup.get('placaVideo')?.touched">
-                    {{getErrorMessage('placaVideo', formGroup.get('placaVideo')?.errors)}}
+            @if(formGroup.get('memoria')?.hasError('apiError')){
+            <span>{{ formGroup.get("memoria")?.getError("apiError") }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('placaVideo')?.hasError('apiError')){
-                        <span>{{formGroup.get('placaVideo')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Placa de Video</mat-label>
+          <input matInput type="text" formControlName="placaVideo" />
+          <mat-error
+            *ngIf="
+              formGroup.get('placaVideo')?.errors &&
+              formGroup.get('placaVideo')?.touched
+            "
+          >
+            {{
+              getErrorMessage("placaVideo", formGroup.get("placaVideo")?.errors)
+            }}
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Sistema Operacional</mat-label>
-                    <input matInput type="text" formControlName="sistemaOperacional">
-                    <mat-error *ngIf="formGroup.get('sistemaOperacional')?.errors && 
-                                        formGroup.get('sistemaOperacional')?.touched">
-                    {{getErrorMessage('sistemaOperacional', formGroup.get('sistemaOperacional')?.errors)}}
+            @if(formGroup.get('placaVideo')?.hasError('apiError')){
+            <span>{{ formGroup.get("placaVideo")?.getError("apiError") }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('sistemaOperacional')?.hasError('apiError')){
-                        <span>{{formGroup.get('sistemaOperacional')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Sistema Operacional</mat-label>
+          <input matInput type="text" formControlName="sistemaOperacional" />
+          <mat-error
+            *ngIf="
+              formGroup.get('sistemaOperacional')?.errors &&
+              formGroup.get('sistemaOperacional')?.touched
+            "
+          >
+            {{
+              getErrorMessage(
+                "sistemaOperacional",
+                formGroup.get("sistemaOperacional")?.errors
+              )
+            }}
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>armazenamento</mat-label>
-                    <input matInput type="text" formControlName="armazenamento">
-                    <mat-error *ngIf="formGroup.get('armazenamento')?.errors && 
-                                        formGroup.get('armazenamento')?.touched">
-                    {{getErrorMessage('armazenamento', formGroup.get('armazenamento')?.errors)}}
+            @if(formGroup.get('sistemaOperacional')?.hasError('apiError')){
+            <span>{{
+              formGroup.get("sistemaOperacional")?.getError("apiError")
+            }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                    @if(formGroup.get('armazenamento')?.hasError('apiError')){
-                        <span>{{formGroup.get('armazenamento')?.getError('apiError')}}</span>
-                    }
-                </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>armazenamento</mat-label>
+          <input matInput type="text" formControlName="armazenamento" />
+          <mat-error
+            *ngIf="
+              formGroup.get('armazenamento')?.errors &&
+              formGroup.get('armazenamento')?.touched
+            "
+          >
+            {{
+              getErrorMessage(
+                "armazenamento",
+                formGroup.get("armazenamento")?.errors
+              )
+            }}
 
-                <mat-form-field appearance="fill">
-                    <mat-label>Genero</mat-label>
-                    <mat-select formControlName="genero">
-                      <mat-option *ngFor="let genero of generos" [value]="genero.id">
-                        {{genero.nome}}
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            @if(formGroup.get('armazenamento')?.hasError('apiError')){
+            <span>{{
+              formGroup.get("armazenamento")?.getError("apiError")
+            }}</span>
+            }
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill">
-                    <mat-label>Plataforma</mat-label>
-                    <mat-select formControlName="plataforma">
-                      <mat-option *ngFor="let plataforma of plataformas" [value]="plataforma.id">
-                        {{plataforma.nome}}
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Genero</mat-label>
+          <mat-select formControlName="genero">
+            <mat-option *ngFor="let genero of generos" [value]="genero.id">
+              {{ genero.nome }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
+        <mat-form-field appearance="fill">
+          <mat-label>Plataforma</mat-label>
+          <mat-select formControlName="plataforma">
+            <mat-option
+              *ngFor="let plataforma of plataformas"
+              [value]="plataforma.id"
+            >
+              {{ plataforma.nome }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill">
-                    <mat-label>Desenvolvedora</mat-label>
-                    <mat-select formControlName="desenvolvedora">
-                      <mat-option *ngFor="let desenvolvedora of desenvolvedoras" [value]="desenvolvedora.id">
-                        {{desenvolvedora.nome}}
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                
-                <mat-form-field appearance="fill">
-                    <mat-label>Classificação</mat-label>
-                    <mat-select formControlName="classificacao">
-                      <mat-option [value]="1">Livre</mat-option>
-                      <mat-option [value]="2">10 anos</mat-option>
-                      <mat-option [value]="3">12 anos</mat-option>
-                      <mat-option [value]="4">14 anos</mat-option>
-                      <mat-option [value]="5">16 anos</mat-option>
-                      <mat-option [value]="6">18 anos</mat-option>
-                    </mat-select>
-                </mat-form-field>
-               
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button 
-                    color="primary" 
-                    (click)="salvar()"> 
-                Salvar 
-            </button>
-            <button mat-raised-button 
-                    *ngIf="formGroup?.get('id')?.value"
-                    color="warn" 
-                    (click)="excluir()"
-                    [disabled]="formGroup.invalid"> 
-                Excluir 
-            </button>
-            <button mat-raised-button  
-                    routerLink="/admin/jogos"> 
-                Cancelar 
-            </button>
+        <mat-form-field appearance="fill">
+          <mat-label>Desenvolvedora</mat-label>
+          <mat-select formControlName="desenvolvedora">
+            <mat-option
+              *ngFor="let desenvolvedora of desenvolvedoras"
+              [value]="desenvolvedora.id"
+            >
+              {{ desenvolvedora.nome }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        </mat-card-actions>
-    </mat-card>
+        <mat-form-field appearance="fill">
+          <mat-label>Classificação</mat-label>
+          <mat-select formControlName="classificacao">
+            <mat-option [value]="1">Livre</mat-option>
+            <mat-option [value]="2">10 anos</mat-option>
+            <mat-option [value]="3">12 anos</mat-option>
+            <mat-option [value]="4">14 anos</mat-option>
+            <mat-option [value]="5">16 anos</mat-option>
+            <mat-option [value]="6">18 anos</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Nome da capa de jogo</mat-label>
+          <input matInput type="text" formControlName="nomeImagem" />
+          <mat-error
+            *ngIf="
+              formGroup.get('nomeImagem') &&
+              formGroup.get('nomeImagem')?.invalid &&
+              formGroup.get('nomeImagem')?.touched
+            "
+          >
+            O nome da Imagem é obrigatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Capa do Jogo</mat-label>
+          <input
+            type="file"
+            (change)="carregarImagemSelecionada($event)"
+            hidden
+            #fileInput
+          />
+          <input matInput [value]="fileName" readonly />
+
+          <button mat-icon-button matSuffix (click)="fileInput.click()">
+            <mat-icon>folder_open</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="salvar()">
+        Salvar
+      </button>
+      <button
+        mat-raised-button
+        *ngIf="formGroup?.get('id')?.value"
+        color="warn"
+        (click)="excluir()"
+        [disabled]="formGroup.invalid"
+      >
+        Excluir
+      </button>
+      <button mat-raised-button routerLink="/admin/jogos">Cancelar</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

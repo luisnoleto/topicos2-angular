@@ -25,8 +25,7 @@ import { GeneroService } from '../../../services/genero.service';
 import { DesenvolvedoraService } from '../../../services/desenvolvedora.service';
 import { PlataformaService } from '../../../services/plataforma.service';
 import { Classificacao } from '../../../models/classificacao.model';
-
-
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-jogo-form',
@@ -41,7 +40,8 @@ import { Classificacao } from '../../../models/classificacao.model';
     MatToolbarModule,
     RouterModule,
     MatSelectModule,
-    CommonModule
+    CommonModule,
+    MatIcon,
   ],
   templateUrl: './jogo-form.component.html',
   styleUrl: './jogo-form.component.css',
@@ -52,8 +52,9 @@ export class JogoFormComponent {
   plataformas: Plataforma[] = [];
   desenvolvedoras: Desenvolvedora[] = [];
   classificacoes: Classificacao[] = [];
-
-
+  fileName: string = '';
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,83 +63,75 @@ export class JogoFormComponent {
     private generoService: GeneroService,
     private plataformaService: PlataformaService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {
-
-    const jogo: Jogo =
-      activatedRoute.snapshot.data['jogo'];
+    const jogo: Jogo | null = activatedRoute.snapshot.data['jogo'];
 
     this.formGroup = formBuilder.group({
-      id: [(jogo && jogo.id) ? jogo.id : null],
-      nome: [jogo && jogo.nome ? jogo.nome : '',
-      Validators.compose([Validators.required, Validators.minLength(4)])],
-      descricao: [jogo && jogo.descricao ? jogo.descricao : '',
-      Validators.compose([Validators.required, Validators.minLength(4)])],
-      preco: [jogo && jogo.preco ? jogo.preco : '',
-      Validators.compose([Validators.required])],
-      estoque: [jogo && jogo.estoque ? jogo.estoque : '',
-      Validators.required],
-      processador: [jogo && jogo.processador ? jogo.processador : '',
-      Validators.required],
-      memoria: [jogo && jogo.memoria ? jogo.memoria : '',
-      Validators.required],
-      placaVideo: [jogo && jogo.placaVideo ? jogo.placaVideo : '',
-      Validators.required],
-      sistemaOperacional: [jogo && jogo.sistemaOperacional ? jogo.sistemaOperacional : '',
-      Validators.required],
-      armazenamento: [jogo && jogo.armazenamento ? jogo.armazenamento : '',
-      Validators.required],
-      genero: [jogo && jogo.genero ? jogo.genero.id : '',
-      Validators.required],
-      plataforma: [jogo && jogo.plataforma ? jogo.plataforma.id : null,
-        Validators.compose([Validators.required])],
-      desenvolvedora: [jogo && jogo.desenvolvedora ? jogo.desenvolvedora.id : null,
-        Validators.compose([Validators.required])],
-      classificacao: [jogo && jogo.classificacao ? jogo.classificacao : null,
-        Validators.compose([Validators.required])],
-      nomeImagem: [jogo && jogo.nomeImagem ? jogo.nomeImagem : ''],
-      
+      id: [jogo?.id ?? null],
+      nome: [
+        jogo?.nome ?? '',
+        Validators.compose([Validators.required, Validators.minLength(4)]),
+      ],
+      descricao: [
+        jogo?.descricao ?? '',
+        Validators.compose([Validators.required, Validators.minLength(4)]),
+      ],
+      preco: [jogo?.preco ?? '', Validators.compose([Validators.required])],
+      estoque: [jogo?.estoque ?? '', Validators.required],
+      processador: [jogo?.processador ?? '', Validators.required],
+      memoria: [jogo?.memoria ?? '', Validators.required],
+      placaVideo: [jogo?.placaVideo ?? '', Validators.required],
+      sistemaOperacional: [jogo?.sistemaOperacional ?? '', Validators.required],
+      armazenamento: [jogo?.armazenamento ?? '', Validators.required],
+      genero: [jogo?.genero?.id ?? '', Validators.required],
+      plataforma: [
+        jogo?.plataforma?.id ?? null,
+        Validators.compose([Validators.required]),
+      ],
+      desenvolvedora: [
+        jogo?.desenvolvedora?.id ?? null,
+        Validators.compose([Validators.required]),
+      ],
+      classificacao: [
+        jogo?.classificacao ?? null,
+        Validators.compose([Validators.required]),
+      ],
+      nomeImagem: [jogo?.nomeImagem ?? ''],
     });
   }
 
   ngOnInit(): void {
-    this.generoService.findByAtivo(true).subscribe(data => {
+    this.generoService.findByAtivo(true).subscribe((data) => {
       this.generos = data;
-      
     });
 
-    this.plataformaService.findByAtivo(true).subscribe(data => {
+    this.plataformaService.findByAtivo(true).subscribe((data) => {
       this.plataformas = data;
-      
     });
 
-    this.desenvolvedoraService.findByAtivo(true).subscribe(data => {
+    this.desenvolvedoraService.findByAtivo(true).subscribe((data) => {
       this.desenvolvedoras = data;
-      
     });
-
- 
-
-    
   }
-
-  
-
-
 
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const jogo = this.formGroup.value;
 
-      const operacao = jogo.id == null
-        ? this.jogoService.save(jogo)
-        : this.jogoService.update(jogo);
+      // Debugging log
+      console.log('Dados do jogo antes de salvar:', jogo);
 
+      const operacao =
+        jogo.id == null
+          ? this.jogoService.save(jogo)
+          : this.jogoService.update(jogo);
+      this.carregarImagemSelecionada();
       operacao.subscribe({
         next: () => this.router.navigateByUrl('/admin/jogos'),
         error: (error: HttpErrorResponse) => {
-          console.log('Erro ao Salvar' + JSON.stringify(error));
+          console.log('Erro ao Salvar', JSON.stringify(error));
           this.tratarErros(error);
         },
       });
@@ -161,7 +154,6 @@ export class JogoFormComponent {
     }
   }
 
-
   tratarErros(error: HttpErrorResponse) {
     if (error.status == 400) {
       if (error.error?.errors) {
@@ -173,7 +165,7 @@ export class JogoFormComponent {
             formControl.setErrors({ apiError: validationError.message });
           }
         });
-      };
+      }
     } else if (error.status < 400) {
       alert(error.error?.message || 'Erro generico no envio do formulario.');
     } else if (error.status >= 500) {
@@ -181,16 +173,14 @@ export class JogoFormComponent {
     }
   }
 
-
   errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
-
     nome: {
       required: 'O nome deve ser informado.',
-      minlength: 'O nome deve conter ao menos 4 caracteres'
+      minlength: 'O nome deve conter ao menos 4 caracteres',
     },
     descricao: {
       required: 'A descrição deve ser informada.',
-      minlength: 'A descrição deve conter ao menos 4 caracteres'
+      minlength: 'A descrição deve conter ao menos 4 caracteres',
     },
     preco: {
       required: 'O preço deve ser informado.',
@@ -225,21 +215,59 @@ export class JogoFormComponent {
     estoque: {
       required: 'O estoque deve ser informado.',
     },
-  }
+  };
 
-  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+  getErrorMessage(
+    controlName: string,
+    errors: ValidationErrors | null | undefined
+  ): string {
     if (!errors) {
       return '';
     }
 
     for (const errorName in errors) {
-      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
+      if (
+        errors.hasOwnProperty(errorName) &&
+        this.errorMessages[controlName][errorName]
+      ) {
         return this.errorMessages[controlName][errorName];
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
+  carregarImagemSelecionada(event?: any) {
+    this.selectedFile = event?.target.files[0];
 
+    if (this.selectedFile) {
+      this.fileName = this.selectedFile.name;
+      this.formGroup.get('nomeImagem')?.setValue(this.fileName);
 
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imagePreview = reader.result);
+      reader.readAsDataURL(this.selectedFile);
+
+      // Debugging log
+      console.log('Imagem selecionada:', this.selectedFile.name);
+      console.log(
+        'FormGroup nomeImagem:',
+        this.formGroup.get('nomeImagem')?.value
+      );
+      this.uploadImage(this.formGroup.get('id')?.value);
+    }
+  }
+
+  private uploadImage(jogoId: number) {
+    if (this.selectedFile) {
+      this.jogoService
+        .uploadImagem(jogoId, this.selectedFile.name, this.selectedFile)
+        .subscribe({
+          next: () => {
+            console.log('Upload da imagem feito com sucesso');
+          },
+          error: () => {
+            console.log('Erro ao fazer o upload da imagem');
+          },
+        });
+    }
+  }
 }
-
