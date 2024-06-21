@@ -42,7 +42,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Número</mat-label>
-          <input matInput type="text" formControlName="numero" />
+          <input matInput type="number" formControlName="numero" />
           <mat-error
             *ngIf="
               formGroup.get('numero')?.errors &&
@@ -81,7 +81,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Cidade</mat-label>
-          <mat-select formControlName="desenvolvedora">
+          <mat-select formControlName="municipio">
             <mat-option *ngFor="let municipio of municipios" [value]="municipio.id">
               {{municipio.nome}}
             </mat-option>

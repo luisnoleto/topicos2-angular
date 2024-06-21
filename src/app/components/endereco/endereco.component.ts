@@ -22,6 +22,7 @@ import { Municipio } from '../../models/municipio.model';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { OnInit } from '@angular/core';
 import { Endereco } from '../../models/endereco.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro-endereco-form',
@@ -50,18 +51,19 @@ export class CadastroEnderecoFormComponent implements OnInit {
     private enderecoService: EnderecoService,
     private municipioService: MunicipioService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     const endereco: Endereco = activatedRoute.snapshot.data['endereco'];
 
     this.formGroup = this.formBuilder.group({
       id: [endereco?.id ?? null],
-      cep: [endereco?.cep ??  '', Validators.required],
+      cep: [endereco?.cep ??  '', Validators.compose([Validators.required, Validators.pattern('\\d{5}-\\d{3}')])],
       logradouro: [endereco?.logradouro ??  '', Validators.required],
       numero: [endereco?.numero ??   '', Validators.required],
       complemento: [endereco?.complemento ?? ''],
       bairro: [endereco?.bairro ?? '', Validators.required],
-      idCidade: [endereco?.cidade?.id ?? null, Validators.required],
+      municipio: [endereco?.municipio?.id ?? null, Validators.required],
     });
   }
 
@@ -85,7 +87,7 @@ export class CadastroEnderecoFormComponent implements OnInit {
           : this.enderecoService.update(endereco);
      
       operacao.subscribe({
-        next: () => this.router.navigateByUrl('/admin/jogos'),
+        next: () => this.voltarPagina(),
         error: (error: HttpErrorResponse) => {
           console.log('Erro ao Salvar', JSON.stringify(error));
           this.tratarErros(error);
@@ -150,5 +152,9 @@ export class CadastroEnderecoFormComponent implements OnInit {
       }
     }
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
+  }
+
+  voltarPagina(): void{
+    this.location.back();
   }
 }
