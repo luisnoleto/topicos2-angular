@@ -13,50 +13,101 @@
           <mat-card-content>
             <form [formGroup]="formGroup" class="form-grid">
               <div class="form-field">
-
                 <div class="dados-usuario">
                   <div class="item-dado">
                     <label for="nome">Nome: &nbsp;</label>
-                    <input type="text" id="nome" value="{{ usuarioLogado?.nome }}" disabled>
-                    <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'nome']">Editar</button>
+                    <input
+                      type="text"
+                      id="nome"
+                      value="{{ usuarioLogado?.nome }}"
+                      disabled
+                    />
+                    <button
+                      mat-button
+                      [routerLink]="[
+                        '/usuarios/edit/',
+                        usuarioLogado?.id,
+                        'nome'
+                      ]"
+                    >
+                      Editar
+                    </button>
                   </div>
                 </div>
-
               </div>
               <div class="form-field">
-
                 <div class="item-dado">
                   <label for="login">Login: &nbsp;</label>
-                  <input type="text" id="login" value="{{ usuarioLogado?.login }}" disabled>
-                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'login']" >Editar</button>
+                  <input
+                    type="text"
+                    id="login"
+                    value="{{ usuarioLogado?.login }}"
+                    disabled
+                  />
+                  <button
+                    mat-button
+                    [routerLink]="[
+                      '/usuarios/edit/',
+                      usuarioLogado?.id,
+                      'login'
+                    ]"
+                  >
+                    Editar
+                  </button>
                 </div>
-
               </div>
               <div class="form-field">
-
                 <div class="item-dado">
                   <label for="senha">Senha: &nbsp;</label>
-                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'senha']">Editar</button>
+                  <button
+                    mat-button
+                    [routerLink]="[
+                      '/usuarios/edit/',
+                      usuarioLogado?.id,
+                      'senha'
+                    ]"
+                  >
+                    Editar
+                  </button>
                 </div>
-
               </div>
               <div class="form-field">
-
                 <div class="item-dado">
                   <label for="email">Email: &nbsp;</label>
-                  <input type="email" id="email" value="{{ usuarioLogado?.email }}" disabled>
-                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'email']">Editar</button>
+                  <input
+                    type="email"
+                    id="email"
+                    value="{{ usuarioLogado?.email }}"
+                    disabled
+                  />
+                  <button
+                    mat-button
+                    [routerLink]="[
+                      '/usuarios/edit/',
+                      usuarioLogado?.id,
+                      'email'
+                    ]"
+                  >
+                    Editar
+                  </button>
                 </div>
-
               </div>
               <div class="form-field">
-
                 <div class="item-dado">
                   <label for="cpf">CPF: &nbsp;</label>
-                  <input type="text" id="cpf" value="{{ usuarioLogado?.cpf }}" disabled>
-                  <button [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'cpf']">Editar</button>
+                  <input
+                    type="text"
+                    id="cpf"
+                    value="{{ usuarioLogado?.cpf }}"
+                    disabled
+                  />
+                  <button
+                    mat-button
+                    [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'cpf']"
+                  >
+                    Editar
+                  </button>
                 </div>
-
               </div>
               <div formArrayName="listaTelefone">
                 <div
@@ -81,6 +132,7 @@
                     <mat-label>Número</mat-label>
                     <input matInput formControlName="numero" />
                   </mat-form-field>
+
                 </div>
               </div>
               <button
@@ -99,12 +151,9 @@
             >
               Excluir Telefone
             </button>
-
-              
             </form>
           </mat-card-content>
           <mat-card-actions>
-
             <button
               mat-raised-button
               color="primary"
@@ -112,7 +161,6 @@
             >
               Alterar Senha
             </button>
-            
           </mat-card-actions>
         </mat-card>
       </div>
