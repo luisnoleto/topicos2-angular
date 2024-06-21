@@ -5,6 +5,7 @@ import {
   Validators,
   FormArray,
   ReactiveFormsModule,
+  ValidationErrors,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +21,7 @@ import { MunicipioService } from '../../services/municipio.service';
 import { Municipio } from '../../models/municipio.model';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { OnInit } from '@angular/core';
+import { Endereco } from '../../models/endereco.model';
 
 @Component({
   selector: 'app-cadastro-endereco-form',
@@ -50,16 +52,16 @@ export class CadastroEnderecoFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    const endereco: EnderecoDTO = activatedRoute.snapshot.data['endereco'];
+    const endereco: Endereco = activatedRoute.snapshot.data['endereco'];
 
     this.formGroup = this.formBuilder.group({
-      id: [endereco ? endereco.id : null],
-      cep: [endereco ? endereco.cep : '', Validators.required],
-      logradouro: [endereco ? endereco.logradouro : '', Validators.required],
-      numero: [endereco ? endereco.numero : '', Validators.required],
-      complemento: [endereco ? endereco.complemento : ''],
-      bairro: [endereco ? endereco.bairro : '', Validators.required],
-      idCidade: [endereco ? endereco.idCidade : null, Validators.required],
+      id: [endereco?.id ?? null],
+      cep: [endereco?.cep ??  '', Validators.required],
+      logradouro: [endereco?.logradouro ??  '', Validators.required],
+      numero: [endereco?.numero ??   '', Validators.required],
+      complemento: [endereco?.complemento ?? ''],
+      bairro: [endereco?.bairro ?? '', Validators.required],
+      idCidade: [endereco?.cidade?.id ?? null, Validators.required],
     });
   }
 
@@ -74,18 +76,79 @@ export class CadastroEnderecoFormComponent implements OnInit {
     if (this.formGroup.valid) {
       const endereco = this.formGroup.value;
 
-      let operacao;
+      // Debugging log
+      console.log('Dados do jogo antes de salvar:', endereco);
 
-      operacao = this.enderecoService.insertEndereco(endereco);
-
+      const operacao =
+        endereco.id == null
+          ? this.enderecoService.save(endereco)
+          : this.enderecoService.update(endereco);
+     
       operacao.subscribe({
-        next: (data) => {
-          this.router.navigate(['/']);
-        },
+        next: () => this.router.navigateByUrl('/admin/jogos'),
         error: (error: HttpErrorResponse) => {
-          console.error('Erro ao salvar endereço:', error);
+          console.log('Erro ao Salvar', JSON.stringify(error));
+          this.tratarErros(error);
         },
       });
     }
+  }
+
+  tratarErros(error: HttpErrorResponse) {
+    if (error.status == 400) {
+      if (error.error?.errors) {
+        error.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.field);
+          console.log(validationError);
+          if (formControl) {
+            console.log(formControl);
+            formControl.setErrors({ apiError: validationError.message });
+          }
+        });
+      }
+    } else if (error.status < 400) {
+      alert(error.error?.message || 'Erro generico no envio do formulario.');
+    } else if (error.status >= 500) {
+      alert('Erro interno do Servidor. Por favor, tente novamente mais tarde.');
+    }
+  }
+
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+    cep: {
+      required: 'O campo CEP é obrigatório',
+    },
+    logradouro: {
+      required: 'O campo Logradouro é obrigatório',
+    },
+    numero: {
+      required: 'O campo Número é obrigatório',
+    },
+    bairro: {
+      required: 'O campo Bairro é obrigatório',
+    },
+    cidade: {
+      required: 'O campo Cidade é obrigatório',
+    },
+
+    
+  };
+
+  getErrorMessage(
+    controlName: string,
+    errors: ValidationErrors | null | undefined
+  ): string {
+    if (!errors) {
+      return '';
+    }
+
+    for (const errorName in errors) {
+      if (
+        errors.hasOwnProperty(errorName) &&
+        this.errorMessages[controlName][errorName]
+      ) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 }
