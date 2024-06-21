@@ -15,7 +15,7 @@ export class EnderecoService {
     private httpClient: HttpClient,
     private authService: AuthService
   ) {}
-
+  usuarioId = this.authService.getUsuarioLogado();
   getEnderecos(): Observable<EnderecoResponseDTO[]> {
     return this.authService.getUsuarioLogado().pipe(
       switchMap((usuarioLogado) =>
@@ -80,7 +80,7 @@ export class EnderecoService {
 
   deletar(idEndereco: number): Observable<void> {
     return this.httpClient.delete<void>(
-      `${this.apiUrl}/deleta-endereco/${this.authService.getUsuarioLogado}/${idEndereco}`
+      `${this.apiUrl}/deleta-endereco/${this.authService.getUsuarioLogado}/${idEndereco}` //esse authservice ta retornando uma ulr e nao o id do usuario, tentei fazer  usuarioId =  this.authService.getUsuarioLogado(); e usuarioId.id mas nao tem
     );
   }
 }

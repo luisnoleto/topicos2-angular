@@ -24,8 +24,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EnderecoResponseDTO } from '../../models/enderecoDTO.model';
-import { EnderecoService } from '../../services/endereco.service';
-
 
 @Component({
   selector: 'app-dados-usuario',
