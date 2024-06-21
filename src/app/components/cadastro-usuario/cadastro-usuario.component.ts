@@ -68,7 +68,7 @@ export class CadastroUsuarioComponent {
       login: [user && user.login ? user.login : '', Validators.required],
       senha: [
         user && user.senha ? user.senha : '',
-        Validators.compose([Validators.required, Validators.minLength(8)]),
+        Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
       email: [user && user.email ? user.email : '', Validators.required],
       cpf: [user && user.cpf ? user.cpf : '', Validators.required],
