@@ -94,7 +94,7 @@ export const routes: Routes = [
         title: 'Detalhes da Compra',
         canActivate: [authGuard],
       },
-
+ 
       {
         path: 'meus-enderecos/edit/:id',
         component: EditarEnderecoComponent,
