@@ -84,7 +84,6 @@ export const routes: Routes = [
       {
         path: 'cadastro-enderecos',
         component: CadastroEnderecoFormComponent,
-        title: 'Endereços',
         canActivate: [authGuard],
       },
 

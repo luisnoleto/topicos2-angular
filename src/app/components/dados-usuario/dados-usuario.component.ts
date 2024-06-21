@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
+import { EnderecoService } from '../../services/endereco.service';
 
 @Component({
   selector: 'app-dados-usuario',
@@ -48,7 +49,8 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
     private router: Router,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private userStateService: UserStateService
+    private userStateService: UserStateService,
+    private enderecoService: EnderecoService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
     this.formGroup = this.formBuilder.group({
@@ -61,7 +63,7 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
       senha: ['', Validators.required],
       listaTelefone: this.formBuilder.array(
         user?.listaTelefone ? user.listaTelefone.map((tel) => this.formBuilder.group(tel)) : []
-      ),
+      ), 
     });
   }
 
