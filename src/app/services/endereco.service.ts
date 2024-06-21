@@ -51,9 +51,9 @@ export class EnderecoService {
       numero: endereco.numero,
       complemento: endereco.complemento,
       bairro: endereco.bairro,
-      idCidade: endereco.cidade,
+      idCidade: endereco.municipio,
     };
-    return this.httpClient.post<Endereco>(`${this.apiUrl}/insert-endereco`, obj);
+    return this.httpClient.post<Endereco>(`${this.apiUrl}/insere-endereco`, obj);
   }
 
   update(endereco: Endereco): Observable<Endereco> {
@@ -64,7 +64,7 @@ export class EnderecoService {
       numero: endereco.numero,
       complemento: endereco.complemento,
       bairro: endereco.bairro,
-      idCidade: endereco.cidade,
+      idCidade: endereco.municipio,
     };
     return this.httpClient.put<Endereco>(`${this.apiUrl}/endereco/atualiza-endereco/${this.authService.getUsuarioLogado}/${endereco.id}`, obj);
   }
