@@ -96,8 +96,8 @@ export class UpdateCpfComponent implements OnInit, OnDestroy {
 
       this.userService.alterarCpf(senhaAtual, novoCPF).subscribe({
         next: (response) => {
-          console.log('Nome updated successfully', response);
-          this.showSnackbarTopPosition('Senha Alterada com Sucesso', 'Fechar');
+          console.log('CPF updated successfully', response);
+          this.showSnackbarTopPosition('CPF Alterado com Sucesso', 'Fechar');
           this.userStateService.updateUser(response);
           this.voltarPagina();
         },
