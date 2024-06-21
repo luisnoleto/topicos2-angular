@@ -47,6 +47,7 @@ import { CarouselFormComponent } from './components/carousel/carousel-form/carou
 import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produto.component';
 import { UpdateCpfComponent } from './components/update-cpf/update-cpf.component';
 import { UpdateLoginComponent } from './components/update-login/update-login.component';
+import { DetalhesCompraComponent } from './components/detalhes-compra/detalhes-compra.component';
 
 export const routes: Routes = [
   {
@@ -84,35 +85,40 @@ export const routes: Routes = [
       {
         path: 'cadastro-enderecos',
         component: CadastroEnderecoFormComponent,
+        title: 'Endereços',
+      },
+      {
+        path: 'detalhes-compra/:id',
+        component: DetalhesCompraComponent,
+        title: 'Detalhes da Compra',
         canActivate: [authGuard],
       },
-
+ 
       {
         path: 'usuarios/edit/:id/senha',
         component: UpdateSenhaComponent,
-    
-        canActivate: [authGuard]
+
+        canActivate: [authGuard],
       },
       {
         path: 'usuarios/edit/:id/nome',
         component: UpdateNomeComponent,
-        
-        canActivate: [authGuard]
+
+        canActivate: [authGuard],
       },
 
       {
         path: 'usuarios/edit/:id/cpf',
         component: UpdateCpfComponent,
 
-        canActivate: [authGuard]
-   
+        canActivate: [authGuard],
       },
 
       {
         path: 'usuarios/edit/:id/email',
         component: UpdateEmailComponent,
-        
-        canActivate: [authGuard]
+
+        canActivate: [authGuard],
       },
 
       {
@@ -121,13 +127,11 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
 
-  
-
       {
         path: 'usuarios/edit/:id',
         component: UserFormComponent,
         resolve: { user: userResolver },
-        canActivate: [authGuard]
+        canActivate: [authGuard],
       },
       {
         path: 'finalizar-pedido',

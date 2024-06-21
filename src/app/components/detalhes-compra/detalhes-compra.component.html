@@ -1,0 +1,42 @@
+<div *ngIf="pedido; else loading" class="detalhes-compra-container">
+  <h1>Obrigado! Sua Compra Foi Finalizada com Sucesso</h1>
+  <div class="imagens-container">
+    <img *ngFor="let imagem of jogoImagens" [src]="imagem" alt="Jogo Imagem" />
+  </div>
+  <mat-card class="pedido-card">
+    <h2 style="text-align: center">Detalhes da sua compra</h2>
+    <!-- Wrap left and right columns in .info-container -->
+    <div class="info-container">
+      <div class="left-column">
+        <p>
+          <strong>Preço Total:</strong> R$
+          {{ pedido.totalPedido | number : "1.2-2" }}
+        </p>
+        <p><strong>Quantidade de Itens:</strong> {{ pedido.itens.length }}</p>
+        <p>
+          <strong>Data da Compra:</strong>
+          {{ pedido.dataCompra | date : "dd/MM/yyyy, 'às' HH:mm" }}
+        </p>
+      </div>
+      <div class="right-column">
+        <div class="endereco-container">
+          <div class="endereco-title">
+            <strong>Endereço de Entrega:</strong>
+          </div>
+          <div
+            class="endereco-details"
+            [innerHTML]="getEnderecoCompleto()"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- End of .info-container -->
+    <button mat-raised-button color="primary" (click)="goToMeusPedidos()">
+      Ver Todos Os Pedidos
+    </button>
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <p>Carregando...</p>
+</ng-template>

@@ -1,0 +1,80 @@
+.detalhes-compra-container {
+  padding: 20px;
+  background-color: #121212;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imagens-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.imagens-container img {
+  width: 250px;
+  height: 340px;
+  margin: 0 10px;
+}
+
+.pedido-card {
+  width: 80%;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  text-align: left;
+}
+
+.pedido-card h1,
+.pedido-card h2 {
+  margin: 10px 0;
+}
+
+.pedido-card p {
+  margin: 5px 0;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column {
+  flex: 1;
+}
+
+.right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.endereco-container {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.endereco-title {
+  text-align: right;
+}
+
+.endereco-details {
+  text-align: right;
+  margin-top: 5px;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  color: #fff;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: purple;
+}
