@@ -48,6 +48,7 @@ import { PaginaProdutoComponent } from './components/pagina-produto/pagina-produ
 import { UpdateCpfComponent } from './components/update-cpf/update-cpf.component';
 import { UpdateLoginComponent } from './components/update-login/update-login.component';
 import { DetalhesCompraComponent } from './components/detalhes-compra/detalhes-compra.component';
+import { EditarEnderecoComponent } from './components/editar-endereco/editar-endereco.component';
 
 export const routes: Routes = [
   {
@@ -94,6 +95,13 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
  
+      {
+        path: 'meus-enderecos/edit/:id',
+        component: EditarEnderecoComponent,
+        title: 'Editar Endereço',
+        canActivate: [authGuard],
+      },
+
       {
         path: 'usuarios/edit/:id/senha',
         component: UpdateSenhaComponent,

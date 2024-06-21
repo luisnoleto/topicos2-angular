@@ -70,12 +70,8 @@
   transition: background 0.3s;
 }
 
-#buttonPedido{
+#buttonPedido {
   margin-left: 15px;
-}
-#addTelefone{
-  margin-bottom: -80px;
-
 }
 
 .toggle-button:hover {
@@ -94,6 +90,7 @@ button[mat-raised-button] {
 button[mat-raised-button]:not(:last-child) {
   margin-right: 1rem;
 }
+
 button {
   color: #fff;
   transition: background 0.3s;
@@ -115,13 +112,8 @@ button:hover {
 }
 
 .small-input {
-  width: 60px; 
-}
-
-@media (max-width: 600px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+  width: 60px;
+  margin-right: 15px;
 }
 
 .telefone-fields {
@@ -130,4 +122,21 @@ button:hover {
   flex-direction: column;
   gap: 20px; /* Adjust the gap as needed */
   width: 50%;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.telefone-button-container {
+  display: flex;
+  justify-content: flex-start; /* Aligns items to the left */
+  gap: 10px; /* Adjust the gap between buttons */
+}
+
+@media (max-width: 600px) {
+  .telefone-button-container {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+  }
 }

@@ -58,9 +58,15 @@ export class CadastroEnderecoFormComponent implements OnInit {
 
     this.formGroup = this.formBuilder.group({
       id: [endereco?.id ?? null],
-      cep: [endereco?.cep ??  '', Validators.compose([Validators.required, Validators.pattern('\\d{5}-\\d{3}')])],
-      logradouro: [endereco?.logradouro ??  '', Validators.required],
-      numero: [endereco?.numero ??   '', Validators.required],
+      cep: [
+        endereco?.cep ?? '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('\\d{5}-\\d{3}'),
+        ]),
+      ],
+      logradouro: [endereco?.logradouro ?? '', Validators.required],
+      numero: [endereco?.numero ?? '', Validators.required],
       complemento: [endereco?.complemento ?? ''],
       bairro: [endereco?.bairro ?? '', Validators.required],
       municipio: [endereco?.municipio?.id ?? null, Validators.required],
@@ -79,13 +85,13 @@ export class CadastroEnderecoFormComponent implements OnInit {
       const endereco = this.formGroup.value;
 
       // Debugging log
-      console.log('Dados do jogo antes de salvar:', endereco);
+      console.log('Dados do endereço antes de salvar:', endereco);
 
       const operacao =
         endereco.id == null
           ? this.enderecoService.save(endereco)
           : this.enderecoService.update(endereco);
-     
+
       operacao.subscribe({
         next: () => this.voltarPagina(),
         error: (error: HttpErrorResponse) => {
@@ -131,8 +137,6 @@ export class CadastroEnderecoFormComponent implements OnInit {
     cidade: {
       required: 'O campo Cidade é obrigatório',
     },
-
-    
   };
 
   getErrorMessage(
@@ -154,7 +158,7 @@ export class CadastroEnderecoFormComponent implements OnInit {
     return 'Erro não mapeado (entre em contato com o desenvolvedor)';
   }
 
-  voltarPagina(): void{
+  voltarPagina(): void {
     this.location.back();
   }
 }

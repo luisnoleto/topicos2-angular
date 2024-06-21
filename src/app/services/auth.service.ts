@@ -13,6 +13,7 @@ export class AuthService {
   private tokenKey = 'jwt_token';
   private usuarioLogadoKey = 'usuario_logado';
   private usuarioLogadoSubject = new BehaviorSubject<User | null>(null);
+  private usuarioLogado: User | null = null;
 
   constructor(
     private http: HttpClient,
@@ -81,6 +82,9 @@ export class AuthService {
     this.usuarioLogadoSubject.next(null);
   }
 
+  getUsuarioLogadoSync(): User | null {
+    return this.usuarioLogado;
+  }
   isTokenExpired(): boolean {
     const token = this.getToken();
     console.error('token: ' + token);

@@ -1,11 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { UserStateService } from '../../services/userState.service';
+import { EnderecoService } from '../../services/endereco.service';
 import { User } from '../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +23,7 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
-import { EnderecoService } from '../../services/endereco.service';
+import { EnderecoResponseDTO } from '../../models/enderecoDTO.model';
 
 @Component({
   selector: 'app-dados-usuario',
@@ -38,9 +45,13 @@ import { EnderecoService } from '../../services/endereco.service';
 })
 export class DadosUsuarioComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
+  formTelefone: FormGroup;
   showAddresses = false;
   usuarioLogado: User | null = null;
+  enderecos: EnderecoResponseDTO[] = [];
   private subscription = new Subscription();
+  senhaAtual: string = '';
+  showSenhaAtualField = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,6 +64,7 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
     private enderecoService: EnderecoService
   ) {
     const user: User = activatedRoute.snapshot.data['user'];
+
     this.formGroup = this.formBuilder.group({
       id: [user?.id || null],
       nome: [user?.nome || '', Validators.required],
@@ -61,23 +73,26 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
       cpf: [user?.cpf || '', Validators.required],
       dataNascimento: [user?.dataNascimento || '', Validators.required],
       senha: ['', Validators.required],
-      listaTelefone: this.formBuilder.array(
-        user?.listaTelefone ? user.listaTelefone.map((tel) => this.formBuilder.group(tel)) : []
-      ), 
+    });
+
+    this.formTelefone = this.formBuilder.group({
+      listaTelefone: this.formBuilder.array([]),
+      senhaAtual: [''],
     });
   }
 
   ngOnInit(): void {
     this.obterUsuarioLogado();
-
     this.subscription.add(
       this.userStateService.user$.subscribe((user) => {
         if (user) {
           this.formGroup.patchValue(user);
           this.usuarioLogado = user;
+          this.senhaAtual = user.senha || '';
         }
       })
     );
+    this.loadEnderecos();
   }
 
   ngOnDestroy(): void {
@@ -87,17 +102,30 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
   obterUsuarioLogado() {
     this.subscription.add(
       this.authService.getUsuarioLogado().subscribe((usuario) => {
-        this.usuarioLogado = usuario;
-        this.formGroup.patchValue({
-          id: usuario?.id,
-          nome: usuario?.nome,
-          login: usuario?.login,
-          email: usuario?.email,
-          cpf: usuario?.cpf,
-          dataNascimento: usuario?.dataNascimento,
-          senha: usuario?.senha,
-          listaTelefone: usuario?.listaTelefone || [],
-        });
+        if (usuario) {
+          this.usuarioLogado = usuario;
+          this.senhaAtual = usuario.senha || '';
+
+          this.formGroup.patchValue({
+            id: usuario.id,
+            nome: usuario.nome,
+            login: usuario.login,
+            email: usuario.email,
+            cpf: usuario.cpf,
+            dataNascimento: usuario.dataNascimento,
+            senha: usuario.senha,
+          });
+
+          const telefoneArray = this.formBuilder.array(
+            usuario.listaTelefone?.map((tel) =>
+              this.formBuilder.group({
+                codigoArea: [tel.codigoArea, Validators.required],
+                numero: [tel.numero, Validators.required],
+              })
+            ) || []
+          );
+          this.formTelefone.setControl('listaTelefone', telefoneArray);
+        }
       })
     );
   }
@@ -106,12 +134,22 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
     this.showAddresses = !this.showAddresses;
   }
 
+  loadEnderecos() {
+    this.subscription.add(
+      this.enderecoService.getEnderecos().subscribe((enderecos) => {
+        this.enderecos = enderecos;
+      })
+    );
+  }
+
   get listaTelefone() {
-    return this.formGroup.get('listaTelefone') as FormArray;
+    return this.formTelefone.get('listaTelefone') as FormArray;
   }
 
   addTelefone() {
-    this.listaTelefone.push(this.formBuilder.group({ codigoArea: '', numero: '' }));
+    this.listaTelefone.push(
+      this.formBuilder.group({ codigoArea: '', numero: '' })
+    );
   }
 
   removeTelefone() {
@@ -120,28 +158,36 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
     }
   }
 
-  salvar() {
-    this.formGroup.markAllAsTouched();
-    if (this.formGroup.valid) {
-      const user = this.formGroup.value;
+  showSenhaField() {
+    this.showSenhaAtualField = true;
+  }
 
-      if (!user.id && this.usuarioLogado?.id) {
-        user.id = this.usuarioLogado.id;
+  salvarTelefones() {
+    if (this.formTelefone.valid) {
+      if (!this.formTelefone.value.senhaAtual) {
+        console.error('Senha atual não encontrada.');
+        return;
       }
 
-      if (this.usuarioLogado?.senha) {
-        user.senha = this.usuarioLogado.senha;
-      }
-
-      this.userService.update(user).subscribe({
-        next: () => {
-          this.router.navigateByUrl('/usuarios/dados-usuario');
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log('Erro ao salvar' + JSON.stringify(error));
-          this.tratarErros(error);
-        },
-      });
+      const telefones = this.formTelefone.value.listaTelefone.map(
+        (tel: any) => ({
+          codigoArea: tel.codigoArea,
+          numero: tel.numero,
+        })
+      );
+      this.userService
+        .alterarTelefone(this.formTelefone.value.senhaAtual, telefones)
+        .subscribe({
+          next: () => {
+            this.router.navigateByUrl('/usuarios/dados-usuario');
+            console.log('Telefones salvos com sucesso');
+            console.log(telefones);
+          },
+          error: (error: HttpErrorResponse) => {
+            console.log('Erro ao salvar telefones' + JSON.stringify(error));
+            this.tratarErros(error);
+          },
+        });
     }
   }
 
@@ -158,5 +204,37 @@ export class DadosUsuarioComponent implements OnInit, OnDestroy {
     } else {
       console.log('Erro inesperado', error);
     }
+  }
+
+  irPedidos() {
+    this.router.navigateByUrl('/meus-pedidos');
+  }
+
+  irEndereco() {
+    this.router.navigateByUrl('/cadastro-enderecos');
+  }
+
+  carregarEnderecos() {
+    this.enderecoService.getEnderecos().subscribe({
+      next: (enderecos: EnderecoResponseDTO[]) => {
+        this.enderecos = enderecos;
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao buscar endereços', error);
+      },
+    });
+  }
+
+  deletarEndereco(enderecoId: number) {
+    const usuarioLogado = this.authService.getUsuarioLogadoSync();
+
+    this.enderecoService.deletar(enderecoId).subscribe({
+      next: () => {
+        this.carregarEnderecos();
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao deletar endereço', error);
+      },
+    });
   }
 }

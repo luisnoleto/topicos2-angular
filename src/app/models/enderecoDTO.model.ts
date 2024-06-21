@@ -8,6 +8,7 @@ export interface EnderecoDTO {
   complemento: string;
   bairro: string;
   idCidade: number;
+  municipio?: Municipio;
 }
 
 export interface EnderecoResponseDTO {

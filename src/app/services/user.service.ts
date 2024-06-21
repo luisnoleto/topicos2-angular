@@ -88,4 +88,10 @@ export class UserService {
       loginNovo,
     });
   }
+  alterarTelefone(senhaAtual: string, telefones: any[]): Observable<User> {
+    return this.httpClient.patch<User>(`${this.adminUrl}/alterar/telefone`, {
+      senhaAtual,
+      listaTelefones: telefones,
+    });
+  }
 }

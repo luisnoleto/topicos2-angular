@@ -138,7 +138,7 @@ export class FazerPedidoComponent implements OnInit {
         console.log('Pedido realizado com sucesso', response);
         this.carrinhoService.removerTudo();
         this.checkCarrinhoStatus();
-        this.router.navigate(['/meus-pedidos']);
+        this.router.navigate(['/detalhes-compra']);
       },
       error: (error) => {
         console.error('Erro ao realizar pedido', error);
