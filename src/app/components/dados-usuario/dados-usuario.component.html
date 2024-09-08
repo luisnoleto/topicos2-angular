@@ -109,76 +109,98 @@
                   </button>
                 </div>
               </div>
-              <div formArrayName="listaTelefone">
+            </form>
+            <form [formGroup]="formTelefone" class="form-grid">
+              <div
+                class="form-field telefone-fields"
+                formArrayName="listaTelefone"
+              >
                 <div
                   *ngFor="let telefone of listaTelefone.controls; let i = index"
                   [formGroupName]="i"
                 >
-                  <mat-form-field
-                    id="dddform"
-                    appearance="fill"
-                    class="full-width -input"
-                    style="width: 10%"
-                  >
+                  <mat-form-field appearance="fill" class="small-input">
                     <mat-label>DDD</mat-label>
                     <input matInput formControlName="codigoArea" />
                   </mat-form-field>
-                  <mat-form-field
-                    id="numeroform"
-                    appearance="fill"
-                    class="full-width-input"
-                    style="width: 25%"
-                  >
+                  <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Número</mat-label>
                     <input matInput formControlName="numero" />
                   </mat-form-field>
-
                 </div>
               </div>
+              <div class="telefone-button-container">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="addTelefone()"
+                >
+                  Adicionar Telefone
+                </button>
+                <button
+                  mat-raised-button
+                  color="warn"
+                  (click)="removeTelefone()"
+                >
+                  Remover Telefone
+                </button>
+              </div>
               <button
-              mat-raised-button
-              color="primary"
-              id="addTelefone"
-              (click)="addTelefone()"
-            >
-              Adicionar Telefone
-            </button>
-            <button
-              mat-raised-button
-              color="warn"
-              *ngIf="listaTelefone.controls.length > 0"
-              (click)="removeTelefone()"
-            >
-              Excluir Telefone
-            </button>
+                mat-raised-button
+                color="primary"
+                (click)="showSenhaField()"
+              >
+                Salvar Telefones
+              </button>
+              <div *ngIf="showSenhaAtualField">
+                <mat-form-field appearance="fill">
+                  <mat-label>Senha Atual</mat-label>
+                  <input
+                    matInput
+                    formControlName="senhaAtual"
+                    type="password"
+                  />
+                </mat-form-field>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="salvarTelefones()"
+                  style="margin-left: 15px"
+                >
+                  Confirmar Alteração
+                </button>
+              </div>
             </form>
           </mat-card-content>
-          <mat-card-actions>
-            <button
-              mat-raised-button
-              color="primary"
-              [routerLink]="['/usuarios/edit/', usuarioLogado?.id, 'senha']"
-            >
-              Alterar Senha
-            </button>
-          </mat-card-actions>
         </mat-card>
       </div>
     </div>
     <div class="saved-addresses" *ngIf="showAddresses">
       <h2 class="section-title">ENDEREÇOS CADASTRADOS</h2>
-      <!-- Placeholder for saved addresses -->
-      <div class="address">
-        <p>Quadra 1204 sul alameda 16, 38 Qi 06</p>
-        <p>CEP: 77019506</p>
-        <p>Cidade: Palmas Estado: Tocantins</p>
+      <div *ngFor="let endereco of enderecos" class="address">
+        <p>
+          {{ endereco.logradouro }}, {{ endereco.numero }},
+          {{ endereco.bairro }}, {{ endereco.cep }}
+        </p>
+        <p>{{ endereco.complemento }}</p>
+        <p>{{ endereco.nomeCidade }} - {{ endereco.nomeEstado }}</p>
+        <button mat-button [routerLink]="['/meus-enderecos/edit', endereco.id]">
+          Editar
+        </button>
+        <button mat-button color="warn" (click)="deletarEndereco(endereco.id)">
+          Deletar
+        </button>
       </div>
+      <button class="toggle-button" (click)="irEndereco()">
+        Adicionar Endereço
+      </button>
     </div>
   </div>
-  <button class="toggle-button" (click)="toggleAddresses()">
-    Endereços Salvos
+  <button class="toggle-button" id="buttonEndereco" (click)="toggleAddresses()">
+    Meus Endereços
   </button>
-  <button class="toggle-button" id="buttonPedido" (click)="toggleAddresses()">
+
+  <button class="toggle-button" id="buttonPedido" (click)="irPedidos()">
     Meus Pedidos
   </button>
 </div>
